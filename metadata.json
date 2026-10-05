@@ -1,0 +1,6 @@
+{
+  "name": "Margarita — Portafolio Multipotencial",
+  "description": "Portafolio personal de Margarita: Nostalgia Analógica + Despliegue Digital. Artefactos, soluciones, talleres, audiografemas y exploraciones creativas.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

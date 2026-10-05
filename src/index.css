@@ -1,0 +1,434 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-base: #0D0D12;
+    --bg-surface: #14141B;
+    --bg-surface-elevated: #1B1B26;
+    --border-subtle: #242436;
+    --magenta-neon: #FF007F;
+    --fuchsia-electric: #E024C3;
+    --text-primary: #F4F4F8;
+    --text-muted: #8E8EA8;
+  }
+
+  body {
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Tipografías de identidad */
+@font-face {
+  font-family: 'Thorne Normal';
+  src: url('/fonts/Thorne-n.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GF Ordner Normal';
+  src: url('/fonts/Ordner_n.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MASTERPLAN';
+  src: url('/fonts/MASTERPLAN___.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MailBomb';
+  src: url('/fonts/MAILBOMB.TTF') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PROG.BOT';
+  src: url('/fonts/progbot.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Hacked';
+  src: url('/fonts/HACKED.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-rajdhani {
+  font-family: 'Rajdhani', sans-serif;
+}
+
+.font-hacked {
+  font-family: 'Hacked', monospace, sans-serif;
+  letter-spacing: 0.04em;
+}
+
+.font-progbot {
+  font-family: 'PROG.BOT', monospace, sans-serif;
+  letter-spacing: 0.04em;
+}
+
+.font-mailbomb {
+  font-family: 'MailBomb', sans-serif;
+  letter-spacing: 0.04em;
+}
+
+.font-masterplan {
+  font-family: 'MASTERPLAN', sans-serif;
+  letter-spacing: 0.05em;
+}
+
+.font-display {
+  font-family: 'Syne', sans-serif;
+}
+
+.font-mono-code {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.font-thorne {
+  font-family: 'Thorne Normal', 'JetBrains Mono', monospace;
+  letter-spacing: 0.04em;
+}
+
+.font-ordner {
+  font-family: 'GF Ordner Normal', sans-serif;
+  letter-spacing: 0.08em;
+}
+
+.font-dosis {
+  font-family: 'Dosis', sans-serif;
+}
+
+.font-redgar {
+  font-family: 'Redgar', 'GF Ordner Normal', 'Syne', sans-serif;
+  letter-spacing: 0.035em;
+}
+
+.font-bahnschrift {
+  font-family: 'Bahnschrift', 'DIN Alternate', 'Barlow Semi Condensed', 'DIN 1451 Mittelschrift', 'DIN 1451', 'GF Ordner Normal', sans-serif;
+  letter-spacing: 0.025em;
+}
+
+.font-bahnschrift-condensed {
+  font-family: 'Bahnschrift Condensed', 'Bahnschrift', 'Barlow Condensed', 'DIN Alternate', 'DIN Condensed', 'GF Ordner Normal', sans-serif;
+  font-stretch: condensed;
+  letter-spacing: 0.035em;
+}
+
+@keyframes terminalBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.cursor-blink {
+  animation: terminalBlink 0.9s infinite;
+}
+
+/* Capa de protección de contenido y anti-copia */
+.unselectable,
+.protected-content {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.protected-media {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+  -webkit-touch-callout: none;
+}
+
+/* Resplandor neón magenta para el botón CTA */
+.neon-glow-magenta {
+  box-shadow: 0 0 15px rgba(224, 36, 195, 0.45), 0 0 30px rgba(255, 0, 127, 0.2);
+}
+
+.neon-glow-magenta:hover {
+  box-shadow: 0 0 22px rgba(224, 36, 195, 0.7), 0 0 45px rgba(255, 0, 127, 0.4);
+}
+
+/* Efecto Micro-Glitch cromático analógico en hover */
+@keyframes microGlitch {
+  0% {
+    transform: translate(0);
+    text-shadow: none;
+  }
+  20% {
+    transform: translate(-1.5px, 0.5px);
+    text-shadow: 1.5px 0 #00f0ff, -1.5px 0 #ff007f;
+  }
+  40% {
+    transform: translate(1.5px, -0.5px);
+    text-shadow: -1.5px 0 #00f0ff, 1.5px 0 #ff007f;
+  }
+  60% {
+    transform: translate(-0.5px, 0);
+    text-shadow: 1px 0 #00f0ff, -1px 0 #ff007f;
+  }
+  80% {
+    transform: translate(0.5px, -0.5px);
+    text-shadow: -0.5px 0 #00f0ff, 0.5px 0 #ff007f;
+  }
+  100% {
+    transform: translate(0);
+    text-shadow: 0 0 8px rgba(224, 36, 195, 0.6);
+  }
+}
+
+.group:hover .group-hover-glitch {
+  animation: microGlitch 0.24s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+/* Monitor CRT retro y marco analógico */
+.crt-screen {
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 0 35px rgba(0, 0, 0, 0.85), 0 0 20px rgba(255, 0, 127, 0.12);
+}
+
+.crt-scanlines::after {
+  content: "";
+  display: block;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(18, 16, 24, 0) 50%, rgba(0, 0, 0, 0.35) 50%),
+              linear-gradient(90deg, rgba(255, 0, 127, 0.03), rgba(0, 240, 255, 0.02), rgba(0, 0, 255, 0.02));
+  background-size: 100% 3px, 6px 100%;
+  pointer-events: none;
+  z-index: 20;
+}
+
+/* Efecto Láser Neón reactivo */
+.laser-glow {
+  box-shadow: 0 0 16px rgba(224, 36, 195, 0.35), inset 0 0 8px rgba(224, 36, 195, 0.15);
+}
+
+/* Efecto Marco Esquinas Cortadas (Cyber-Chassis Modular) */
+.cyber-chassis {
+  position: relative;
+  display: inline-block;
+  padding: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  clip-path: polygon(
+    6px 0%,
+    calc(100% - 6px) 0%,
+    100% 6px,
+    100% calc(100% - 6px),
+    calc(100% - 6px) 100%,
+    6px 100%,
+    0% calc(100% - 6px),
+    0% 6px
+  );
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cyber-chassis:hover,
+.cyber-chassis.is-active {
+  background: linear-gradient(135deg, #E024C3 0%, #FF007F 50%, #00f0ff 100%);
+  filter: drop-shadow(0 0 8px rgba(224, 36, 195, 0.55));
+}
+
+.cyber-chassis-inner {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  width: 100%;
+  height: 100%;
+  padding: 0.35rem 0.65rem;
+  background: #111118;
+  clip-path: polygon(
+    5px 0%,
+    calc(100% - 5px) 0%,
+    100% 5px,
+    100% calc(100% - 5px),
+    calc(100% - 5px) 100%,
+    5px 100%,
+    0% calc(100% - 5px),
+    0% 5px
+  );
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.cyber-chassis:hover .cyber-chassis-inner {
+  background: #191426;
+  color: #FFFFFF;
+}
+
+.cyber-chassis.is-active .cyber-chassis-inner {
+  background: #201328;
+  color: #FFFFFF;
+}
+
+/* Animación progresiva suave para manifiesto/biografía */
+@keyframes subtleFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-subtle-reveal-1 {
+  animation: subtleFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+}
+
+.animate-subtle-reveal-2 {
+  animation: subtleFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both;
+}
+
+.animate-subtle-reveal-3 {
+  animation: subtleFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.55s both;
+}
+
+.animate-subtle-reveal-4 {
+  animation: subtleFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.75s both;
+}
+
+/* Pulsación lenta para indicadores circulares */
+@keyframes pulseSlow {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.9);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulseSlow 2.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Animaciones de aparición gradual al hacer scroll (Scroll Fade-In) */
+@keyframes scrollFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-scroll {
+  animation: scrollFadeIn 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Animación de levitación suave desfasada para los botones */
+@keyframes subtleFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-subtle-float {
+  animation: subtleFloat 4s ease-in-out infinite;
+}
+
+/* Animación de desplazamiento continuo (Slide / Marquee ODS) */
+@keyframes odsMarquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-ods-slide {
+  display: flex;
+  width: max-content;
+  animation: odsMarquee 36s linear infinite;
+}
+
+.animate-ods-slide:hover {
+  animation-play-state: paused;
+}
+
+/* ========================================================= */
+/* TEXTURA GLITCH & EFECTOS DE TRANSMISIÓN ANALÓGICA         */
+/* ========================================================= */
+@keyframes glitchLineScan {
+  0% {
+    top: -10%;
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    top: 110%;
+    opacity: 0.7;
+  }
+}
+
+.glitch-scan-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 5%, rgba(0, 240, 255, 0.8) 30%, rgba(255, 0, 127, 0.8) 70%, transparent 95%);
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
+  pointer-events: none;
+  animation: glitchLineScan 3.5s linear infinite;
+  z-index: 15;
+}
+
+.glitch-texture-overlay {
+  background: 
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.25) 0px,
+      rgba(0, 0, 0, 0.25) 1px,
+      transparent 1px,
+      transparent 2px
+    ),
+    radial-gradient(
+      ellipse at center,
+      rgba(224, 36, 195, 0.05) 0%,
+      rgba(0, 240, 255, 0.03) 60%,
+      transparent 100%
+    );
+  pointer-events: none;
+}
+
+.glitch-border-chromatic {
+  box-shadow: 
+    -1.5px 0 0 rgba(0, 240, 255, 0.4),
+    1.5px 0 0 rgba(255, 0, 127, 0.4),
+    0 12px 40px rgba(0, 0, 0, 0.6);
+}
+
+
+
