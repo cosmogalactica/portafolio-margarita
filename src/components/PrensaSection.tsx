@@ -6,7 +6,7 @@
  * incorporando a cada título su propio slide interactivo de imágenes con estética glitch CRT.
  */
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import {
   Newspaper,
   ChevronLeft,
@@ -35,7 +35,7 @@ export const PRENSA_DATA: PrensaItem[] = [
   {
     id: 'prensa-la-cultural-2024',
     year: '2024',
-    badge: 'RADIO & MEDIOS',
+    badge: 'RADIO',
     badgeColor: '#FF007F',
     title: 'ENTREVISTA SONORARTEC LAB | TUTOR.I.A',
     highlightKeyword: 'ENTREVISTA SONORARTEC LAB | TUTOR.I.A',
@@ -47,7 +47,7 @@ export const PRENSA_DATA: PrensaItem[] = [
   {
     id: 'prensa-vanguardia-femenina-2020',
     year: '2020',
-    badge: 'REVISTA IMPRESA',
+    badge: 'REVISTA DIGITAL',
     badgeColor: '#E024C3',
     title: 'MARKETING DIGITAL PARA TRABAJADORAS ARTÍSTICAS Y CULTURALES DE LA COMUNA 10',
     highlightKeyword: 'MARKETING DIGITAL PARA TRABAJADORAS ARTÍSTICAS Y CULTURALES',
@@ -107,32 +107,78 @@ export const PRENSA_DATA: PrensaItem[] = [
   },
 ];
 
+export const LACULTURAL_GITHUB_IMAGES = [
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/lacultural/lacultural1.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/lacultural/lacultural2.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/lacultural/lacultural3.webp',
+];
+
+export const LACULTURAL_PROD_IMAGES = [
+  '/images/lacultural/lacultural1.webp',
+  '/images/lacultural/lacultural2.webp',
+  '/images/lacultural/lacultural3.webp',
+];
+
+export const TELEMEDELLIN_GITHUB_IMAGES = [
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/telemedellin/telemedellin1.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/telemedellin/telemedellin2.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/telemedellin/telemedellin3.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/telemedellin/telemedellin4.webp',
+];
+
+export const TELEMEDELLIN_PROD_IMAGES = [
+  '/images/telemedellin/telemedellin1.webp',
+  '/images/telemedellin/telemedellin2.webp',
+  '/images/telemedellin/telemedellin3.webp',
+  '/images/telemedellin/telemedellin4.webp',
+];
+
+export const LAUSTEREO_GITHUB_IMAGES = [
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/laustereo/laustereo1.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/laustereo/laustereo2.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/laustereo/laustereo3.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/laustereo/laustereo4.webp',
+];
+
+export const LAUSTEREO_PROD_IMAGES = [
+  '/images/laustereo/laustereo1.webp',
+  '/images/laustereo/laustereo2.webp',
+  '/images/laustereo/laustereo3.webp',
+  '/images/laustereo/laustereo4.webp',
+];
+
+export const ADN_GITHUB_IMAGES = [
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/adn.webp',
+];
+
+export const ADN_PROD_IMAGES = [
+  '/images/adn.webp',
+];
+
+export const VANGUARDIA_GITHUB_IMAGES = [
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/vanguardia.webp',
+];
+
+export const VANGUARDIA_PROD_IMAGES = [
+  '/images/vanguardia.webp',
+];
+
+export const LAARTIVISTA_GITHUB_IMAGES = [
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/laartivista.jpg',
+];
+
+export const LAARTIVISTA_PROD_IMAGES = [
+  '/images/laartivista.jpg',
+];
+
 // Colección curada de imágenes por defecto para cada artículo de prensa
 const PRENSA_DEFAULT_IMAGES: Record<string, string[]> = {
-  'prensa-la-cultural-2024': [
-    'https://images.unsplash.com/photo-1590602847861-f357a9332bbc?q=80&w=900&auto=format&fit=crop', // Cabina de radio micrófono
-    'https://images.unsplash.com/photo-1478737270239-2f02b77fc618?q=80&w=900&auto=format&fit=crop', // Mezcladora de audio
-  ],
-  'prensa-vanguardia-femenina-2020': [
-    'https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=900&auto=format&fit=crop', // Revista y publicación impresa
-    'https://images.unsplash.com/photo-1531497865144-0464ef8fb9a9?q=80&w=900&auto=format&fit=crop', // Red de creadoras culturales
-  ],
-  'prensa-telemedellin-2019': [
-    'https://images.unsplash.com/photo-1526470608268-f674ce90ebd4?q=80&w=900&auto=format&fit=crop', // Set de televisión y cámara
-    'https://images.unsplash.com/photo-1585829365295-ab7cd400c167?q=80&w=900&auto=format&fit=crop', // Pantalla de transmisión
-  ],
-  'prensa-la-u-stereo-2016': [
-    'https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=900&auto=format&fit=crop', // Estudio radial universitario
-    'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=900&auto=format&fit=crop', // Instrumentos acústicos y sonido
-  ],
-  'prensa-diario-adn-2015': [
-    'https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=900&auto=format&fit=crop', // Periódico impreso
-    'https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=900&auto=format&fit=crop', // Laboratorio creativo makerspace
-  ],
-  'prensa-diario-vanguardia-2013': [
-    'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=900&auto=format&fit=crop', // Circuito electrónico intervenido
-    'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=900&auto=format&fit=crop', // Circuitos y componentes sonoros
-  ],
+  'prensa-la-cultural-2024': LACULTURAL_GITHUB_IMAGES,
+  'prensa-vanguardia-femenina-2020': LAARTIVISTA_GITHUB_IMAGES,
+  'prensa-telemedellin-2019': TELEMEDELLIN_GITHUB_IMAGES,
+  'prensa-la-u-stereo-2016': LAUSTEREO_GITHUB_IMAGES,
+  'prensa-diario-adn-2015': ADN_GITHUB_IMAGES,
+  'prensa-diario-vanguardia-2013': VANGUARDIA_GITHUB_IMAGES,
 };
 
 const GENERIC_PRENSA_IMAGES = [
@@ -149,17 +195,125 @@ interface PrensaGlitchSlideProps {
 }
 
 const PrensaGlitchSlide: React.FC<PrensaGlitchSlideProps> = ({ prensaId, prensaTitle }) => {
+  const isExternalProduction = typeof window !== 'undefined' && 
+    !window.location.hostname.includes('run.app') && 
+    !window.location.hostname.includes('localhost') && 
+    !window.location.hostname.includes('127.0.0.1');
+
+  const defaultList = useMemo(() => {
+    if (prensaId === 'prensa-la-cultural-2024') {
+      return isExternalProduction ? LACULTURAL_PROD_IMAGES : LACULTURAL_GITHUB_IMAGES;
+    }
+    if (prensaId === 'prensa-vanguardia-femenina-2020') {
+      return isExternalProduction ? LAARTIVISTA_PROD_IMAGES : LAARTIVISTA_GITHUB_IMAGES;
+    }
+    if (prensaId === 'prensa-telemedellin-2019') {
+      return isExternalProduction ? TELEMEDELLIN_PROD_IMAGES : TELEMEDELLIN_GITHUB_IMAGES;
+    }
+    if (prensaId === 'prensa-la-u-stereo-2016') {
+      return isExternalProduction ? LAUSTEREO_PROD_IMAGES : LAUSTEREO_GITHUB_IMAGES;
+    }
+    if (prensaId === 'prensa-diario-adn-2015') {
+      return isExternalProduction ? ADN_PROD_IMAGES : ADN_GITHUB_IMAGES;
+    }
+    if (prensaId === 'prensa-diario-vanguardia-2013') {
+      return isExternalProduction ? VANGUARDIA_PROD_IMAGES : VANGUARDIA_GITHUB_IMAGES;
+    }
+    return PRENSA_DEFAULT_IMAGES[prensaId] || GENERIC_PRENSA_IMAGES;
+  }, [prensaId, isExternalProduction]);
+
+  const isVertical =
+    prensaId === 'prensa-diario-adn-2015' || prensaId === 'prensa-diario-vanguardia-2013';
+
   const [images, setImages] = useState<string[]>(() => {
     const saved = localStorage.getItem(`margarita_prensa_slide_${prensaId}`);
     if (saved) {
       try {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        if (
+          (prensaId === 'prensa-la-cultural-2024' ||
+            prensaId === 'prensa-vanguardia-femenina-2020' ||
+            prensaId === 'prensa-telemedellin-2019' ||
+            prensaId === 'prensa-la-u-stereo-2016' ||
+            prensaId === 'prensa-diario-adn-2015' ||
+            prensaId === 'prensa-diario-vanguardia-2013') &&
+          Array.isArray(parsed) &&
+          parsed.some((u: string) => typeof u === 'string' && u.includes('unsplash.com'))
+        ) {
+          localStorage.removeItem(`margarita_prensa_slide_${prensaId}`);
+          return defaultList;
+        }
+        return parsed;
       } catch {
-        return PRENSA_DEFAULT_IMAGES[prensaId] || GENERIC_PRENSA_IMAGES;
+        return defaultList;
       }
     }
-    return PRENSA_DEFAULT_IMAGES[prensaId] || GENERIC_PRENSA_IMAGES;
+    return defaultList;
   });
+
+  useEffect(() => {
+    if (prensaId === 'prensa-la-cultural-2024') {
+      try {
+        const saved = localStorage.getItem(`margarita_prensa_slide_${prensaId}`);
+        if (!saved || saved.includes('unsplash.com')) {
+          localStorage.removeItem(`margarita_prensa_slide_${prensaId}`);
+          setImages(isExternalProduction ? LACULTURAL_PROD_IMAGES : LACULTURAL_GITHUB_IMAGES);
+        }
+      } catch {
+        // no-op
+      }
+    } else if (prensaId === 'prensa-vanguardia-femenina-2020') {
+      try {
+        const saved = localStorage.getItem(`margarita_prensa_slide_${prensaId}`);
+        if (!saved || saved.includes('unsplash.com')) {
+          localStorage.removeItem(`margarita_prensa_slide_${prensaId}`);
+          setImages(isExternalProduction ? LAARTIVISTA_PROD_IMAGES : LAARTIVISTA_GITHUB_IMAGES);
+        }
+      } catch {
+        // no-op
+      }
+    } else if (prensaId === 'prensa-telemedellin-2019') {
+      try {
+        const saved = localStorage.getItem(`margarita_prensa_slide_${prensaId}`);
+        if (!saved || saved.includes('unsplash.com')) {
+          localStorage.removeItem(`margarita_prensa_slide_${prensaId}`);
+          setImages(isExternalProduction ? TELEMEDELLIN_PROD_IMAGES : TELEMEDELLIN_GITHUB_IMAGES);
+        }
+      } catch {
+        // no-op
+      }
+    } else if (prensaId === 'prensa-la-u-stereo-2016') {
+      try {
+        const saved = localStorage.getItem(`margarita_prensa_slide_${prensaId}`);
+        if (!saved || saved.includes('unsplash.com')) {
+          localStorage.removeItem(`margarita_prensa_slide_${prensaId}`);
+          setImages(isExternalProduction ? LAUSTEREO_PROD_IMAGES : LAUSTEREO_GITHUB_IMAGES);
+        }
+      } catch {
+        // no-op
+      }
+    } else if (prensaId === 'prensa-diario-adn-2015') {
+      try {
+        const saved = localStorage.getItem(`margarita_prensa_slide_${prensaId}`);
+        if (!saved || saved.includes('unsplash.com')) {
+          localStorage.removeItem(`margarita_prensa_slide_${prensaId}`);
+          setImages(isExternalProduction ? ADN_PROD_IMAGES : ADN_GITHUB_IMAGES);
+        }
+      } catch {
+        // no-op
+      }
+    } else if (prensaId === 'prensa-diario-vanguardia-2013') {
+      try {
+        const saved = localStorage.getItem(`margarita_prensa_slide_${prensaId}`);
+        if (!saved || saved.includes('unsplash.com')) {
+          localStorage.removeItem(`margarita_prensa_slide_${prensaId}`);
+          setImages(isExternalProduction ? VANGUARDIA_PROD_IMAGES : VANGUARDIA_GITHUB_IMAGES);
+        }
+      } catch {
+        // no-op
+      }
+    }
+  }, [prensaId, isExternalProduction]);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showAddModal, setShowAddModal] = useState(false);
@@ -189,14 +343,41 @@ const PrensaGlitchSlide: React.FC<PrensaGlitchSlideProps> = ({ prensaId, prensaT
 
   const handleReset = (e: React.MouseEvent) => {
     e.stopPropagation();
-    const defaults = PRENSA_DEFAULT_IMAGES[prensaId] || GENERIC_PRENSA_IMAGES;
+    let defaults = PRENSA_DEFAULT_IMAGES[prensaId] || GENERIC_PRENSA_IMAGES;
+    if (prensaId === 'prensa-la-cultural-2024') {
+      defaults = isExternalProduction ? LACULTURAL_PROD_IMAGES : LACULTURAL_GITHUB_IMAGES;
+    } else if (prensaId === 'prensa-vanguardia-femenina-2020') {
+      defaults = isExternalProduction ? LAARTIVISTA_PROD_IMAGES : LAARTIVISTA_GITHUB_IMAGES;
+    } else if (prensaId === 'prensa-telemedellin-2019') {
+      defaults = isExternalProduction ? TELEMEDELLIN_PROD_IMAGES : TELEMEDELLIN_GITHUB_IMAGES;
+    } else if (prensaId === 'prensa-la-u-stereo-2016') {
+      defaults = isExternalProduction ? LAUSTEREO_PROD_IMAGES : LAUSTEREO_GITHUB_IMAGES;
+    } else if (prensaId === 'prensa-diario-adn-2015') {
+      defaults = isExternalProduction ? ADN_PROD_IMAGES : ADN_GITHUB_IMAGES;
+    } else if (prensaId === 'prensa-diario-vanguardia-2013') {
+      defaults = isExternalProduction ? VANGUARDIA_PROD_IMAGES : VANGUARDIA_GITHUB_IMAGES;
+    }
     setImages(defaults);
     localStorage.removeItem(`margarita_prensa_slide_${prensaId}`);
     setCurrentIndex(0);
   };
 
   return (
-    <div className="relative w-full aspect-[16/9] sm:aspect-[16/10] rounded-xl overflow-hidden bg-[#0A0A12] border border-[#26263A] group/slide my-3.5 shadow-md">
+    <div
+      onContextMenu={(e) => e.preventDefault()}
+      onDragStart={(e) => e.preventDefault()}
+      style={
+        {
+          userSelect: 'none',
+          WebkitUserDrag: 'none',
+        } as React.CSSProperties
+      }
+      className={`relative w-full rounded-xl overflow-hidden bg-[#0A0A12] border border-[#26263A] group/slide my-3.5 shadow-md select-none flex items-center justify-center ${
+        isVertical
+          ? 'aspect-[3/4] sm:aspect-[4/5] max-h-[500px] sm:max-h-[560px] bg-[#07070D]'
+          : 'aspect-[16/9] sm:aspect-[16/10]'
+      }`}
+    >
       {/* Capas de textura Glitch y escaneo CRT sutil */}
       <div className="absolute inset-0 glitch-texture-overlay z-10 pointer-events-none" />
 
@@ -205,9 +386,74 @@ const PrensaGlitchSlide: React.FC<PrensaGlitchSlideProps> = ({ prensaId, prensaT
           <img
             src={images[currentIndex]}
             alt={`${prensaTitle} (${currentIndex + 1})`}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover/slide:scale-105 pointer-events-none select-none"
+            className={`w-full h-full transition-transform duration-500 pointer-events-none select-none ${
+              isVertical
+                ? 'object-contain group-hover/slide:scale-[1.02] p-1.5'
+                : 'object-cover group-hover/slide:scale-105'
+            }`}
             loading="lazy"
             draggable={false}
+            onContextMenu={(e) => e.preventDefault()}
+            onDragStart={(e) => e.preventDefault()}
+            style={
+              {
+                userSelect: 'none',
+                WebkitUserDrag: 'none',
+              } as React.CSSProperties
+            }
+            onError={(e) => {
+              const target = e.currentTarget;
+              const currentSrc = target.src;
+              if (currentSrc.includes('lacultural')) {
+                const match = currentSrc.match(/lacultural\d+\.webp/);
+                if (match) {
+                  const filename = match[0];
+                  if (currentSrc.includes('raw.githubusercontent.com')) {
+                    target.src = `/images/lacultural/${filename}`;
+                  } else {
+                    target.src = `https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/lacultural/${filename}`;
+                  }
+                }
+              } else if (currentSrc.includes('telemedellin')) {
+                const match = currentSrc.match(/telemedellin\d+\.webp/);
+                if (match) {
+                  const filename = match[0];
+                  if (currentSrc.includes('raw.githubusercontent.com')) {
+                    target.src = `/images/telemedellin/${filename}`;
+                  } else {
+                    target.src = `https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/telemedellin/${filename}`;
+                  }
+                }
+              } else if (currentSrc.includes('laustereo')) {
+                const match = currentSrc.match(/laustereo\d+\.webp/);
+                if (match) {
+                  const filename = match[0];
+                  if (currentSrc.includes('raw.githubusercontent.com')) {
+                    target.src = `/images/laustereo/${filename}`;
+                  } else {
+                    target.src = `https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/laustereo/${filename}`;
+                  }
+                }
+              } else if (currentSrc.includes('adn.webp')) {
+                if (currentSrc.includes('raw.githubusercontent.com')) {
+                  target.src = '/images/adn.webp';
+                } else {
+                  target.src = 'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/adn.webp';
+                }
+              } else if (currentSrc.includes('vanguardia.webp')) {
+                if (currentSrc.includes('raw.githubusercontent.com')) {
+                  target.src = '/images/vanguardia.webp';
+                } else {
+                  target.src = 'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/vanguardia.webp';
+                }
+              } else if (currentSrc.includes('laartivista.jpg')) {
+                if (currentSrc.includes('raw.githubusercontent.com')) {
+                  target.src = '/images/laartivista.jpg';
+                } else {
+                  target.src = 'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/laartivista.jpg';
+                }
+              }
+            }}
           />
 
           {/* Sombra gradual inferior */}
@@ -343,21 +589,14 @@ export const PrensaSection: React.FC = () => {
       <div className="max-w-7xl mx-auto">
         {/* ENCABEZADO DE SECCIÓN CON ESTILO RETRO-TERMINAL */}
         <ScrollReveal direction="up" distance="sm">
-          <div className="mb-10 sm:mb-14">
+          <div className="mb-8 sm:mb-10">
             <button
               type="button"
-              className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#FF007F]/10 hover:bg-[#FF007F]/20 border border-[#FF007F]/30 hover:border-[#FF007F] text-[#FF007F] text-[15px] sm:text-base font-bahnschrift-condensed font-bold uppercase tracking-widest transition-all duration-300 cursor-pointer group mb-3"
+              className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-[#FF007F]/10 hover:bg-[#FF007F]/20 border border-[#FF007F]/30 hover:border-[#FF007F] text-[#FF007F] text-[19px] sm:text-[20px] font-bahnschrift-condensed font-bold uppercase tracking-widest transition-all duration-300 cursor-pointer group"
             >
-              <Newspaper className="w-4 h-4 text-[#FF007F]" />
+              <Newspaper className="w-5 h-5 text-[#FF007F]" />
               <span>PRENSA</span>
             </button>
-            <h2 className="font-bahnschrift-condensed font-bold text-2xl sm:text-3xl text-white tracking-wider uppercase">
-              Apariciones en Prensa & Medios de Comunicación
-            </h2>
-            <p className="text-base sm:text-lg text-[#9A9AB4] mt-2 max-w-3xl font-rajdhani font-semibold tracking-wide">
-              Entrevistas en televisión y radio, reportajes en diarios de circulación y publicaciones
-              editoriales sobre la trayectoria de Margarita y Sonorartec Lab.
-            </p>
           </div>
         </ScrollReveal>
 
@@ -365,17 +604,6 @@ export const PrensaSection: React.FC = () => {
         <ScrollReveal direction="up" distance="md" delay={100} className="w-full">
           <div className="w-full p-6 sm:p-10 rounded-2xl bg-[#14141E] border border-[#252538] font-dosis relative overflow-hidden">
             <div className="relative z-10">
-              {/* Encabezado editorial interno */}
-              <div className="flex items-center justify-between pb-4 mb-6 border-b border-[#232336]">
-                <div className="flex items-center gap-2 font-dosis text-sm text-[#FF007F] uppercase tracking-wider font-semibold">
-                  <span className="w-2 h-2 rounded-full bg-[#FF007F]" />
-                  <span>REGISTROS DE PRENSA, RADIO & TELEVISIÓN</span>
-                </div>
-                <span className="font-mono-code text-[11px] text-[#8E8EA8]">
-                  6 COBERTURAS ARCHIVADAS
-                </span>
-              </div>
-
               {/* Grid editorial de 2 columnas de prensa con sus slides glitch */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
                 {PRENSA_DATA.map((item) => (
@@ -418,13 +646,6 @@ export const PrensaSection: React.FC = () => {
                           return cleanTitle;
                         })()}
                       </h3>
-
-                      {/* Descripción de la cobertura */}
-                      {item.description && (
-                        <p className="font-rajdhani font-medium text-xs sm:text-[14px] text-[#A6A6C0] leading-relaxed mb-2.5 whitespace-pre-line">
-                          {item.description}
-                        </p>
-                      )}
 
                       {/* Medio, Colectivo / Organización y Ubicación */}
                       <div className="flex flex-wrap items-center gap-x-2 font-dosis text-sm text-[#9494B0]">

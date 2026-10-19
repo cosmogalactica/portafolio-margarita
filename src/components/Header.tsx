@@ -19,7 +19,7 @@ interface NavItem {
   href: string;
   isExternal?: boolean;
   hasDropdown?: boolean;
-  children?: { id: string; label: string; href: string; badge?: string }[];
+  children?: { id: string; label: string; href: string; badge?: string; isExternal?: boolean }[];
 }
 
 export const NAV_ITEMS: NavItem[] = [
@@ -29,8 +29,16 @@ export const NAV_ITEMS: NavItem[] = [
     href: '#noticias',
     hasDropdown: true,
     children: [
-      { id: 'noticias-todas', label: 'Todas las Noticias', href: '#noticias' },
-      { id: 'darpana', label: 'DARPANA', href: '#darpana', badge: 'Especial' },
+      {
+        id: 'darpana-instagram',
+        label: 'Darpana en Instagram',
+        href: '#darpana-instagram',
+      },
+      {
+        id: 'darpana-lanzamiento',
+        label: 'Darpana Lanzamiento',
+        href: '#darpana',
+      },
     ],
   },
   { id: 'soluciones', label: 'SOLUCIONES', href: '#soluciones' },
@@ -117,6 +125,38 @@ export const Header: React.FC<HeaderProps> = ({ onCtaClick, activeSection = '' }
     }
   };
 
+  const handleNoticiasClick = (e?: React.MouseEvent) => {
+    if (e) {
+      e.preventDefault();
+    }
+    setIsNoticiasOpen(false);
+    setIsMobileMenuOpen(false);
+    const target = document.getElementById('noticias') || document.getElementById('darpana');
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+      window.history.pushState(null, '', '#noticias');
+    } else {
+      window.location.hash = '#noticias';
+    }
+  };
+
+  const handleSubItemClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, isExternal?: boolean) => {
+    setIsNoticiasOpen(false);
+    setIsMobileMenuOpen(false);
+    if (isExternal || href.startsWith('http')) {
+      return;
+    }
+    e.preventDefault();
+    const id = href.replace('#', '');
+    const target = document.getElementById(id) || document.getElementById('noticias');
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+      window.history.pushState(null, '', href);
+    } else {
+      window.location.hash = href;
+    }
+  };
+
   return (
     <header
       role="banner"
@@ -147,8 +187,8 @@ export const Header: React.FC<HeaderProps> = ({ onCtaClick, activeSection = '' }
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FF007F] shadow-[0_0_8px_#FF007F]" />
               </span>
 
-              {/* Nombre de marca con tipografía MASTERPLAN y micro-glitch cromático */}
-              <span className="font-masterplan font-normal text-[19px] sm:text-[21px] tracking-wider text-[#F4F4F8] group-hover:text-white group-hover-glitch transition-colors duration-200 uppercase inline-block">
+              {/* Nombre de marca con tipografía Reprobate y tamaño aumentado en 2 puntos */}
+              <span className="font-reprobate font-normal text-[21px] sm:text-[23px] tracking-wider text-[#F4F4F8] group-hover:text-white group-hover-glitch transition-colors duration-200 uppercase inline-block">
                 MARGARITA
               </span>
             </a>
@@ -166,7 +206,7 @@ export const Header: React.FC<HeaderProps> = ({ onCtaClick, activeSection = '' }
                   <div key={item.id} className="relative" ref={dropdownRef}>
                     <button
                       type="button"
-                      onClick={() => setIsNoticiasOpen(!isNoticiasOpen)}
+                      onClick={handleNoticiasClick}
                       onMouseEnter={() => setIsNoticiasOpen(true)}
                       aria-expanded={isNoticiasOpen}
                       aria-haspopup="true"
@@ -182,24 +222,20 @@ export const Header: React.FC<HeaderProps> = ({ onCtaClick, activeSection = '' }
                       />
                     </button>
 
-                    {/* Submenú desplegable para NOTICIAS (incluye DARPANA) */}
+                    {/* Submenú desplegable para NOTICIAS (Darpana en Instagram y Darpana Lanzamiento) */}
                     {isNoticiasOpen && (
                       <div
                         onMouseLeave={() => setIsNoticiasOpen(false)}
                         className="absolute left-0 mt-1.5 w-56 py-1.5 bg-[#101018]/95 border border-[#E024C3]/30 rounded-md shadow-[0_10px_35px_rgba(0,0,0,0.8),0_0_15px_rgba(224,36,195,0.15)] backdrop-blur-2xl z-50 animate-in fade-in zoom-in-95 duration-150"
                       >
-                        <div className="px-3 py-1 border-b border-[#242436] mb-1 flex items-center justify-between">
-                          <span className="text-[10px] tracking-widest uppercase text-[#8E8EA8] font-mono-code">
-                            Bitácora & Difusión
-                          </span>
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#E024C3] animate-pulse shadow-[0_0_6px_#E024C3]" />
-                        </div>
                         {item.children?.map((subItem) => (
                           <a
                             key={subItem.id}
                             href={subItem.href}
-                            onClick={() => setIsNoticiasOpen(false)}
-                            className="flex items-center justify-between px-3 py-2 text-xs text-[#C5C5D8] hover:text-white hover:bg-[#E024C3]/15 transition-all group"
+                            target={subItem.isExternal || subItem.href.startsWith('http') ? '_blank' : undefined}
+                            rel={subItem.isExternal || subItem.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                            onClick={(e) => handleSubItemClick(e, subItem.href, subItem.isExternal)}
+                            className="flex items-center justify-between px-3 py-2 text-xs text-[#C5C5D8] hover:text-white hover:bg-[#E024C3]/15 transition-all group cursor-pointer"
                           >
                             <span className="font-mono-code flex items-center gap-1.5 group-hover-glitch">
                               <span className="text-[#E024C3] opacity-0 group-hover:opacity-100 transition-opacity font-bold">›</span>
@@ -241,37 +277,17 @@ export const Header: React.FC<HeaderProps> = ({ onCtaClick, activeSection = '' }
             aria-label="Navegación horizontal compacta"
             className="hidden md:flex xl:hidden items-center gap-1.5 overflow-x-auto max-w-[70vw] scrollbar-none py-1 px-1 font-thorne text-[13px] text-[#A4A4BA]"
           >
-            {/* Noticias con Dropdown */}
+            {/* Botón Noticias / Darpana */}
             <div className="relative shrink-0" ref={dropdownRef}>
               <button
                 type="button"
-                onClick={() => setIsNoticiasOpen(!isNoticiasOpen)}
+                onClick={handleNoticiasClick}
                 className={`group flex items-center gap-1 px-2.5 py-1 text-[#A4A4BA] hover:text-white transition-colors cursor-pointer ${
-                  isNoticiasOpen ? 'text-[#FF007F]' : ''
+                  activeSection === 'noticias' ? 'text-[#FF007F]' : ''
                 }`}
               >
                 <span>NOTICIAS</span>
-                <ChevronDown className={`w-3 h-3 transition-transform ${isNoticiasOpen ? 'rotate-180 text-[#FF007F]' : 'group-hover:text-[#FF007F]'}`} />
               </button>
-              {isNoticiasOpen && (
-                <div className="absolute left-0 mt-1 w-48 py-1.5 bg-[#12121A]/95 border border-[#E024C3]/30 rounded shadow-[0_10px_30px_rgba(0,0,0,0.8),0_0_15px_rgba(224,36,195,0.15)] backdrop-blur-xl z-50">
-                  <a
-                    href="#noticias"
-                    onClick={() => setIsNoticiasOpen(false)}
-                    className="block px-3 py-1.5 text-xs text-[#C5C5D8] hover:text-white hover:bg-[#E024C3]/15 transition-colors"
-                  >
-                    Todas las Noticias
-                  </a>
-                  <a
-                    href="#darpana"
-                    onClick={() => setIsNoticiasOpen(false)}
-                    className="flex items-center justify-between px-3 py-1.5 text-xs text-[#FF007F] hover:bg-[#E024C3]/15 transition-colors"
-                  >
-                    <span>DARPANA</span>
-                    <span className="text-[9px] border border-[#FF007F]/40 bg-[#FF007F]/10 px-1 rounded shadow-[0_0_6px_rgba(255,0,127,0.3)]">Especial</span>
-                  </a>
-                </div>
-              )}
             </div>
 
             {NAV_ITEMS.filter((i) => i.id !== 'noticias').map((item) => (
@@ -339,16 +355,23 @@ export const Header: React.FC<HeaderProps> = ({ onCtaClick, activeSection = '' }
               {/* Rama de submenú DARPANA */}
               <div className="mt-2 pl-3 border-l-2 border-[#E024C3]/40 space-y-1">
                 <a
-                  href="#darpana"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center justify-between py-1.5 text-xs text-[#E024C3] hover:text-[#FF007F] font-medium"
+                  href="#darpana-instagram"
+                  onClick={(e) => handleSubItemClick(e, '#darpana-instagram')}
+                  className="flex items-center justify-between py-1.5 text-xs text-[#C5C5D8] hover:text-[#00f0ff] font-medium"
                 >
-                  <span className="flex items-center gap-1.5">
+                  <span className="flex items-center gap-1.5 font-mono-code">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#E024C3]" />
-                    DARPANA
+                    Darpana en Instagram
                   </span>
-                  <span className="text-[10px] px-1.5 py-0.5 bg-[#FF007F]/15 border border-[#FF007F]/30 text-[#FF007F] rounded">
-                    Submenú Especial
+                </a>
+                <a
+                  href="#darpana"
+                  onClick={(e) => handleSubItemClick(e, '#darpana')}
+                  className="flex items-center justify-between py-1.5 text-xs text-[#C5C5D8] hover:text-[#00f0ff] font-medium"
+                >
+                  <span className="flex items-center gap-1.5 font-mono-code">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#00f0ff]" />
+                    Darpana Lanzamiento
                   </span>
                 </a>
               </div>

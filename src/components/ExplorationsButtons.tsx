@@ -2,63 +2,56 @@
  * @file ExplorationsButtons.tsx
  * @description Slide continuo tipo ticker de exploraciones, proyectos y obras,
  * con la misma estructura y estética fluida que el slide de ODS de la sección de Soluciones.
- * Sin efectos flotantes ni brillos pesados, con navegación suave y botón para pausar/reanudar.
+ * Enlaces directos a las plataformas y obras oficiales (YouTube y Sonorartec Lab).
  */
 
 import React, { useState } from 'react';
-import { Play, Pause, Sparkles } from 'lucide-react';
+import { Play, Pause, ExternalLink } from 'lucide-react';
 
 export interface ProjectButtonItem {
   id: string;
   label: string;
   subtitle?: string;
   accentColor: string;
-  href?: string;
+  href: string;
 }
 
 export const EXPLORATION_BUTTONS: ProjectButtonItem[] = [
   {
-    id: 'darpana',
-    label: 'DARPANA',
-    accentColor: '#FF007F',
-    href: '#publicaciones',
-  },
-  {
     id: 'audiografemas',
     label: 'AUDIOGRAFEMAS',
     accentColor: '#00f0ff',
-    href: '#publicaciones',
+    href: 'https://www.youtube.com/playlist?list=PL5CrXSrTboId96fV9uE3dLR8ZltC4iU3B',
   },
   {
-    id: 'cine-y-tecnologia',
-    label: 'CINE Y TECNOLOGÍA',
-    accentColor: '#E024C3',
-    href: '#talleres',
-  },
-  {
-    id: 'ovni-fancine',
-    label: 'OVNI FANCINE',
-    accentColor: '#00f0ff',
-    href: '#publicaciones',
+    id: 'darpana',
+    label: 'DARPANA',
+    accentColor: '#FF007F',
+    href: 'https://sonorarteclab.com/darpana/',
   },
   {
     id: 'mi-diario-cinefilo',
     label: 'MI DIARIO CINÉFILO',
     accentColor: '#FF007F',
-    href: '#publicaciones',
+    href: 'https://sonorarteclab.com/mi-diario-cinefilo/',
+  },
+  {
+    id: 'cine-y-tecnologia',
+    label: 'CINE Y TECNOLOGÍA',
+    accentColor: '#E024C3',
+    href: 'https://www.youtube.com/playlist?list=PLe85FU8Lv9rAwRTZ02pjK_pORLSEK4X0f',
+  },
+  {
+    id: 'ovni-fancine',
+    label: 'OVNI FANCINE',
+    accentColor: '#00f0ff',
+    href: 'https://sonorarteclab.com/ovni-fancine/',
   },
   {
     id: 'ovni-cinemancia',
     label: 'OVNI CINEMANCIA',
     accentColor: '#E024C3',
-    href: '#exposiciones',
-  },
-  {
-    id: 'vibraciones-salvajes',
-    label: 'LAS VIBRACIONES SALVAJES',
-    subtitle: 'ruido y salud mental',
-    accentColor: '#00f0ff',
-    href: '#conversatorios',
+    href: 'https://sonorarteclab.com/ovni-cinemancia/',
   },
 ];
 
@@ -71,17 +64,16 @@ export const ExplorationsButtons: React.FC<ExplorationsButtonsProps> = ({ onButt
 
   const handleClick = (e: React.MouseEvent, item: ProjectButtonItem) => {
     if (onButtonClick) {
-      e.preventDefault();
       onButtonClick(item.id);
     }
   };
 
   return (
     <div className="mt-8 sm:mt-12 pt-6 border-t border-[#222234]">
-      {/* Barra de control minimalista superior con etiqueta y botón de pausa/reanudación */}
-      <div className="flex items-center justify-between gap-4 mb-3 px-1">
-        <div className="flex items-center gap-2 font-bahnschrift-condensed text-xs sm:text-sm text-[#00f0ff] uppercase tracking-wider font-semibold">
-          <Sparkles className="w-3.5 h-3.5 text-[#00f0ff]" />
+      {/* Barra de control superior idéntica al div de PERFIL */}
+      <div className="flex items-center justify-between gap-4 mb-4 px-1">
+        <div className="flex items-center gap-2 font-bahnschrift-condensed text-sm text-[#00f0ff] uppercase tracking-widest font-bold">
+          <span className="w-2 h-2 rounded-full bg-[#00f0ff] animate-pulse-slow shadow-[0_0_8px_#00f0ff]" />
           <span>EXPLORACIONES & PROYECTOS</span>
         </div>
 
@@ -124,27 +116,25 @@ export const ExplorationsButtons: React.FC<ExplorationsButtonsProps> = ({ onButt
           {EXPLORATION_BUTTONS.map((item) => (
             <div key={`exp-1-${item.id}`} className="inline-flex items-center">
               <a
-                href={item.href || `#${item.id}`}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={(e) => handleClick(e, item)}
-                className="inline-flex items-center gap-2 group/item px-2 py-1 rounded transition-colors hover:bg-white/5 cursor-pointer"
+                className="inline-flex items-center gap-2 group/item px-2.5 py-1 rounded transition-colors hover:bg-white/5 cursor-pointer"
+                title={`Abrir ${item.label}`}
               >
-                {/* Punto de acento sutil sin resplandor excesivo */}
+                {/* Punto de acento sutil */}
                 <span
                   className="w-1.5 h-1.5 rounded-full shrink-0"
                   style={{ backgroundColor: item.accentColor }}
                 />
 
                 {/* Título */}
-                <span className="font-bahnschrift-condensed font-medium text-[13px] sm:text-[15px] text-[#EAEAF4] group-hover/item:text-white tracking-wide uppercase transition-colors">
+                <span className="font-bahnschrift-condensed font-medium text-[16px] sm:text-[18px] text-[#EAEAF4] group-hover/item:text-[#00f0ff] tracking-wide uppercase transition-colors">
                   {item.label}
                 </span>
 
-                {/* Subtítulo si aplica */}
-                {item.subtitle && (
-                  <span className="font-rajdhani font-semibold text-xs text-[#8E8EA8] tracking-normal lowercase group-hover/item:text-[#B0B0C8]">
-                    ({item.subtitle})
-                  </span>
-                )}
+                <ExternalLink className="w-3 h-3 text-[#7E7E98] group-hover/item:text-white transition-colors" />
               </a>
 
               {/* Separador vertical "|" */}
@@ -161,27 +151,25 @@ export const ExplorationsButtons: React.FC<ExplorationsButtonsProps> = ({ onButt
           {EXPLORATION_BUTTONS.map((item) => (
             <div key={`exp-2-${item.id}`} className="inline-flex items-center">
               <a
-                href={item.href || `#${item.id}`}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={(e) => handleClick(e, item)}
-                className="inline-flex items-center gap-2 group/item px-2 py-1 rounded transition-colors hover:bg-white/5 cursor-pointer"
+                className="inline-flex items-center gap-2 group/item px-2.5 py-1 rounded transition-colors hover:bg-white/5 cursor-pointer"
+                title={`Abrir ${item.label}`}
               >
-                {/* Punto de acento sutil sin resplandor excesivo */}
+                {/* Punto de acento sutil */}
                 <span
                   className="w-1.5 h-1.5 rounded-full shrink-0"
                   style={{ backgroundColor: item.accentColor }}
                 />
 
                 {/* Título */}
-                <span className="font-bahnschrift-condensed font-medium text-[13px] sm:text-[15px] text-[#EAEAF4] group-hover/item:text-white tracking-wide uppercase transition-colors">
+                <span className="font-bahnschrift-condensed font-medium text-[16px] sm:text-[18px] text-[#EAEAF4] group-hover/item:text-[#00f0ff] tracking-wide uppercase transition-colors">
                   {item.label}
                 </span>
 
-                {/* Subtítulo si aplica */}
-                {item.subtitle && (
-                  <span className="font-rajdhani font-semibold text-xs text-[#8E8EA8] tracking-normal lowercase group-hover/item:text-[#B0B0C8]">
-                    ({item.subtitle})
-                  </span>
-                )}
+                <ExternalLink className="w-3 h-3 text-[#7E7E98] group-hover/item:text-white transition-colors" />
               </a>
 
               {/* Separador vertical "|" */}

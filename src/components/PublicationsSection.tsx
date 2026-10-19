@@ -6,15 +6,21 @@
  * para el resto de títulos.
  */
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   BookOpen,
   ChevronLeft,
   ChevronRight,
   Image as ImageIcon,
-  Edit3,
+  ExternalLink,
 } from 'lucide-react';
 import { ScrollReveal } from './ScrollReveal';
+import {
+  DarpanaSlide,
+  DarpanaVideoSlide,
+  DARPANA_GITHUB_IMAGES,
+  DARPANA_PROD_IMAGES
+} from './NewsSection';
 
 export interface PublicationItem {
   id: string;
@@ -41,35 +47,33 @@ export const PUBLICATIONS_DATA: PublicationItem[] = [
     title: 'DARPANA',
     highlightKeyword: 'DARPANA',
     work: 'Obra ganadora: DARPANA',
-    description: 'Beca de creación literaria ganadora para la producción de una obra inédita en formato impreso y digital de cuento para participantes con enfoque diferencial.',
+    description: 'Proyecto de Literatura Multicanal que expande el libro físico hacia un ecosistema digital | Beca de creación literaria ganadora para la producción de una obra inédita en formato impreso y digital de cuento para participantes con enfoque diferencial.',
     publisher: 'IMCT',
     location: 'Bucaramanga, Colombia, 2026',
   },
   {
     id: 'pub-ovni-fancine-2023',
     year: '2023',
-    badge: 'FANZINE INDEPENDIENTE',
+    badge: 'FANZINE',
     badgeColor: '#E024C3',
     title: 'OVNI FANCINE',
     highlightKeyword: 'OVNI FANCINE',
-    description: `OVNI fanCine es una publicación y espacio virtual de circulación independiente donde amplifico textos y fotogramas de películas que me deslumbraron y quiero compartir.
+    description: `OVNI fanCine es una publicación y espacio virtual de circulación independiente donde amplifico textos y fotogramas de películas increíbles que quiero compartir | Concepto donde relaciono la Cinematografía con otras áreas del conocimiento y de la experiencia humana como:
 
-Concepto donde relaciono la Cinematografía con otras áreas del conocimiento y de la experiencia humana como:
-
-Literatura-Poesía
-Sonido-Música
-Tecnología
-Artes Plásticas
-Naturaleza y Ecología del Consumo
-Adicciones
-Vejez-Enfermedad
-Mundo Interior
-Feminismo-Género
-Afectividad Contemporánea
-Diversidad Funcional`,
+Cine & Literatura-Poesía
+Cine & Sonido-Música
+Cine & Tecnología
+Cine & Artes Plásticas
+Cine & Naturaleza y Ecología del Consumo
+Cine & Adicciones
+Cine & Vejez-Enfermedad
+Cine & Mundo Interior
+Cine & Feminismo-Género
+Cine & Afectividad Contemporánea
+Cine & Diversidad Funcional`,
     publisher: 'Publicación independiente impresa en mi casa',
     location: 'Bucaramanga 2023',
-    videoUrl: 'https://www.youtube.com/watch?v=ScMzIvxBSi4',
+    videoUrl: 'https://www.youtube.com/watch?v=4uRBn2mVOAs',
   },
   {
     id: 'pub-diario-cinefilo-2022',
@@ -78,9 +82,9 @@ Diversidad Funcional`,
     badgeColor: '#FF007F',
     title: 'MI DIARIO CINÉFILO',
     highlightKeyword: 'MI DIARIO CINÉFILO',
-    description: `Bitácora cinematográfica física y digital con 6 experiencias diseñadas para recordar y conversar acerca de tus pelis favs.
+    description: `Bitácora cinéfila en formato digital con 6 experiencias diseñadas para recordar, compartir y conversar sobre tus películas favoritas.
 
-Dinámicas pensadas para momentos de introspección o para detonar el diálogo con amigos y familia. Cierra la pantalla y activa la conversación !`,
+Dinámicas pensadas para momentos de introspección o para detonar el diálogo con amigos y familia. ¡ Cierra la pantalla y activa la conversación !`,
     publisher: 'Publicación Independiente',
     location: 'Bucaramanga 2022',
   },
@@ -91,9 +95,7 @@ Dinámicas pensadas para momentos de introspección o para detonar el diálogo c
     badgeColor: '#E024C3',
     title: 'LA VOZ INVISIBLE',
     highlightKeyword: 'LA VOZ INVISIBLE',
-    description: `Becaria Ganadora del Programa Nacional de Estímulos Relato de persona con discapacidad auditiva
-
-Texto: La Voz Invisible Ministerio de Cultura   Bogotá, 2021`,
+    description: 'Relato testimonial y literario reconocido con la beca del Programa Nacional de Estímulos del Ministerio de Cultura (2021). Una propuesta introspectiva que aborda las realidades, sensaciones y formas de habitar el mundo desde la discapacidad auditiva.',
     publisher: 'Ministerio de Cultura',
     location: 'Bogotá, 2021',
   },
@@ -107,12 +109,13 @@ Texto: La Voz Invisible Ministerio de Cultura   Bogotá, 2021`,
     description: 'Historias sono-digitales donde utilizo la música como excusa para compartir lo que escribo. Algunas personas le llaman canciones, yo les llame: Audiografemas.',
     publisher: 'YOUTUBE',
     location: 'Bucaramanga, 2017',
-    videoUrl: 'https://www.youtube.com/watch?v=ScMzIvxBSi4',
+    link: 'https://www.youtube.com/watch?v=90TqY9uL-Mo&list=PL5CrXSrTboId96fV9uE3dLR8ZltC4iU3B&index=4',
+    videoUrl: 'https://www.youtube.com/watch?v=90TqY9uL-Mo&list=PL5CrXSrTboId96fV9uE3dLR8ZltC4iU3B&index=4',
   },
   {
     id: 'pub-synthetizadores-sonidos-marcianos-2017',
     year: '2017',
-    badge: 'TEXTO SONORO',
+    badge: 'FANZINE',
     badgeColor: '#FF007F',
     title: 'HABLEMOS DE SYNTHETIZADORES Y SONIDOS MARCIANOS',
     highlightKeyword: 'HABLEMOS DE SYNTHETIZADORES Y SONIDOS MARCIANOS',
@@ -133,32 +136,49 @@ Texto: La Voz Invisible Ministerio de Cultura   Bogotá, 2021`,
   },
 ];
 
+export const BMANGA_ESCRIBE_CUENTA_GITHUB_IMAGES = [
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/bmangaescribeycuenta/bmangaescribeycuenta1.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/bmangaescribeycuenta/bmangaescribeycuenta2.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/bmangaescribeycuenta/bmangaescribeycuenta3.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/bmangaescribeycuenta/bmangaescribeycuenta4.webp',
+];
+
+export const BMANGA_ESCRIBE_CUENTA_PROD_IMAGES = [
+  '/images/bmangaescribeycuenta/bmangaescribeycuenta1.webp',
+  '/images/bmangaescribeycuenta/bmangaescribeycuenta2.webp',
+  '/images/bmangaescribeycuenta/bmangaescribeycuenta3.webp',
+  '/images/bmangaescribeycuenta/bmangaescribeycuenta4.webp',
+];
+
+export const MI_DIARIO_CINEFILO_GITHUB_IMAGES = [
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/midiariocinefilo/midiairocinefilo1.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/midiariocinefilo/midiairocinefilo2.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/midiariocinefilo/midiairocinefilo3.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/midiariocinefilo/midiairocinefilo4.webp',
+];
+
+export const MI_DIARIO_CINEFILO_PROD_IMAGES = [
+  '/images/midiariocinefilo/midiariocinefilo1.webp',
+  '/images/midiariocinefilo/midiariocinefilo2.webp',
+  '/images/midiariocinefilo/midiariocinefilo3.webp',
+  '/images/midiariocinefilo/midiariocinefilo4.webp',
+];
+
 // Colecciones por defecto de registros visuales para cada una de las publicaciones
 const PUB_DEFAULT_IMAGES: Record<string, string[]> = {
-  'pub-darpana-2026': [
-    'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=900&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=900&auto=format&fit=crop',
-  ],
+  'pub-darpana-2026': DARPANA_GITHUB_IMAGES,
   'pub-ovni-fancine-2023': [
     'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=900&auto=format&fit=crop',
     'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?q=80&w=900&auto=format&fit=crop',
   ],
-  'pub-diario-cinefilo-2022': [
-    'https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=900&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=900&auto=format&fit=crop',
-  ],
+  'pub-diario-cinefilo-2022': MI_DIARIO_CINEFILO_GITHUB_IMAGES,
   'pub-voz-invisible-2021': [
     'https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=900&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=80&w=900&auto=format&fit=crop',
   ],
   'pub-synthetizadores-sonidos-marcianos-2017': [
-    'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=900&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=900&auto=format&fit=crop',
+    'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/hablemosdesynthes.webp',
   ],
-  'pub-bucaramanga-escribe-cuenta-2007': [
-    'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?q=80&w=900&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=900&auto=format&fit=crop',
-  ],
+  'pub-bucaramanga-escribe-cuenta-2007': BMANGA_ESCRIBE_CUENTA_GITHUB_IMAGES,
 };
 
 const GENERIC_PUB_IMAGES = [
@@ -173,105 +193,112 @@ interface PublicationYouTubeEmbedProps {
   publicationId: string;
   publicationTitle: string;
   defaultUrl: string;
+  isFixed?: boolean;
 }
 
 const PublicationYouTubeEmbed: React.FC<PublicationYouTubeEmbedProps> = ({
   publicationId,
   publicationTitle,
   defaultUrl,
+  isFixed = false,
 }) => {
+  const isUrlFixed = isFixed || publicationId === 'pub-ovni-fancine-2023';
+
   const [videoUrl, setVideoUrl] = useState<string>(() => {
-    return localStorage.getItem(`margarita_pub_video_${publicationId}`) || defaultUrl;
+    if (isUrlFixed) {
+      try {
+        localStorage.setItem(`margarita_pub_video_${publicationId}`, defaultUrl);
+      } catch {
+        // ignore
+      }
+      return defaultUrl;
+    }
+    try {
+      const saved = localStorage.getItem(`margarita_pub_video_${publicationId}`);
+      if (saved && (saved.includes('ScMzIvxBSi4') || saved.trim() === '')) {
+        return defaultUrl;
+      }
+      return saved || defaultUrl;
+    } catch {
+      return defaultUrl;
+    }
   });
-  const [isEditing, setIsEditing] = useState(false);
-  const [tempUrl, setTempUrl] = useState(videoUrl);
+
+  useEffect(() => {
+    if (isUrlFixed) {
+      setVideoUrl(defaultUrl);
+      try {
+        localStorage.setItem(`margarita_pub_video_${publicationId}`, defaultUrl);
+      } catch {
+        // ignore
+      }
+    }
+  }, [defaultUrl, isUrlFixed, publicationId]);
 
   const getEmbedUrl = (raw: string) => {
-    const match = raw.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
-    if (match && match[1]) {
-      return `https://www.youtube-nocookie.com/embed/${match[1]}?rel=0&modestbranding=1`;
-    }
-    return raw;
-  };
+    const videoMatch = raw.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+    const listMatch = raw.match(/[?&]list=([a-zA-Z0-9_-]+)/);
+    const indexMatch = raw.match(/[?&]index=(\d+)/);
 
-  const handleSave = () => {
-    if (!tempUrl.trim()) return;
-    setVideoUrl(tempUrl.trim());
-    localStorage.setItem(`margarita_pub_video_${publicationId}`, tempUrl.trim());
-    setIsEditing(false);
+    if (videoMatch && videoMatch[1]) {
+      const videoId = videoMatch[1];
+      let url = `https://www.youtube-nocookie.com/embed/${videoId}?rel=0`;
+      if (listMatch && listMatch[1]) {
+        url += `&list=${listMatch[1]}`;
+        if (indexMatch && indexMatch[1]) {
+          url += `&index=${indexMatch[1]}`;
+        }
+      }
+      return url;
+    }
+
+    if (listMatch && listMatch[1]) {
+      return `https://www.youtube-nocookie.com/embed/videoseries?list=${listMatch[1]}&rel=0`;
+    }
+
+    return raw;
   };
 
   const embedUrl = getEmbedUrl(videoUrl);
 
   return (
-    <div className="relative w-full aspect-[16/9] sm:aspect-[16/10] rounded-xl overflow-hidden bg-[#0A0A12] border border-[#26263A] group/video my-3.5 shadow-md">
-      {/* Capas de textura Glitch y escaneo CRT sutil */}
-      <div className="absolute inset-0 glitch-texture-overlay z-10 pointer-events-none" />
+    <div className="my-3.5">
+      <div className="relative w-full aspect-[16/9] sm:aspect-[16/10] rounded-xl overflow-hidden bg-[#0A0A12] border border-[#26263A] group/video shadow-md">
+        {/* Capas de textura Glitch y escaneo CRT sutil */}
+        <div className="absolute inset-0 glitch-texture-overlay z-10 pointer-events-none" />
 
-      {/* Frame de Video de YouTube Embebido */}
-      <iframe
-        src={embedUrl}
-        title={`Video YouTube ${publicationTitle}`}
-        className="w-full h-full border-0 pointer-events-auto"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-      />
-
-      {/* Insignia superior flotante */}
-      <div className="absolute top-2 left-2 z-20 pointer-events-none flex items-center gap-1.5 px-2 py-0.5 rounded bg-black/80 backdrop-blur-md border border-[#00f0ff]/30 font-mono-code text-[11px] text-white">
-        <span className="w-1.5 h-1.5 rounded-full bg-[#00f0ff] animate-pulse" />
-        <span>YOUTUBE // {publicationTitle}</span>
+        {/* Reproductor de Video (Directo MP4 o Embebido de YouTube) */}
+        {videoUrl.includes('.mp4') ? (
+          <video
+            src={videoUrl}
+            controls
+            controlsList="nodownload"
+            onContextMenu={(e) => e.preventDefault()}
+            draggable={false}
+            playsInline
+            className="w-full h-full object-contain pointer-events-auto select-none"
+            style={
+              {
+                userSelect: 'none',
+                WebkitUserDrag: 'none',
+                pointerEvents: 'auto',
+              } as React.CSSProperties
+            }
+          >
+            <source src={videoUrl} type="video/mp4" />
+            <source src={`/videos/${videoUrl.split('/').pop()}`} type="video/mp4" />
+            Tu navegador no soporta reproducción de video HTML5.
+          </video>
+        ) : (
+          <iframe
+            src={embedUrl}
+            title={`Video YouTube ${publicationTitle}`}
+            className="w-full h-full border-0 pointer-events-auto"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        )}
       </div>
-
-      {/* Botón flotante para editar la URL del video */}
-      <div className="absolute top-2 right-2 z-20">
-        <button
-          type="button"
-          onClick={() => {
-            setTempUrl(videoUrl);
-            setIsEditing(true);
-          }}
-          className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-black/80 hover:bg-[#FF007F] text-[#A0A0BA] hover:text-white border border-[#333348] hover:border-[#FF007F] font-mono-code text-[11px] transition-colors cursor-pointer"
-          title="Editar enlace de YouTube"
-        >
-          <Edit3 className="w-3 h-3" />
-          <span>EDITAR URL</span>
-        </button>
-      </div>
-
-      {/* Modal / Overlay para editar el enlace de YouTube */}
-      {isEditing && (
-        <div className="absolute inset-0 z-30 p-4 bg-black/90 backdrop-blur-md flex flex-col justify-center items-center font-mono-code">
-          <div className="w-full max-w-sm p-4 bg-[#14141E] border border-[#2B2B3E] rounded-xl shadow-2xl">
-            <span className="text-xs text-white uppercase block mb-2 font-bold">
-              Ingresar URL de YouTube
-            </span>
-            <input
-              type="url"
-              value={tempUrl}
-              onChange={(e) => setTempUrl(e.target.value)}
-              placeholder="https://www.youtube.com/watch?v=..."
-              className="w-full px-2.5 py-1.5 rounded bg-[#0A0A12] border border-[#3A3A50] text-white text-xs mb-3 focus:outline-none focus:border-[#00f0ff]"
-            />
-            <div className="flex gap-2">
-              <button
-                type="button"
-                onClick={() => setIsEditing(false)}
-                className="flex-1 py-1 text-xs rounded bg-[#202030] text-[#A0A0BA] hover:text-white cursor-pointer"
-              >
-                Cancelar
-              </button>
-              <button
-                type="button"
-                onClick={handleSave}
-                className="flex-1 py-1 text-xs rounded bg-[#00f0ff] text-black font-bold hover:bg-[#5cf5ff] cursor-pointer"
-              >
-                Guardar
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
@@ -282,22 +309,62 @@ const PublicationYouTubeEmbed: React.FC<PublicationYouTubeEmbedProps> = ({
 interface PublicationGlitchSlideProps {
   publicationId: string;
   publicationTitle: string;
+  fitMode?: 'cover' | 'contain';
 }
 
 const PublicationGlitchSlide: React.FC<PublicationGlitchSlideProps> = ({
   publicationId,
   publicationTitle,
+  fitMode,
 }) => {
+  const isContain =
+    fitMode === 'contain' ||
+    publicationId === 'pub-synthetizadores-sonidos-marcianos-2017' ||
+    publicationId === 'pub-bucaramanga-escribe-cuenta-2007';
+
   const [images] = useState<string[]>(() => {
+    // Si la publicación es Bucaramanga Escribe y Cuenta y se detecta despliegue en Hostinger / producción externa
+    const isExternalProduction =
+      typeof window !== 'undefined' &&
+      window.location.hostname !== 'localhost' &&
+      !window.location.hostname.includes('127.0.0.1') &&
+      !window.location.hostname.includes('run.app') &&
+      !window.location.hostname.includes('webcontainer') &&
+      !window.location.hostname.includes('github.dev');
+
+    let defaultList = PUB_DEFAULT_IMAGES[publicationId] || GENERIC_PUB_IMAGES;
+    if (publicationId === 'pub-diario-cinefilo-2022' && isExternalProduction) {
+      defaultList = MI_DIARIO_CINEFILO_PROD_IMAGES;
+    } else if (publicationId === 'pub-bucaramanga-escribe-cuenta-2007' && isExternalProduction) {
+      defaultList = BMANGA_ESCRIBE_CUENTA_PROD_IMAGES;
+    }
+
     const saved = localStorage.getItem(`margarita_publication_slide_${publicationId}`);
     if (saved) {
       try {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        // Si tiene registros antiguos que requieren sincronización, actualizar al recurso oficial
+        if (
+          (publicationId === 'pub-voz-invisible-2021' && Array.isArray(parsed) && parsed.length > 1) ||
+          ((publicationId === 'pub-diario-cinefilo-2022' ||
+            publicationId === 'pub-synthetizadores-sonidos-marcianos-2017' ||
+            publicationId === 'pub-bucaramanga-escribe-cuenta-2007') &&
+            Array.isArray(parsed) &&
+            parsed.some((url: string) => typeof url === 'string' && url.includes('unsplash.com')))
+        ) {
+          try {
+            localStorage.setItem(`margarita_publication_slide_${publicationId}`, JSON.stringify(defaultList));
+          } catch {
+            // ignore
+          }
+          return defaultList;
+        }
+        return Array.isArray(parsed) && parsed.length > 0 ? parsed : defaultList;
       } catch {
-        return PUB_DEFAULT_IMAGES[publicationId] || GENERIC_PUB_IMAGES;
+        return defaultList;
       }
     }
-    return PUB_DEFAULT_IMAGES[publicationId] || GENERIC_PUB_IMAGES;
+    return defaultList;
   });
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -315,23 +382,85 @@ const PublicationGlitchSlide: React.FC<PublicationGlitchSlideProps> = ({
   };
 
   return (
-    <div className="relative w-full aspect-[16/9] sm:aspect-[16/10] rounded-xl overflow-hidden bg-[#0A0A12] border border-[#26263A] group/slide my-3.5 shadow-md">
+    <div
+      onContextMenu={(e) => e.preventDefault()}
+      onDragStart={(e) => e.preventDefault()}
+      style={
+        {
+          userSelect: 'none',
+          WebkitUserDrag: 'none',
+        } as React.CSSProperties
+      }
+      className="relative w-full aspect-[16/9] sm:aspect-[16/10] rounded-xl overflow-hidden bg-[#0A0A12] border border-[#26263A] group/slide my-3.5 shadow-md select-none flex items-center justify-center"
+    >
       {/* Capas de textura Glitch y escaneo CRT sutil sin halo */}
       <div className="absolute inset-0 glitch-texture-overlay z-10 pointer-events-none" />
 
       {/* Imagen actual */}
       {images.length > 0 ? (
         <>
-          <img
-            src={images[currentIndex]}
-            alt={`${publicationTitle} (${currentIndex + 1})`}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover/slide:scale-105 pointer-events-none select-none"
-            loading="lazy"
-            draggable={false}
-          />
+          <div className="w-full h-full flex items-center justify-center overflow-hidden">
+            <img
+              src={images[currentIndex]}
+              alt={`${publicationTitle} (${currentIndex + 1})`}
+              className="w-full h-full object-cover transition-transform duration-500 group-hover/slide:scale-105 pointer-events-none select-none protected-media"
+              loading="lazy"
+              draggable={false}
+              onContextMenu={(e) => e.preventDefault()}
+              onDragStart={(e) => e.preventDefault()}
+              style={
+                {
+                  userSelect: 'none',
+                  WebkitUserDrag: 'none',
+                } as React.CSSProperties
+              }
+              onError={(e) => {
+                const target = e.currentTarget;
+                const currentSrc = target.src;
 
-          {/* Sombra gradual inferior */}
-          <div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-black/80 to-transparent pointer-events-none z-10" />
+                // Fallback para Mi Diario Cinéfilo (intercambio automático GitHub Raw <-> Ruta relativa limpia)
+                if (currentSrc.includes('diariocinefilo') || currentSrc.includes('diairocinefilo')) {
+                  const match = currentSrc.match(/midiariocinefilo\d+\.webp/) || currentSrc.match(/midiairocinefilo\d+\.webp/);
+                  if (match) {
+                    const numMatch = match[0].match(/\d+/);
+                    const num = numMatch ? numMatch[0] : '1';
+                    if (currentSrc.includes('raw.githubusercontent.com')) {
+                      target.src = `/images/midiariocinefilo/midiariocinefilo${num}.webp`;
+                    } else {
+                      target.src = `https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/midiariocinefilo/midiairocinefilo${num}.webp`;
+                    }
+                  }
+                  return;
+                }
+
+                // Fallback para Bmanga Escribe y Cuenta (intercambio automático GitHub Raw <-> Ruta relativa limpia)
+                if (currentSrc.includes('bmangaescribeycuenta')) {
+                  const match = currentSrc.match(/bmangaescribeycuenta\d+\.webp/);
+                  if (match) {
+                    const filename = match[0];
+                    if (currentSrc.includes('raw.githubusercontent.com')) {
+                      target.src = `/images/bmangaescribeycuenta/${filename}`;
+                    } else {
+                      target.src = `https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/bmangaescribeycuenta/${filename}`;
+                    }
+                  }
+                  return;
+                }
+
+                // Fallback para Hablemos de Synthes
+                if (currentSrc.includes('raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/hablemosdesynthes.webp')) {
+                  target.src = '/hablemosdesynthes.webp';
+                } else if (currentSrc.endsWith('/hablemosdesynthes.webp')) {
+                  target.src = 'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/hablemosdesynthes.webp';
+                }
+              }}
+            />
+          </div>
+
+          {/* Sombra gradual inferior (solo para imágenes en modo cover) */}
+          {!isContain && (
+            <div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-black/80 to-transparent pointer-events-none z-10" />
+          )}
 
           {/* Controles de navegación */}
           {images.length > 1 && (
@@ -404,20 +533,14 @@ export const PublicationsSection: React.FC = () => {
         
         {/* ENCABEZADO DE SECCIÓN PUBLICACIONES */}
         <ScrollReveal direction="up" distance="sm">
-          <div className="mb-10 sm:mb-14">
+          <div className="mb-8 sm:mb-10">
             <button
               type="button"
-              className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#00f0ff]/10 hover:bg-[#00f0ff]/20 border border-[#00f0ff]/30 hover:border-[#00f0ff] text-[#00f0ff] text-[15px] sm:text-base font-bahnschrift-condensed font-bold uppercase tracking-widest transition-all duration-300 hover:shadow-[0_0_15px_rgba(0,240,255,0.25)] cursor-pointer group mb-3"
+              className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-[#00f0ff]/10 hover:bg-[#00f0ff]/20 border border-[#00f0ff]/30 hover:border-[#00f0ff] text-[#00f0ff] text-[19px] sm:text-[20px] font-bahnschrift-condensed font-bold uppercase tracking-widest transition-all duration-300 hover:shadow-[0_0_15px_rgba(0,240,255,0.25)] cursor-pointer group"
             >
-              <BookOpen className="w-4 h-4 text-[#00f0ff]" />
+              <BookOpen className="w-5 h-5 text-[#00f0ff]" />
               <span>PUBLICACIONES</span>
             </button>
-            <h2 className="font-bahnschrift-condensed font-bold text-2xl sm:text-3xl text-white tracking-wider uppercase">
-              Obras, Ensayos, Fanzines & Literatura Expandida
-            </h2>
-            <p className="text-base sm:text-lg text-[#9A9AB4] mt-2 max-w-3xl font-rajdhani font-semibold tracking-wide">
-              Producción editorial independiente, fanzines autogestivos, textos transmedia y escrituras multicanal con textura analógica.
-            </p>
           </div>
         </ScrollReveal>
 
@@ -425,18 +548,6 @@ export const PublicationsSection: React.FC = () => {
         <ScrollReveal direction="up" distance="md" delay={100} className="w-full">
           <div className="w-full p-6 sm:p-10 rounded-2xl bg-[#14141E] border border-[#252538] font-dosis relative overflow-hidden">
             <div className="relative z-10">
-              
-              {/* Encabezado editorial interno */}
-              <div className="flex items-center justify-between pb-4 mb-6 border-b border-[#232336]">
-                <div className="flex items-center gap-2 font-dosis text-sm text-[#00f0ff] uppercase tracking-wider font-semibold">
-                  <span className="w-2 h-2 rounded-full bg-[#00f0ff] shadow-[0_0_8px_#00f0ff]" />
-                  <span>CATÁLOGO EDITORIAL</span>
-                </div>
-                <span className="font-dosis text-xs text-[#8E8EA8] font-medium">
-                  2006 | 2026
-                </span>
-              </div>
-
               {/* Grid editorial de publicaciones */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
                 {PUBLICATIONS_DATA.map((item) => (
@@ -487,23 +598,46 @@ export const PublicationsSection: React.FC = () => {
 
                       {/* Entidad convocante / Editorial y ubicación */}
                       <div className="flex flex-wrap items-center gap-x-2 font-dosis text-sm text-[#9494B0] pt-1">
-                        <span className="text-[#E0E0F0] font-semibold">{item.publisher}</span>
+                        {item.link ? (
+                          <a
+                            href={item.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[#00f0ff] hover:text-white font-semibold inline-flex items-center gap-1 transition-colors cursor-pointer"
+                          >
+                            <span>{item.publisher}</span>
+                            <ExternalLink className="w-3 h-3" />
+                          </a>
+                        ) : (
+                          <span className="text-[#E0E0F0] font-semibold">{item.publisher}</span>
+                        )}
                         <span className="text-[#55556E] font-normal">|</span>
                         <span>{item.location}</span>
                       </div>
                     </div>
 
-                    {/* REPRODUCTOR DE VIDEO DE YOUTUBE (SI TIENE VIDEO) O SLIDE DE IMÁGENES */}
-                    {item.videoUrl ? (
+                    {/* SLIDE DE IMÁGENES DARPANA VERTICAL */}
+                    {item.id === 'pub-darpana-2026' ? (
+                      <div className="my-3.5 w-full flex items-center justify-center">
+                        <DarpanaSlide />
+                      </div>
+                    ) : item.videoUrl ? (
                       <PublicationYouTubeEmbed
                         publicationId={item.id}
                         publicationTitle={item.title}
                         defaultUrl={item.videoUrl}
+                        isFixed={item.id === 'pub-ovni-fancine-2023'}
                       />
                     ) : (
                       <PublicationGlitchSlide
                         publicationId={item.id}
                         publicationTitle={item.title}
+                        fitMode={
+                          item.id === 'pub-synthetizadores-sonidos-marcianos-2017' ||
+                          item.id === 'pub-bucaramanga-escribe-cuenta-2007'
+                            ? 'contain'
+                            : 'cover'
+                        }
                       />
                     )}
                   </article>

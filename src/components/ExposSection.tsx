@@ -5,7 +5,7 @@
  * salones e instalaciones interactivas con un slide de imágenes individual debajo de cada título.
  */
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import {
   Eye,
   ChevronLeft,
@@ -112,44 +112,183 @@ export const EXPOS_DATA: ExpoItem[] = [
   },
 ];
 
+export const EXPOLABMAMB_GITHUB_IMAGES = [
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/expolabmamb/expolabmamb1.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/expolabmamb/expolabmamb2.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/expolabmamb/expolabmamb3.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/expolabmamb/expolabmamb4.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/expolabmamb/expolabmamb5.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/expolabmamb/expolabmamb6.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/expolabmamb/expolabmamb7.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/expolabmamb/expolabmamb8.webp',
+];
+
+export const EXPOLABMAMB_PROD_IMAGES = [
+  '/images/expolabmamb/expolabmamb1.webp',
+  '/images/expolabmamb/expolabmamb2.webp',
+  '/images/expolabmamb/expolabmamb3.webp',
+  '/images/expolabmamb/expolabmamb4.webp',
+  '/images/expolabmamb/expolabmamb5.webp',
+  '/images/expolabmamb/expolabmamb6.webp',
+  '/images/expolabmamb/expolabmamb7.webp',
+  '/images/expolabmamb/expolabmamb8.webp',
+];
+
+export const OVNIPAPELVIAJERO_GITHUB_IMAGES = [
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/ovnipapelviajero/ovnipapelviajero1.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/ovnipapelviajero/ovnipapelviajero2.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/ovnipapelviajero/ovnipapelviajero3.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/ovnipapelviajero/ovnipapelviajero4.webp',
+];
+
+export const OVNIPAPELVIAJERO_PROD_IMAGES = [
+  '/images/ovnipapeliajero/ovnipapeliajero1.webp',
+  '/images/ovnipapeliajero/ovnipapeliajero2.webp',
+  '/images/ovnipapeliajero/ovnipapeliajero3.webp',
+  '/images/ovnipapeliajero/ovnipapeliajero4.webp',
+];
+
+// Aliases para soportar ambas grafías (con y sin 'v')
+export const OVNIPAPELIAJERO_GITHUB_IMAGES = OVNIPAPELVIAJERO_GITHUB_IMAGES;
+export const OVNIPAPELIAJERO_PROD_IMAGES = OVNIPAPELVIAJERO_PROD_IMAGES;
+
+export const ENTIEMPOREAL_GITHUB_IMAGES = [
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/entiemporeal/entiemporeal1.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/entiemporeal/entiemporeal2.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/entiemporeal/entiemporeal3.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/entiemporeal/entiemporeal4.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/entiemporeal/entiemporeal5.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/entiemporeal/entiemporeal6.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/entiemporeal/entiemporeal7.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/entiemporeal/entiemporeal8.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/entiemporeal/entiemporeal9.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/entiemporeal/entiemporeal10.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/entiemporeal/entiemporeal11.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/entiemporeal/entiemporeal12.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/entiemporeal/entiemporeal13.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/entiemporeal/entiemporeal14.webp',
+];
+
+export const ENTIEMPOREAL_PROD_IMAGES = [
+  '/images/entiemporeal/entiemporeal1.webp',
+  '/images/entiemporeal/entiemporeal2.webp',
+  '/images/entiemporeal/entiemporeal3.webp',
+  '/images/entiemporeal/entiemporeal4.webp',
+  '/images/entiemporeal/entiemporeal5.webp',
+  '/images/entiemporeal/entiemporeal6.webp',
+  '/images/entiemporeal/entiemporeal7.webp',
+  '/images/entiemporeal/entiemporeal8.webp',
+  '/images/entiemporeal/entiemporeal9.webp',
+  '/images/entiemporeal/entiemporeal10.webp',
+  '/images/entiemporeal/entiemporeal11.webp',
+  '/images/entiemporeal/entiemporeal12.webp',
+  '/images/entiemporeal/entiemporeal13.webp',
+  '/images/entiemporeal/entiemporeal14.webp',
+];
+
+export const CIMAKIDS_GITHUB_IMAGES = [
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/cimakids/cimakids1.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/cimakids/cimakids2.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/cimakids/cimakids3.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/cimakids/cimakids4.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/cimakids/cimakids5.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/cimakids/cimakids6.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/cimakids/cimakids7.webp',
+];
+
+export const CIMAKIDS_PROD_IMAGES = [
+  '/images/cimakids/cimakids1.webp',
+  '/images/cimakids/cimakids2.webp',
+  '/images/cimakids/cimakids3.webp',
+  '/images/cimakids/cimakids4.webp',
+  '/images/cimakids/cimakids5.webp',
+  '/images/cimakids/cimakids6.webp',
+  '/images/cimakids/cimakids7.webp',
+];
+
+export const BOCHINCHEMAMB_GITHUB_IMAGES = [
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/bochinchemamb/bochinchemamb1.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/bochinchemamb/bochinchemamb2.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/bochinchemamb/bochinchemamb3.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/bochinchemamb/bochinchemamb4.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/bochinchemamb/bochinchemamb5.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/bochinchemamb/bochinchemamb6.webp',
+];
+
+export const BOCHINCHEMAMB_PROD_IMAGES = [
+  '/images/bochinchemamb/bochinchemamb1.webp',
+  '/images/bochinchemamb/bochinchemamb2.webp',
+  '/images/bochinchemamb/bochinchemamb3.webp',
+  '/images/bochinchemamb/bochinchemamb4.webp',
+  '/images/bochinchemamb/bochinchemamb5.webp',
+  '/images/bochinchemamb/bochinchemamb6.webp',
+];
+
+export const MERCADILLO_GITHUB_IMAGES = [
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/mercadillo/mercadillo1.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/mercadillo/mercadillo2.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/mercadillo/mercadillo3.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/mercadillo/mercadillo4.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/mercadillo/mercadillo5.webp',
+];
+
+export const MERCADILLO_PROD_IMAGES = [
+  '/images/mercadillo/mercadillo1.webp',
+  '/images/mercadillo/mercadillo2.webp',
+  '/images/mercadillo/mercadillo3.webp',
+  '/images/mercadillo/mercadillo4.webp',
+  '/images/mercadillo/mercadillo5.webp',
+];
+
+export const POEMASELECTRO_GITHUB_IMAGES = [
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/poemaselectro/poemaselectro1.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/poemaselectro/poemaselectro2.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/poemaselectro/poemaselectro3.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/poemaselectro/poemaselectro4.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/poemaselectro/poemaselectro5.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/poemaselectro/poemaselectro6.webp',
+];
+
+export const POEMASELECTRO_PROD_IMAGES = [
+  '/images/poemaselectro/poemaselectro1.webp',
+  '/images/poemaselectro/poemaselectro2.webp',
+  '/images/poemaselectro/poemaselectro3.webp',
+  '/images/poemaselectro/poemaselectro4.webp',
+  '/images/poemaselectro/poemaselectro5.webp',
+  '/images/poemaselectro/poemaselectro6.webp',
+];
+
+export const VOLVER_GITHUB_IMAGES = [
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/volver1.webp',
+];
+
+export const VOLVER_PROD_IMAGES = [
+  '/images/volver1.webp',
+];
+
+export const PONGALECARINO_GITHUB_IMAGES = [
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/pongalecari%C3%B1oalmonte/volverypongalecari%C3%B1oalmonte1.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/pongalecari%C3%B1oalmonte/volverypongalecari%C3%B1oalmonte2.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/pongalecari%C3%B1oalmonte/volverypongalecari%C3%B1oalmonte3.webp',
+];
+
+export const PONGALECARINO_PROD_IMAGES = [
+  '/images/pongalecariñoalmonte/volverypongalecariñoalmonte1.webp',
+  '/images/pongalecariñoalmonte/volverypongalecariñoalmonte2.webp',
+  '/images/pongalecariñoalmonte/volverypongalecariñoalmonte3.webp',
+];
+
 // Colecciones por defecto de registros visuales para cada una de las exposiciones
 const EXPO_DEFAULT_IMAGES: Record<string, string[]> = {
-  'expolab-creativa-mamb-2015': [
-    'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=900&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1541701494587-cb58502866ab?q=80&w=900&auto=format&fit=crop',
-  ],
-  'lanzamiento-ovni-fancine-2015': [
-    'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=900&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=900&auto=format&fit=crop',
-  ],
-  'expolab-creativa-festival-en-tiempo-real-2014': [
-    'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=900&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=900&auto=format&fit=crop',
-  ],
-  'expolab-creativa-cumbre-medio-ambiente-2014': [
-    'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=900&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=900&auto=format&fit=crop',
-  ],
-  'bocinche-jam-noix-colectivo-mamb-2014': [
-    'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=900&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=900&auto=format&fit=crop',
-  ],
-  'expolab-creativa-mercadillo-bohemios-2014': [
-    'https://images.unsplash.com/photo-1513151233558-d860c5398176?q=80&w=900&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=900&auto=format&fit=crop',
-  ],
-  'poemas-electrodomesticos-artemisia-2011': [
-    'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=900&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=900&auto=format&fit=crop',
-  ],
-  'bienal-arte-suba-2010': [
-    'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=80&w=900&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1536924940846-227afb31e2a5?q=80&w=900&auto=format&fit=crop',
-  ],
-  'salon-regional-artistas-2009': [
-    'https://images.unsplash.com/photo-1561214115-f2f134cc4912?q=80&w=900&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=900&auto=format&fit=crop',
-  ],
+  'expolab-creativa-mamb-2015': EXPOLABMAMB_GITHUB_IMAGES,
+  'lanzamiento-ovni-fancine-2015': OVNIPAPELVIAJERO_GITHUB_IMAGES,
+  'expolab-creativa-festival-en-tiempo-real-2014': ENTIEMPOREAL_GITHUB_IMAGES,
+  'expolab-creativa-cumbre-medio-ambiente-2014': CIMAKIDS_GITHUB_IMAGES,
+  'bocinche-jam-noix-colectivo-mamb-2014': BOCHINCHEMAMB_GITHUB_IMAGES,
+  'expolab-creativa-mercadillo-bohemios-2014': MERCADILLO_GITHUB_IMAGES,
+  'poemas-electrodomesticos-artemisia-2011': POEMASELECTRO_GITHUB_IMAGES,
+  'bienal-arte-suba-2010': VOLVER_GITHUB_IMAGES,
+  'salon-regional-artistas-2009': PONGALECARINO_GITHUB_IMAGES,
 };
 
 const GENERIC_EXPO_IMAGES = [
@@ -169,17 +308,51 @@ const ExpoGlitchSlide: React.FC<ExpoGlitchSlideProps> = ({
   expoId,
   expoTitle,
 }) => {
-  const [images] = useState<string[]>(() => {
-    const saved = localStorage.getItem(`margarita_expo_slide_${expoId}`);
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch {
-        return EXPO_DEFAULT_IMAGES[expoId] || GENERIC_EXPO_IMAGES;
-      }
+  const isExternalProduction = typeof window !== 'undefined' && 
+    !window.location.hostname.includes('run.app') && 
+    !window.location.hostname.includes('localhost') && 
+    !window.location.hostname.includes('127.0.0.1');
+
+  // Obtener la lista canónica de imágenes de forma reactiva e inmediata
+  const images = useMemo<string[]>(() => {
+    if (expoId === 'expolab-creativa-mamb-2015') {
+      return isExternalProduction ? EXPOLABMAMB_PROD_IMAGES : EXPOLABMAMB_GITHUB_IMAGES;
+    }
+    if (expoId === 'lanzamiento-ovni-fancine-2015') {
+      return isExternalProduction ? OVNIPAPELVIAJERO_PROD_IMAGES : OVNIPAPELVIAJERO_GITHUB_IMAGES;
+    }
+    if (expoId === 'expolab-creativa-festival-en-tiempo-real-2014') {
+      return isExternalProduction ? ENTIEMPOREAL_PROD_IMAGES : ENTIEMPOREAL_GITHUB_IMAGES;
+    }
+    if (expoId === 'expolab-creativa-cumbre-medio-ambiente-2014') {
+      return isExternalProduction ? CIMAKIDS_PROD_IMAGES : CIMAKIDS_GITHUB_IMAGES;
+    }
+    if (expoId === 'bocinche-jam-noix-colectivo-mamb-2014') {
+      return isExternalProduction ? BOCHINCHEMAMB_PROD_IMAGES : BOCHINCHEMAMB_GITHUB_IMAGES;
+    }
+    if (expoId === 'expolab-creativa-mercadillo-bohemios-2014') {
+      return isExternalProduction ? MERCADILLO_PROD_IMAGES : MERCADILLO_GITHUB_IMAGES;
+    }
+    if (expoId === 'poemas-electrodomesticos-artemisia-2011') {
+      return isExternalProduction ? POEMASELECTRO_PROD_IMAGES : POEMASELECTRO_GITHUB_IMAGES;
+    }
+    if (expoId === 'bienal-arte-suba-2010') {
+      return isExternalProduction ? VOLVER_PROD_IMAGES : VOLVER_GITHUB_IMAGES;
+    }
+    if (expoId === 'salon-regional-artistas-2009') {
+      return isExternalProduction ? PONGALECARINO_PROD_IMAGES : PONGALECARINO_GITHUB_IMAGES;
     }
     return EXPO_DEFAULT_IMAGES[expoId] || GENERIC_EXPO_IMAGES;
-  });
+  }, [expoId, isExternalProduction]);
+
+  // Limpiar cualquier residuo obsoleto en localStorage
+  useEffect(() => {
+    try {
+      localStorage.removeItem(`margarita_expo_slide_${expoId}`);
+    } catch {
+      // ignore
+    }
+  }, [expoId]);
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -196,23 +369,141 @@ const ExpoGlitchSlide: React.FC<ExpoGlitchSlideProps> = ({
   };
 
   return (
-    <div className="relative w-full aspect-[16/9] sm:aspect-[16/10] rounded-xl overflow-hidden bg-[#0A0A12] border border-[#26263A] group/slide my-3.5 shadow-md">
+    <div
+      onContextMenu={(e) => e.preventDefault()}
+      onDragStart={(e) => e.preventDefault()}
+      style={
+        {
+          userSelect: 'none',
+          WebkitUserDrag: 'none',
+        } as React.CSSProperties
+      }
+      className="relative w-full aspect-[16/9] sm:aspect-[16/10] rounded-xl overflow-hidden bg-[#0A0A12] border border-[#26263A] group/slide my-3.5 shadow-md select-none flex items-center justify-center"
+    >
       {/* Capas de textura Glitch y escaneo CRT sutil sin halo */}
       <div className="absolute inset-0 glitch-texture-overlay z-10 pointer-events-none" />
 
       {/* Imagen actual */}
       {images.length > 0 ? (
         <>
-          <img
-            src={images[currentIndex]}
-            alt={`${expoTitle} (${currentIndex + 1})`}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover/slide:scale-105 pointer-events-none select-none"
-            loading="lazy"
-            draggable={false}
-          />
+          <div className="w-full h-full flex items-center justify-center overflow-hidden">
+            <img
+              src={images[currentIndex]}
+              alt={`${expoTitle} (${currentIndex + 1})`}
+              className="w-full h-full object-cover transition-transform duration-500 group-hover/slide:scale-105 pointer-events-none select-none"
+              loading="lazy"
+              draggable={false}
+              onContextMenu={(e) => e.preventDefault()}
+              onDragStart={(e) => e.preventDefault()}
+              style={
+                {
+                  userSelect: 'none',
+                  WebkitUserDrag: 'none',
+                } as React.CSSProperties
+              }
+              onError={(e) => {
+                const target = e.currentTarget;
+                const currentSrc = target.src;
+                if (currentSrc.includes('expolabmamb')) {
+                  const match = currentSrc.match(/expolabmamb\d+\.webp/);
+                  if (match) {
+                    const filename = match[0];
+                    if (currentSrc.includes('raw.githubusercontent.com')) {
+                      target.src = `/images/expolabmamb/${filename}`;
+                    } else {
+                      target.src = `https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/expolabmamb/${filename}`;
+                    }
+                  }
+                } else if (currentSrc.includes('ovnipapelviajero') || currentSrc.includes('ovnipapeliajero')) {
+                  const numMatch = currentSrc.match(/\d+/);
+                  const num = numMatch ? numMatch[0] : '1';
+                  if (currentSrc.includes('raw.githubusercontent.com')) {
+                    target.src = `/images/ovnipapeliajero/ovnipapeliajero${num}.webp`;
+                  } else {
+                    target.src = `https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/ovnipapelviajero/ovnipapelviajero${num}.webp`;
+                  }
+                } else if (currentSrc.includes('entiemporeal')) {
+                  const match = currentSrc.match(/entiemporeal\d+\.webp/);
+                  if (match) {
+                    const filename = match[0];
+                    if (currentSrc.includes('raw.githubusercontent.com')) {
+                      target.src = `/images/entiemporeal/${filename}`;
+                    } else {
+                      target.src = `https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/entiemporeal/${filename}`;
+                    }
+                  }
+                } else if (currentSrc.includes('cimakids')) {
+                  const match = currentSrc.match(/cimakids\d+\.webp/);
+                  if (match) {
+                    const filename = match[0];
+                    if (currentSrc.includes('raw.githubusercontent.com')) {
+                      target.src = `/images/cimakids/${filename}`;
+                    } else {
+                      target.src = `https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/cimakids/${filename}`;
+                    }
+                  }
+                } else if (currentSrc.includes('bochinchemamb')) {
+                  const match = currentSrc.match(/bochinchemamb\d+\.webp/);
+                  if (match) {
+                    const filename = match[0];
+                    if (currentSrc.includes('raw.githubusercontent.com')) {
+                      target.src = `/images/bochinchemamb/${filename}`;
+                    } else {
+                      target.src = `https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/bochinchemamb/${filename}`;
+                    }
+                  }
+                } else if (currentSrc.includes('mercadillo')) {
+                  const match = currentSrc.match(/mercadillo\d+\.webp/);
+                  if (match) {
+                    const filename = match[0];
+                    if (currentSrc.includes('raw.githubusercontent.com')) {
+                      target.src = `/images/mercadillo/${filename}`;
+                    } else {
+                      target.src = `https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/mercadillo/${filename}`;
+                    }
+                  }
+                } else if (currentSrc.includes('poemaselectro')) {
+                  const match = currentSrc.match(/poemaselectro\d+\.webp/);
+                  if (match) {
+                    const filename = match[0];
+                    if (currentSrc.includes('raw.githubusercontent.com')) {
+                      target.src = `/images/poemaselectro/${filename}`;
+                    } else {
+                      target.src = `https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/poemaselectro/${filename}`;
+                    }
+                  }
+                } else if (currentSrc.includes('pongalecari') || currentSrc.includes('volverypongalecari')) {
+                  const numMatch = currentSrc.match(/\d+(?=\.webp)/);
+                  const num = numMatch ? numMatch[0] : '1';
+                  if (currentSrc.includes('raw.githubusercontent.com')) {
+                    target.src = `/images/pongalecariñoalmonte/volverypongalecariñoalmonte${num}.webp`;
+                  } else {
+                    target.src = `https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/pongalecari%C3%B1oalmonte/volverypongalecari%C3%B1oalmonte${num}.webp`;
+                  }
+                } else if (currentSrc.includes('volver')) {
+                  const match = currentSrc.match(/volver\d*\.webp/);
+                  if (match) {
+                    const filename = match[0];
+                    if (currentSrc.includes('raw.githubusercontent.com')) {
+                      target.src = `/images/${filename}`;
+                    } else {
+                      target.src = `https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/${filename}`;
+                    }
+                  }
+                }
+              }}
+            />
+          </div>
 
           {/* Sombra gradual inferior */}
           <div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-black/80 to-transparent pointer-events-none z-10" />
+
+          {/* Contador de diapositivas */}
+          {images.length > 1 && (
+            <div className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-md bg-black/75 backdrop-blur-sm border border-white/10 text-[11px] font-mono-code text-[#E0E0F0] pointer-events-none z-20">
+              {currentIndex + 1} / {images.length}
+            </div>
+          )}
 
           {/* Controles de navegación */}
           {images.length > 1 && (
@@ -235,8 +526,8 @@ const ExpoGlitchSlide: React.FC<ExpoGlitchSlideProps> = ({
               </button>
 
               {/* Indicadores de diapositivas */}
-              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-20">
-                {images.map((_, idx) => (
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-20 max-w-[85%] overflow-x-auto scrollbar-none px-2 py-0.5">
+                {images.map((_: string, idx: number) => (
                   <button
                     key={idx}
                     type="button"
@@ -244,7 +535,7 @@ const ExpoGlitchSlide: React.FC<ExpoGlitchSlideProps> = ({
                       e.stopPropagation();
                       setCurrentIndex(idx);
                     }}
-                    className={`h-1.5 rounded-full transition-all cursor-pointer ${
+                    className={`h-1.5 rounded-full transition-all cursor-pointer shrink-0 ${
                       idx === currentIndex
                         ? 'w-5 bg-[#FF007F]'
                         : 'w-1.5 bg-white/40 hover:bg-white'
@@ -284,20 +575,14 @@ export const ExposSection: React.FC = () => {
         
         {/* ENCABEZADO DE SECCIÓN EXPOS */}
         <ScrollReveal direction="up" distance="sm">
-          <div className="mb-10 sm:mb-14">
+          <div className="mb-8 sm:mb-10">
             <button
               type="button"
-              className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#FF007F]/10 hover:bg-[#FF007F]/20 border border-[#FF007F]/30 hover:border-[#FF007F] text-[#FF007F] text-[15px] sm:text-base font-bahnschrift-condensed font-bold uppercase tracking-widest transition-all duration-300 cursor-pointer group mb-3"
+              className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-[#FF007F]/10 hover:bg-[#FF007F]/20 border border-[#FF007F]/30 hover:border-[#FF007F] text-[#FF007F] text-[19px] sm:text-[20px] font-bahnschrift-condensed font-bold uppercase tracking-widest transition-all duration-300 cursor-pointer group"
             >
-              <Eye className="w-4 h-4 text-[#FF007F]" />
+              <Eye className="w-5 h-5 text-[#FF007F]" />
               <span>EXPOS</span>
             </button>
-            <h2 className="font-bahnschrift-condensed font-bold text-2xl sm:text-3xl text-white tracking-wider uppercase">
-              Exposiciones, Instalaciones & Muestras
-            </h2>
-            <p className="text-base sm:text-lg text-[#9A9AB4] mt-2 max-w-3xl font-rajdhani font-semibold tracking-wide">
-              Circuitos expositivos, bienales, salones de artistas, muestras colectivas e instalaciones de arte sonoro y tecnología expandida.
-            </p>
           </div>
         </ScrollReveal>
 
@@ -305,14 +590,6 @@ export const ExposSection: React.FC = () => {
         <ScrollReveal direction="up" distance="md" delay={100} className="w-full">
           <div className="w-full p-6 sm:p-10 rounded-2xl bg-[#14141E] border border-[#252538] font-dosis relative overflow-hidden">
             <div className="relative z-10">
-              {/* Encabezado editorial interno */}
-              <div className="flex items-center justify-between pb-4 mb-6 border-b border-[#232336]">
-                <div className="flex items-center gap-2 font-dosis text-sm text-[#FF007F] uppercase tracking-wider font-semibold">
-                  <span className="w-2 h-2 rounded-full bg-[#FF007F]" />
-                  <span>EXPOSICIONES & CIRCUITOS REALIZADOS</span>
-                </div>
-              </div>
-
               {/* Grid editorial de 2 columnas con sus slides glitch */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
                 {EXPOS_DATA.map((item) => (

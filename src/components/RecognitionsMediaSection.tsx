@@ -19,11 +19,8 @@ import {
   Award,
   Video,
   Image as ImageIcon,
-  Plus,
   Play,
   Check,
-  RotateCcw,
-  ExternalLink,
   ChevronLeft,
   ChevronRight,
   Sparkles,
@@ -60,7 +57,7 @@ const RECOGNITIONS: RecognitionItem[] = [
     id: 'mincultura-2021',
     year: '2021',
     badge: 'ESTÍMULOS NACIONALES',
-    title: 'BECARIA GANADORA DEL PROGRAMA NACIONAL DE ESTÍMULOS PORTAFOLIO 2021',
+    title: 'BECARIA GANADORA DEL PROGRAMA NACIONAL DE ESTÍMULOS',
     work: 'Texto: La Voz Invisible',
     entity: 'Ministerio de Cultura',
     location: 'Bogotá, Colombia, 2021',
@@ -106,47 +103,69 @@ const RECOGNITIONS: RecognitionItem[] = [
   },
 ];
 
-// Imágenes de referencia por defecto para la galería de arte sonoro y tecnología
-const DEFAULT_GALLERY_IMAGES = [
-  {
-    url: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=1200&auto=format&fit=crop',
-    title: 'Laboratorio de Hardware y Síntesis Analógica',
-    caption: 'Exploración de frecuencias y transductores sonoros'
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1200&auto=format&fit=crop',
-    title: 'Instalación y Grabación Electroacústica',
-    caption: 'Registro sonoro y experimentación espacial'
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop',
-    title: 'Circuit Bending & Placas Prototipo',
-    caption: 'Cultura maker y reciclaje de artefactos'
+// URL base de GitHub Raw para la carpeta MAR (usada para la vista previa en el editor)
+export const GITHUB_RAW_MAR_BASE_URL = 'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/mar/';
+
+/**
+ * Combina la URL base de GitHub Raw con el nombre de cada archivo para la vista previa
+ */
+export const resolveMarImageUrl = (pathOrFilename: string): string => {
+  if (!pathOrFilename) return '';
+  if (pathOrFilename.startsWith('http://') || pathOrFilename.startsWith('https://')) {
+    return pathOrFilename;
   }
-];
+  const filename = pathOrFilename.replace(/^\/?images\/mar\//, '').replace(/^\//, '');
+  return `${GITHUB_RAW_MAR_BASE_URL}${filename}`;
+};
+
+// Galería de imágenes correspondiente al proyecto MAR con URLs públicas de GitHub Raw
+export const MAR_PROJECT_IMAGES: string[] = [
+  'marard1.webp', 'marard2.webp', 'marard3.webp', 'marard4.webp', 'marard5.webp',
+  'marard6.webp', 'marard7.webp', 'marard8.webp', 'marard9.webp', 'marard10.webp',
+  'marard11.webp', 'marard12.webp', 'marard13.webp', 'marard14.webp', 'marard15.webp',
+  'marard16.webp', 'marard17.webp', 'marard18.webp', 'marard19.webp', 'marard20.webp',
+  'marard21.webp', 'marard22.webp', 'marard23.webp', 'marard24.webp', 'marard25.webp',
+  'marard26.webp', 'marard27.webp', 'marard28.webp', 'marard29.webp', 'marard31.webp',
+  'marard32.webp', 'marard33.webp', 'marard34.webp', 'marard35.webp', 'marard36.webp',
+  'marard37.webp', 'marard39.webp', 'marard40.webp', 'marard41.webp', 'marard42.webp',
+  'marard43.webp', 'marard44.webp', 'marard45.webp', 'marard46.webp', 'marard47.webp',
+  'marard48.webp', 'marard50.webp', 'marard51.webp', 'marard52.webp', 'marard53.webp',
+  'marard54.webp', 'marard55.webp', 'marard56.webp', 'marard57.webp', 'marard58.webp',
+  'marard59.webp', 'marard60.webp', 'marard61.webp', 'marard62.webp', 'marard63.webp',
+  'marard64.webp', 'marard65.webp', 'marard66.webp', 'marard67.webp', 'marard68.webp',
+  'marard70.webp', 'marard71.webp', 'marard72.webp', 'marard73.webp', 'marard74.webp',
+  'marard75.webp', 'marard77.webp', 'marard79.webp', 'marard80.webp', 'marard81.webp',
+  'marard82.webp', 'marard83.webp', 'marard84.webp', 'marard85.webp', 'marard86.webp',
+  'marard87.webp', 'marard88.webp', 'marard89.webp', 'marard90.webp', 'marard91.webp',
+  'marard92.webp', 'marard93.webp', 'marard94.webp', 'marard95.webp', 'marard96.webp',
+  'marard97.webp', 'marard98.webp', 'marard99.webp', 'marard100.webp', 'marard101.webp',
+  'marard102.webp', 'marard104.webp', 'marard105.webp', 'marard106.webp', 'marard107.webp',
+  'marard108.webp',
+].map((filename) => `${GITHUB_RAW_MAR_BASE_URL}${filename}`);
 
 export const RecognitionsMediaSection: React.FC = () => {
   // Pestaña activa en la columna izquierda: 'video' | 'gallery'
   // Destino del modal de carga: video o galería
   const [modalTarget, setModalTarget] = useState<'video' | 'gallery'>('video');
 
+  const DEFAULT_VIDEO_URL = 'https://www.youtube.com/watch?v=g3LGDyNT4PQ&list=PL5CrXSrTboId96fV9uE3dLR8ZltC4iU3B&index=1';
+
   // URL del video (recuperada desde localStorage o valor inicial)
   const [videoUrl, setVideoUrl] = useState<string>(() => {
-    return localStorage.getItem('margarita_portfolio_video_url') || 'https://www.youtube.com/watch?v=ScMzIvxBSi4';
+    const saved = localStorage.getItem('margarita_portfolio_video_url');
+    if (saved && saved.includes('ScMzIvxBSi4')) {
+      return DEFAULT_VIDEO_URL;
+    }
+    return saved || DEFAULT_VIDEO_URL;
   });
 
-  // Lista de imágenes para la galería
-  const [galleryImages, setGalleryImages] = useState<string[]>(() => {
-    const saved = localStorage.getItem('margarita_portfolio_gallery_urls');
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch {
-        return DEFAULT_GALLERY_IMAGES.map((img) => img.url);
-      }
-    }
-    return DEFAULT_GALLERY_IMAGES.map((img) => img.url);
-  });
+  // Lista de imágenes para la galería del Proyecto MAR (URLs públicas de GitHub Raw)
+  const [galleryImages, setGalleryImages] = useState<string[]>(MAR_PROJECT_IMAGES);
+
+  useEffect(() => {
+    // Actualizar localStorage con la lista de URLs públicas directas de GitHub Raw
+    localStorage.setItem('margarita_portfolio_gallery_urls', JSON.stringify(MAR_PROJECT_IMAGES));
+  }, []);
 
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
@@ -166,10 +185,27 @@ export const RecognitionsMediaSection: React.FC = () => {
 
     // YouTube
     const ytMatch = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+    const listMatch = url.match(/[?&]list=([a-zA-Z0-9_-]+)/);
+    const indexMatch = url.match(/[?&]index=(\d+)/);
+
     if (ytMatch && ytMatch[1]) {
+      let embed = `https://www.youtube-nocookie.com/embed/${ytMatch[1]}?rel=0&modestbranding=1`;
+      if (listMatch && listMatch[1]) {
+        embed += `&list=${listMatch[1]}`;
+        if (indexMatch && indexMatch[1]) {
+          embed += `&index=${indexMatch[1]}`;
+        }
+      }
       return {
         type: 'youtube',
-        embedUrl: `https://www.youtube-nocookie.com/embed/${ytMatch[1]}?rel=0&modestbranding=1`,
+        embedUrl: embed,
+      };
+    }
+
+    if (listMatch && listMatch[1]) {
+      return {
+        type: 'youtube',
+        embedUrl: `https://www.youtube-nocookie.com/embed/videoseries?list=${listMatch[1]}&rel=0`,
       };
     }
 
@@ -220,15 +256,13 @@ export const RecognitionsMediaSection: React.FC = () => {
   };
 
   const handleResetVideo = () => {
-    const defaultUrl = 'https://www.youtube.com/watch?v=ScMzIvxBSi4';
-    setVideoUrl(defaultUrl);
-    localStorage.setItem('margarita_portfolio_video_url', defaultUrl);
+    setVideoUrl(DEFAULT_VIDEO_URL);
+    localStorage.setItem('margarita_portfolio_video_url', DEFAULT_VIDEO_URL);
   };
 
   const handleResetGallery = () => {
-    const defaultImgs = DEFAULT_GALLERY_IMAGES.map((i) => i.url);
-    setGalleryImages(defaultImgs);
-    localStorage.setItem('margarita_portfolio_gallery_urls', JSON.stringify(defaultImgs));
+    setGalleryImages(MAR_PROJECT_IMAGES);
+    localStorage.setItem('margarita_portfolio_gallery_urls', JSON.stringify(MAR_PROJECT_IMAGES));
     setCurrentSlideIndex(0);
   };
 
@@ -265,17 +299,14 @@ export const RecognitionsMediaSection: React.FC = () => {
         
         {/* ENCABEZADO DE SECCIÓN CON ESTILO RETRO-TERMINAL */}
         <ScrollReveal direction="up" distance="sm">
-          <div className="mb-10 sm:mb-14">
+          <div className="mb-8 sm:mb-10">
             <button
               type="button"
-              className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#FF007F]/10 hover:bg-[#FF007F]/20 border border-[#FF007F]/30 hover:border-[#FF007F] text-[#FF007F] text-[15px] sm:text-base font-bahnschrift-condensed font-bold uppercase tracking-widest transition-all duration-300 hover:shadow-[0_0_15px_rgba(255,0,127,0.25)] cursor-pointer group mb-3"
+              className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-[#FF007F]/10 hover:bg-[#FF007F]/20 border border-[#FF007F]/30 hover:border-[#FF007F] text-[#FF007F] text-[19px] sm:text-[20px] font-bahnschrift-condensed font-bold uppercase tracking-widest transition-all duration-300 hover:shadow-[0_0_15px_rgba(255,0,127,0.25)] cursor-pointer group"
             >
-              <Award className="w-4 h-4 text-[#FF007F]" />
+              <Award className="w-5 h-5 text-[#FF007F]" />
               <span>TRAYECTORIA</span>
             </button>
-            <p className="text-base sm:text-lg text-[#9A9AB4] mt-2 max-w-3xl font-rajdhani font-semibold tracking-wide">
-              Registro cronológico de becas, premios nacionales e internacionales y proyectos transversales.
-            </p>
           </div>
         </ScrollReveal>
 
@@ -307,64 +338,90 @@ export const RecognitionsMediaSection: React.FC = () => {
                     src={currentVideoData.embedUrl}
                     controls
                     playsInline
-                    className="w-full h-full object-contain pointer-events-auto"
+                    className="w-full h-full object-contain pointer-events-auto select-none"
                     controlsList="nodownload"
+                    onContextMenu={(e) => e.preventDefault()}
+                    draggable={false}
+                    style={
+                      {
+                        objectFit: 'contain',
+                        userSelect: 'none',
+                        WebkitUserDrag: 'none',
+                      } as React.CSSProperties
+                    }
                   />
                 ) : (
                   <div className="text-center p-3 font-mono-code">
-                    <Video className="w-6 h-6 text-[#FF007F] mx-auto mb-1.5 opacity-60" />
-                    <div className="text-[14px] text-white uppercase tracking-wider">VIDEO FEED</div>
+                    <Video className="w-6 h-6 text-[#FF007F] mx-auto opacity-60" />
                   </div>
                 )}
-
-                {/* Indicador de estado */}
-                <div className="absolute top-2 left-2 pointer-events-none flex items-center gap-1.5 px-2 py-0.5 rounded bg-black/60 backdrop-blur-md border border-white/10 font-mono-code text-[11px] text-white/90">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF007F] animate-pulse" />
-                  <span>VIDEO FEED</span>
-                </div>
               </div>
             </div>
 
             {/* ----------------------------------------------------- */}
             {/* DIV 2: SLIDE DE IMÁGENES (INFERIOR - DEBAJO DEL VIDEO) */}
             {/* ----------------------------------------------------- */}
-            <div className="flex-1 min-h-0 flex flex-col justify-between p-4 sm:p-5 rounded-2xl bg-[#14141E] border border-[#252538] shadow-[0_12px_40px_rgba(0,0,0,0.6)] relative overflow-hidden">
-              
-              {/* Barra superior de imágenes */}
-              <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b border-[#222234]">
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md font-mono-code text-[14px] sm:text-[15px] font-semibold bg-[#00f0ff]/15 border border-[#00f0ff]/40 text-[#00f0ff] shadow-[0_0_12px_rgba(0,240,255,0.2)]">
-                  <ImageIcon className="w-4 h-4 text-[#00f0ff]" />
-                  <span className="tracking-wider">SLIDE DE IMÁGENES</span>
-                </div>
+            <div className="flex-1 min-h-0 flex flex-col justify-center p-3 sm:p-4 rounded-2xl bg-[#14141E] border border-[#252538] hover:border-[#FF007F]/40 transition-all duration-300 shadow-[0_12px_40px_rgba(0,0,0,0.6)] relative overflow-hidden group">
+              {/* Marco responsivo de carrusel / slide con textura Glitch y estilo unificado del sitio */}
+              <div
+                onContextMenu={(e) => e.preventDefault()}
+                onDragStart={(e) => e.preventDefault()}
+                style={
+                  {
+                    userSelect: 'none',
+                    WebkitUserDrag: 'none',
+                  } as React.CSSProperties
+                }
+                className="relative w-full aspect-[16/9] sm:aspect-[16/10] rounded-xl overflow-hidden bg-[#0A0A12] border border-[#26263A] group/slide my-auto shadow-md select-none flex items-center justify-center"
+              >
+                {/* Capas de textura Glitch y escaneo CRT sutil sin halo */}
+                <div className="absolute inset-0 glitch-texture-overlay z-10 pointer-events-none" />
 
-                <button
-                  type="button"
-                  onClick={() => {
-                    setModalTarget('gallery');
-                    setTempInputUrl('');
-                    setShowInputModal(true);
-                  }}
-                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#1F1F2E] hover:bg-[#28283C] border border-[#34344E] hover:border-[#00f0ff] text-[14px] sm:text-[15px] font-mono-code text-[#E2E2E8] hover:text-white transition-all cursor-pointer shadow-sm"
-                  title="Ingresar nueva imagen a la galería"
-                >
-                  <Plus className="w-4 h-4 text-[#00f0ff]" />
-                  <span>INGRESAR IMAGEN</span>
-                </button>
-              </div>
-
-              {/* Marco responsivo de carrusel / slide (adaptado al 50% de la columna) */}
-              <div className="relative w-full flex-1 min-h-[160px] sm:min-h-[180px] rounded-xl bg-black border border-[#28283C] overflow-hidden flex items-center justify-center group my-auto">
                 {galleryImages.length > 0 ? (
                   <>
-                    <img
-                      src={galleryImages[currentSlideIndex]}
-                      alt={`Registro visual ${currentSlideIndex + 1}`}
-                      className="w-full h-full object-cover protected-media transition-opacity duration-500"
-                      loading="lazy"
-                    />
+                    <div className="w-full h-full flex items-center justify-center overflow-hidden">
+                      <img
+                        key={currentSlideIndex}
+                        src={resolveMarImageUrl(galleryImages[currentSlideIndex] || MAR_PROJECT_IMAGES[0])}
+                        alt={`Proyecto MAR - Registro visual ${currentSlideIndex + 1}`}
+                        onContextMenu={(e) => e.preventDefault()}
+                        onDragStart={(e) => e.preventDefault()}
+                        draggable={false}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover/slide:scale-105 pointer-events-none select-none"
+                        style={
+                          {
+                            userSelect: 'none',
+                            WebkitUserDrag: 'none',
+                          } as React.CSSProperties
+                        }
+                        loading="lazy"
+                        onError={(e) => {
+                          const target = e.currentTarget;
+                          const currentSrc = target.src;
+                          if (currentSrc.includes('marard')) {
+                            const match = currentSrc.match(/marard\d+\.webp/);
+                            if (match) {
+                              const filename = match[0];
+                              if (currentSrc.includes('raw.githubusercontent.com')) {
+                                target.src = `/images/mar/${filename}`;
+                              } else {
+                                target.src = `${GITHUB_RAW_MAR_BASE_URL}${filename}`;
+                              }
+                            }
+                          }
+                        }}
+                      />
+                    </div>
                     
-                    {/* Velo de gradiente en la base */}
-                    <div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-black/80 to-transparent pointer-events-none" />
+                    {/* Sombra gradual inferior (estilo estándar del resto del sitio) */}
+                    <div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-black/80 to-transparent pointer-events-none z-10" />
+
+                    {/* Contador de diapositivas en la esquina superior derecha */}
+                    {galleryImages.length > 1 && (
+                      <div className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-md bg-black/75 backdrop-blur-sm border border-white/10 text-[11px] font-mono-code text-[#E0E0F0] pointer-events-none z-20">
+                        {currentSlideIndex + 1} / {galleryImages.length}
+                      </div>
+                    )}
 
                     {/* Controles de navegación de carrusel */}
                     {galleryImages.length > 1 && (
@@ -372,7 +429,7 @@ export const RecognitionsMediaSection: React.FC = () => {
                         <button
                           type="button"
                           onClick={prevSlide}
-                          className="absolute left-2.5 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/60 hover:bg-[#00f0ff] hover:text-black text-white transition-all backdrop-blur-sm cursor-pointer shadow-lg"
+                          className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/70 hover:bg-[#FF007F] text-white transition-all backdrop-blur-sm cursor-pointer shadow-lg z-20 opacity-80 group-hover/slide:opacity-100"
                           aria-label="Imagen anterior"
                         >
                           <ChevronLeft className="w-4 h-4" />
@@ -380,22 +437,25 @@ export const RecognitionsMediaSection: React.FC = () => {
                         <button
                           type="button"
                           onClick={nextSlide}
-                          className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/60 hover:bg-[#00f0ff] hover:text-black text-white transition-all backdrop-blur-sm cursor-pointer shadow-lg"
+                          className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/70 hover:bg-[#FF007F] text-white transition-all backdrop-blur-sm cursor-pointer shadow-lg z-20 opacity-80 group-hover/slide:opacity-100"
                           aria-label="Siguiente imagen"
                         >
                           <ChevronRight className="w-4 h-4" />
                         </button>
 
-                        {/* Indicadores de diapositivas */}
-                        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-10">
+                        {/* Indicadores de diapositivas con estilo unificado del sitio */}
+                        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-20 max-w-[85%] overflow-x-auto px-1 py-0.5 scrollbar-none">
                           {galleryImages.map((_, idx) => (
                             <button
                               key={idx}
                               type="button"
-                              onClick={() => setCurrentSlideIndex(idx)}
-                              className={`h-1.5 rounded-full transition-all cursor-pointer ${
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setCurrentSlideIndex(idx);
+                              }}
+                              className={`h-1.5 rounded-full transition-all cursor-pointer shrink-0 ${
                                 idx === currentSlideIndex
-                                  ? 'w-5 bg-[#00f0ff]'
+                                  ? 'w-5 bg-[#FF007F]'
                                   : 'w-1.5 bg-white/40 hover:bg-white'
                               }`}
                               aria-label={`Ir a la diapositiva ${idx + 1}`}
@@ -406,8 +466,8 @@ export const RecognitionsMediaSection: React.FC = () => {
                     )}
                   </>
                 ) : (
-                  <div className="flex flex-col items-center justify-center h-full text-center p-3 font-mono-code">
-                    <ImageIcon className="w-6 h-6 text-[#00f0ff] mb-1.5 opacity-60" />
+                  <div className="flex flex-col items-center justify-center h-full text-center p-3 font-mono-code z-20">
+                    <ImageIcon className="w-6 h-6 text-[#FF007F] mb-1.5 opacity-60" />
                     <div className="text-[14px] text-white">GALERÍA VACÍA</div>
                     <button
                       type="button"
@@ -415,40 +475,13 @@ export const RecognitionsMediaSection: React.FC = () => {
                         setModalTarget('gallery');
                         setShowInputModal(true);
                       }}
-                      className="mt-2 px-3 py-1.5 rounded bg-[#00f0ff] text-black text-[14px] font-bold"
+                      className="mt-2 px-3 py-1.5 rounded bg-[#FF007F] text-white text-[14px] font-bold"
                     >
                       INGRESAR PRIMERA IMAGEN
                     </button>
                   </div>
                 )}
-
-                {/* Indicador de estado */}
-                <div className="absolute top-2 left-2 pointer-events-none flex items-center gap-1.5 px-2 py-0.5 rounded bg-black/60 backdrop-blur-md border border-white/10 font-mono-code text-[11px] text-white/90">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#00f0ff] animate-pulse" />
-                  <span>{`SLIDE ${currentSlideIndex + 1}/${galleryImages.length}`}</span>
-                </div>
               </div>
-
-              {/* Metadatos y restablecimiento de galería */}
-              <div className="flex flex-wrap items-center justify-between gap-2 pt-3 mt-3 border-t border-[#222234] text-xs sm:text-[13px] font-mono-code text-[#7A7A96]">
-                <div className="flex items-center gap-1.5">
-                  <span className="text-[#FF007F]">● ARCHIVO:</span>
-                  <span className="text-white truncate max-w-[180px] sm:max-w-[220px]">
-                    Colección ({galleryImages.length} fotos)
-                  </span>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={handleResetGallery}
-                  className="hover:text-white flex items-center gap-1.5 transition-colors cursor-pointer"
-                  title="Restablecer galería a valores iniciales"
-                >
-                  <RotateCcw className="w-3.5 h-3.5" />
-                  <span>RESTABLECER</span>
-                </button>
-              </div>
-
             </div>
 
           </ScrollReveal>
@@ -469,18 +502,7 @@ export const RecognitionsMediaSection: React.FC = () => {
             />
 
             <div className="relative z-10">
-              {/* Encabezado editorial interno */}
-              <div className="flex items-center justify-between pb-4 mb-6 border-b border-[#232336]">
-              <div className="flex items-center gap-2 font-dosis text-sm text-[#00f0ff] uppercase tracking-wider font-semibold">
-                <span className="w-2 h-2 rounded-full bg-[#00f0ff] animate-pulse-slow shadow-[0_0_8px_#00f0ff]" />
-                <span>RECONOCIMIENTOS</span>
-              </div>
-              <span className="font-dosis text-xs text-[#8E8EA8] font-medium">
-                2007 | 2026
-              </span>
-            </div>
-
-            {/* Flujo editorial continuo sin cajas individuales */}
+              {/* Flujo editorial continuo sin cajas individuales */}
             <div className="space-y-6">
               {RECOGNITIONS.map((item) => (
                 <article
@@ -619,11 +641,8 @@ export const RecognitionsMediaSection: React.FC = () => {
               </p>
 
               {/* Párrafo 4: Expresión humana y simbiosis tecnológica */}
-              <p className="font-rajdhani font-semibold text-base sm:text-lg text-[#9A9AB4] leading-relaxed flex items-center flex-wrap gap-2 animate-subtle-reveal-4">
-                <span>
-                  Me apasiona la expresión humana y su simbiosis permanente con la tecnología potenciando el bienestar emocional individual y colectivo.
-                </span>
-                <span className="inline-block w-2 h-4 bg-[#FF007F] animate-pulse ml-1 align-middle" title="terminal cursor" />
+              <p className="font-rajdhani font-semibold text-base sm:text-lg text-[#9A9AB4] leading-relaxed animate-subtle-reveal-4">
+                Me apasiona la expresión humana y su simbiosis permanente con la tecnología potenciando el bienestar emocional individual y colectivo.
               </p>
             </div>
           </div>

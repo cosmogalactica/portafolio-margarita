@@ -101,36 +101,117 @@ export const CONVERSATORIOS_DATA: ConversatorioItem[] = [
   },
 ];
 
+export const WOLF_GITHUB_IMAGES = [
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/wolf/wolf1.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/wolf/wolf2.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/wolf/wolf3.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/wolf/wolf4.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/wolf/wolf5.webp',
+];
+
+export const WOLF_PROD_IMAGES = [
+  '/images/wolf/wolf1.webp',
+  '/images/wolf/wolf2.webp',
+  '/images/wolf/wolf3.webp',
+  '/images/wolf/wolf4.webp',
+  '/images/wolf/wolf5.webp',
+];
+
+export const MUSIFORO_GITHUB_IMAGES = [
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/musiforo/musiforo2.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/musiforo/musiforo1.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/musiforo/musiforo3.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/musiforo/musiforo4.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/musiforo/musiforo5.webp',
+];
+
+export const MUSIFORO_PROD_IMAGES = [
+  '/images/musiforo/musiforo2.webp',
+  '/images/musiforo/musiforo1.webp',
+  '/images/musiforo/musiforo3.webp',
+  '/images/musiforo/musiforo4.webp',
+  '/images/musiforo/musiforo5.webp',
+];
+
+export const BIBLIOLABS_GITHUB_IMAGES = [
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/bibliolabs/bibliolabs1.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/bibliolabs/bibliolabs2.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/bibliolabs/bibliolabs3.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/bibliolabs/bibliolabs4.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/bibliolabs/bibliolabs5.webp',
+];
+
+export const BIBLIOLABS_PROD_IMAGES = [
+  '/images/bibliolabs/bibliolabs1.webp',
+  '/images/bibliolabs/bibliolabs2.webp',
+  '/images/bibliolabs/bibliolabs3.webp',
+  '/images/bibliolabs/bibliolabs4.webp',
+  '/images/bibliolabs/bibliolabs5.webp',
+];
+
+export const UNTREF_GITHUB_IMAGES = [
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/untref/untref3.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/untref/untref1.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/untref/untref2.webp',
+];
+
+export const UNTREF_PROD_IMAGES = [
+  '/images/untref/untref3.webp',
+  '/images/untref/untref1.webp',
+  '/images/untref/untref2.webp',
+];
+
+export const AUDIOGRAFEMAS_GITHUB_IMAGES = [
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/audiografemas/audiografemas1.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/audiografemas/audiografemas2.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/audiografemas/audiografemas3.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/audiografemas/audiografemas4.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/audiografemas/audiografemas5.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/audiografemas/audiografemas6.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/audiografemas/audiografemas7.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/audiografemas/audiografemas8.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/audiografemas/audiografemas9.webp',
+];
+
+export const AUDIOGRAFEMAS_PROD_IMAGES = [
+  '/images/audiografemas/audiografemas1.webp',
+  '/images/audiografemas/audiografemas2.webp',
+  '/images/audiografemas/audiografemas3.webp',
+  '/images/audiografemas/audiografemas4.webp',
+  '/images/audiografemas/audiografemas5.webp',
+  '/images/audiografemas/audiografemas6.webp',
+  '/images/audiografemas/audiografemas7.webp',
+  '/images/audiografemas/audiografemas8.webp',
+  '/images/audiografemas/audiografemas9.webp',
+];
+
+export const HABLEMOSDESYNTHES_GITHUB_IMAGES = [
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/hablemosdesynthes/hablemosdesynthes1.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/hablemosdesynthes/hablemosdesynthes3.webp',
+];
+
+export const HABLEMOSDESYNTHES_PROD_IMAGES = [
+  '/images/hablemosdesynthes/hablemosdesynthes1.webp',
+  '/images/hablemosdesynthes/hablemosdesynthes3.webp',
+];
+
+export const CAFEYFOTOGRAMAS_GITHUB_IMAGES = [
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/cafeyfotogramas1.webp',
+];
+
+export const CAFEYFOTOGRAMAS_PROD_IMAGES = [
+  '/images/cafeyfotogramas1.webp',
+];
+
 // Colecciones por defecto de registros fotográficos adaptadas a cada conversatorio
 const CONVERSATORIO_DEFAULT_IMAGES: Record<string, string[]> = {
-  'mas-alla-del-algoritmo-2024': [
-    'https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=900&auto=format&fit=crop', // Conferencia auditorio
-    'https://images.unsplash.com/photo-1515187029135-18ee286d815b?q=80&w=900&auto=format&fit=crop', // Panel de diálogo y debate
-  ],
-  'musiforo-unal-2021': [
-    'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?q=80&w=900&auto=format&fit=crop', // Micrófono y estrado
-    'https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=900&auto=format&fit=crop', // Creación musical y debate
-  ],
-  'sonorarteclab-cultura-maker-2021': [
-    'https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=900&auto=format&fit=crop', // Makerspaces y circuitos
-    'https://images.unsplash.com/photo-1517420704952-d9f39e95b43e?q=80&w=900&auto=format&fit=crop', // Cultura maker colaborativa
-  ],
-  'movimiento-cultura-maker-untref-2019': [
-    'https://images.unsplash.com/photo-1504639725590-34d0984388bd?q=80&w=900&auto=format&fit=crop', // Simposio tecnológico
-    'https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?q=80&w=900&auto=format&fit=crop', // Ponencia abierta
-  ],
-  'synthetizadores-sonidos-marcianos-2017': [
-    'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=900&auto=format&fit=crop', // Sintetizadores modulares analógicos
-    'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=900&auto=format&fit=crop', // Exploración sonora experimental
-  ],
-  'audiografemas-poesia-analoga-2017': [
-    'https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?q=80&w=900&auto=format&fit=crop', // Poesía y grafemas visuales
-    'https://images.unsplash.com/photo-1518173946687-a4c8a383392e?q=80&w=900&auto=format&fit=crop', // Luz y sombras analógicas
-  ],
-  'cafe-y-fotogramas-2017': [
-    'https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=900&auto=format&fit=crop', // Fotogramas y cinematografía
-    'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=900&auto=format&fit=crop', // Diálogo y proyección
-  ],
+  'mas-alla-del-algoritmo-2024': WOLF_GITHUB_IMAGES,
+  'musiforo-unal-2021': MUSIFORO_GITHUB_IMAGES,
+  'sonorarteclab-cultura-maker-2021': BIBLIOLABS_GITHUB_IMAGES,
+  'movimiento-cultura-maker-untref-2019': UNTREF_GITHUB_IMAGES,
+  'synthetizadores-sonidos-marcianos-2017': HABLEMOSDESYNTHES_GITHUB_IMAGES,
+  'audiografemas-poesia-analoga-2017': AUDIOGRAFEMAS_GITHUB_IMAGES,
+  'cafe-y-fotogramas-2017': CAFEYFOTOGRAMAS_GITHUB_IMAGES,
 };
 
 const GENERIC_CONVERSATORIOS_IMAGES = [
@@ -151,15 +232,144 @@ const ConversatorioGlitchSlide: React.FC<ConversatorioGlitchSlideProps> = ({
   conversatorioTitle,
 }) => {
   const [images] = useState<string[]>(() => {
+    const isExternalProduction = typeof window !== 'undefined' && 
+      !window.location.hostname.includes('run.app') && 
+      !window.location.hostname.includes('localhost') && 
+      !window.location.hostname.includes('127.0.0.1');
+
+    let defaultList = CONVERSATORIO_DEFAULT_IMAGES[conversatorioId] || GENERIC_CONVERSATORIOS_IMAGES;
+    if (conversatorioId === 'mas-alla-del-algoritmo-2024') {
+      defaultList = isExternalProduction ? WOLF_PROD_IMAGES : WOLF_GITHUB_IMAGES;
+    } else if (conversatorioId === 'musiforo-unal-2021') {
+      defaultList = isExternalProduction ? MUSIFORO_PROD_IMAGES : MUSIFORO_GITHUB_IMAGES;
+    } else if (conversatorioId === 'sonorarteclab-cultura-maker-2021') {
+      defaultList = isExternalProduction ? BIBLIOLABS_PROD_IMAGES : BIBLIOLABS_GITHUB_IMAGES;
+    } else if (conversatorioId === 'movimiento-cultura-maker-untref-2019') {
+      defaultList = isExternalProduction ? UNTREF_PROD_IMAGES : UNTREF_GITHUB_IMAGES;
+    } else if (conversatorioId === 'synthetizadores-sonidos-marcianos-2017') {
+      defaultList = isExternalProduction ? HABLEMOSDESYNTHES_PROD_IMAGES : HABLEMOSDESYNTHES_GITHUB_IMAGES;
+    } else if (conversatorioId === 'audiografemas-poesia-analoga-2017') {
+      defaultList = isExternalProduction ? AUDIOGRAFEMAS_PROD_IMAGES : AUDIOGRAFEMAS_GITHUB_IMAGES;
+    } else if (conversatorioId === 'cafe-y-fotogramas-2017') {
+      defaultList = isExternalProduction ? CAFEYFOTOGRAMAS_PROD_IMAGES : CAFEYFOTOGRAMAS_GITHUB_IMAGES;
+    }
+
     const saved = localStorage.getItem(`margarita_conversatorio_slide_${conversatorioId}`);
     if (saved) {
       try {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+
+        // Migrar automáticamente si contiene enlaces antiguos de Unsplash o no tiene exactamente 5 imágenes para Wolf
+        if (
+          conversatorioId === 'mas-alla-del-algoritmo-2024' &&
+          Array.isArray(parsed) &&
+          (parsed.some((url: string) => typeof url === 'string' && url.includes('unsplash.com')) || parsed.length !== 5)
+        ) {
+          try {
+            localStorage.setItem(`margarita_conversatorio_slide_${conversatorioId}`, JSON.stringify(defaultList));
+          } catch {
+            // ignore
+          }
+          return defaultList;
+        }
+
+        // Migrar automáticamente si contiene enlaces antiguos o no tiene musiforo2 como portada para Musiforo
+        if (
+          conversatorioId === 'musiforo-unal-2021' &&
+          Array.isArray(parsed) &&
+          (!parsed[0]?.includes('musiforo2') ||
+            parsed.some((url: string) => typeof url === 'string' && (url.includes('unsplash.com') || !url.includes('musiforo'))) ||
+            parsed.length !== 5)
+        ) {
+          try {
+            localStorage.setItem(`margarita_conversatorio_slide_${conversatorioId}`, JSON.stringify(defaultList));
+          } catch {
+            // ignore
+          }
+          return defaultList;
+        }
+
+        // Migrar automáticamente si contiene enlaces antiguos de Unsplash o no tiene exactamente 5 imágenes para Bibliolabs
+        if (
+          conversatorioId === 'sonorarteclab-cultura-maker-2021' &&
+          Array.isArray(parsed) &&
+          (parsed.some((url: string) => typeof url === 'string' && (url.includes('unsplash.com') || !url.includes('bibliolabs'))) || parsed.length !== 5)
+        ) {
+          try {
+            localStorage.setItem(`margarita_conversatorio_slide_${conversatorioId}`, JSON.stringify(defaultList));
+          } catch {
+            // ignore
+          }
+          return defaultList;
+        }
+
+        // Migrar automáticamente si contiene enlaces antiguos o no tiene untref3 como portada para UNTREF
+        if (
+          conversatorioId === 'movimiento-cultura-maker-untref-2019' &&
+          Array.isArray(parsed) &&
+          (!parsed[0]?.includes('untref3') ||
+            parsed.some((url: string) => typeof url === 'string' && (url.includes('unsplash.com') || !url.includes('untref'))) ||
+            parsed.length !== 3)
+        ) {
+          try {
+            localStorage.setItem(`margarita_conversatorio_slide_${conversatorioId}`, JSON.stringify(defaultList));
+          } catch {
+            // ignore
+          }
+          return defaultList;
+        }
+
+        // Migrar automáticamente si contiene enlaces antiguos, contiene hablemosdesynthes2 o no tiene exactamente 2 imágenes para Hablemos de Synthes
+        if (
+          conversatorioId === 'synthetizadores-sonidos-marcianos-2017' &&
+          Array.isArray(parsed) &&
+          (parsed.some((url: string) => typeof url === 'string' && (url.includes('unsplash.com') || !url.includes('hablemosdesynthes') || url.includes('hablemosdesynthes2'))) ||
+            parsed.length !== 2)
+        ) {
+          try {
+            localStorage.setItem(`margarita_conversatorio_slide_${conversatorioId}`, JSON.stringify(defaultList));
+          } catch {
+            // ignore
+          }
+          return defaultList;
+        }
+
+        // Migrar automáticamente si contiene enlaces antiguos de Unsplash o no tiene exactamente 9 imágenes para Audiografemas
+        if (
+          conversatorioId === 'audiografemas-poesia-analoga-2017' &&
+          Array.isArray(parsed) &&
+          (parsed.some((url: string) => typeof url === 'string' && (url.includes('unsplash.com') || !url.includes('audiografemas'))) || parsed.length !== 9)
+        ) {
+          try {
+            localStorage.setItem(`margarita_conversatorio_slide_${conversatorioId}`, JSON.stringify(defaultList));
+          } catch {
+            // ignore
+          }
+          return defaultList;
+        }
+
+        // Migrar automáticamente si contiene enlaces antiguos de Unsplash o no contiene cafeyfotogramas para Café y Fotogramas
+        if (
+          conversatorioId === 'cafe-y-fotogramas-2017' &&
+          Array.isArray(parsed) &&
+          (parsed.some((url: string) => typeof url === 'string' && (url.includes('unsplash.com') || !url.includes('cafeyfotogramas'))) || parsed.length !== 1)
+        ) {
+          try {
+            localStorage.setItem(`margarita_conversatorio_slide_${conversatorioId}`, JSON.stringify(defaultList));
+          } catch {
+            // ignore
+          }
+          return defaultList;
+        }
+
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed;
+        }
       } catch {
-        return CONVERSATORIO_DEFAULT_IMAGES[conversatorioId] || GENERIC_CONVERSATORIOS_IMAGES;
+        return defaultList;
       }
     }
-    return CONVERSATORIO_DEFAULT_IMAGES[conversatorioId] || GENERIC_CONVERSATORIOS_IMAGES;
+    return defaultList;
   });
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -177,23 +387,121 @@ const ConversatorioGlitchSlide: React.FC<ConversatorioGlitchSlideProps> = ({
   };
 
   return (
-    <div className="relative w-full aspect-[16/9] sm:aspect-[16/10] rounded-xl overflow-hidden bg-[#0A0A12] border border-[#26263A] group/slide my-3.5 shadow-md">
+    <div
+      onContextMenu={(e) => e.preventDefault()}
+      onDragStart={(e) => e.preventDefault()}
+      style={
+        {
+          userSelect: 'none',
+          WebkitUserDrag: 'none',
+        } as React.CSSProperties
+      }
+      className="relative w-full aspect-[16/9] sm:aspect-[16/10] rounded-xl overflow-hidden bg-[#0A0A12] border border-[#26263A] group/slide my-3.5 shadow-md select-none flex items-center justify-center"
+    >
       {/* Capas de textura Glitch y escaneo CRT sutil sin halo */}
       <div className="absolute inset-0 glitch-texture-overlay z-10 pointer-events-none" />
 
       {/* Imagen actual */}
       {images.length > 0 ? (
         <>
-          <img
-            src={images[currentIndex]}
-            alt={`${conversatorioTitle} (${currentIndex + 1})`}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover/slide:scale-105 pointer-events-none select-none"
-            loading="lazy"
-            draggable={false}
-          />
+          <div className="w-full h-full flex items-center justify-center overflow-hidden">
+            <img
+              src={images[currentIndex]}
+              alt={`${conversatorioTitle} (${currentIndex + 1})`}
+              className="w-full h-full object-cover transition-transform duration-500 group-hover/slide:scale-105 pointer-events-none select-none"
+              loading="lazy"
+              draggable={false}
+              onContextMenu={(e) => e.preventDefault()}
+              onDragStart={(e) => e.preventDefault()}
+              style={
+                {
+                  userSelect: 'none',
+                  WebkitUserDrag: 'none',
+                } as React.CSSProperties
+              }
+              onError={(e) => {
+                const target = e.currentTarget;
+                const currentSrc = target.src;
+                if (currentSrc.includes('wolf')) {
+                  const match = currentSrc.match(/wolf\d+\.webp/);
+                  if (match) {
+                    const filename = match[0];
+                    if (currentSrc.includes('raw.githubusercontent.com')) {
+                      target.src = `/images/wolf/${filename}`;
+                    } else {
+                      target.src = `https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/wolf/${filename}`;
+                    }
+                  }
+                } else if (currentSrc.includes('musiforo')) {
+                  const match = currentSrc.match(/musiforo\d+\.webp/);
+                  if (match) {
+                    const filename = match[0];
+                    if (currentSrc.includes('raw.githubusercontent.com')) {
+                      target.src = `/images/musiforo/${filename}`;
+                    } else {
+                      target.src = `https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/musiforo/${filename}`;
+                    }
+                  }
+                } else if (currentSrc.includes('bibliolabs')) {
+                  const match = currentSrc.match(/bibliolabs\d+\.webp/);
+                  if (match) {
+                    const filename = match[0];
+                    if (currentSrc.includes('raw.githubusercontent.com')) {
+                      target.src = `/images/bibliolabs/${filename}`;
+                    } else {
+                      target.src = `https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/bibliolabs/${filename}`;
+                    }
+                  }
+                } else if (currentSrc.includes('untref')) {
+                  const match = currentSrc.match(/untref\d+\.webp/);
+                  if (match) {
+                    const filename = match[0];
+                    if (currentSrc.includes('raw.githubusercontent.com')) {
+                      target.src = `/images/untref/${filename}`;
+                    } else {
+                      target.src = `https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/untref/${filename}`;
+                    }
+                  }
+                } else if (currentSrc.includes('audiografemas')) {
+                  const match = currentSrc.match(/audiografemas\d+\.webp/);
+                  if (match) {
+                    const filename = match[0];
+                    if (currentSrc.includes('raw.githubusercontent.com')) {
+                      target.src = `/images/audiografemas/${filename}`;
+                    } else {
+                      target.src = `https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/audiografemas/${filename}`;
+                    }
+                  }
+                } else if (currentSrc.includes('hablemosdesynthes')) {
+                  const match = currentSrc.match(/hablemosdesynthes\d+\.webp/);
+                  if (match) {
+                    const filename = match[0];
+                    if (currentSrc.includes('raw.githubusercontent.com')) {
+                      target.src = `/images/hablemosdesynthes/${filename}`;
+                    } else {
+                      target.src = `https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/hablemosdesynthes/${filename}`;
+                    }
+                  }
+                } else if (currentSrc.includes('cafeyfotogramas')) {
+                  if (currentSrc.includes('raw.githubusercontent.com')) {
+                    target.src = '/images/cafeyfotogramas1.webp';
+                  } else {
+                    target.src = 'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/cafeyfotogramas1.webp';
+                  }
+                }
+              }}
+            />
+          </div>
 
           {/* Sombra gradual inferior */}
           <div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-black/80 to-transparent pointer-events-none z-10" />
+
+          {/* Contador de diapositivas */}
+          {images.length > 1 && (
+            <div className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-md bg-black/75 backdrop-blur-sm border border-white/10 text-[11px] font-mono-code text-[#E0E0F0] pointer-events-none z-20">
+              {currentIndex + 1} / {images.length}
+            </div>
+          )}
 
           {/* Controles de navegación */}
           {images.length > 1 && (
@@ -201,7 +509,7 @@ const ConversatorioGlitchSlide: React.FC<ConversatorioGlitchSlideProps> = ({
               <button
                 type="button"
                 onClick={handlePrev}
-                className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/70 hover:bg-[#00f0ff] hover:text-black text-white transition-all backdrop-blur-sm cursor-pointer shadow-lg z-20 opacity-80 group-hover/slide:opacity-100"
+                className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/70 hover:bg-[#FF007F] text-white transition-all backdrop-blur-sm cursor-pointer shadow-lg z-20 opacity-80 group-hover/slide:opacity-100"
                 aria-label="Anterior"
               >
                 <ChevronLeft className="w-4 h-4" />
@@ -209,14 +517,14 @@ const ConversatorioGlitchSlide: React.FC<ConversatorioGlitchSlideProps> = ({
               <button
                 type="button"
                 onClick={handleNext}
-                className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/70 hover:bg-[#00f0ff] hover:text-black text-white transition-all backdrop-blur-sm cursor-pointer shadow-lg z-20 opacity-80 group-hover/slide:opacity-100"
+                className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/70 hover:bg-[#FF007F] text-white transition-all backdrop-blur-sm cursor-pointer shadow-lg z-20 opacity-80 group-hover/slide:opacity-100"
                 aria-label="Siguiente"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
 
               {/* Indicadores de diapositivas */}
-              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-20">
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-20 max-w-[85%] overflow-x-auto scrollbar-none px-2 py-0.5">
                 {images.map((_, idx) => (
                   <button
                     key={idx}
@@ -227,7 +535,7 @@ const ConversatorioGlitchSlide: React.FC<ConversatorioGlitchSlideProps> = ({
                     }}
                     className={`h-1.5 rounded-full transition-all cursor-pointer ${
                       idx === currentIndex
-                        ? 'w-5 bg-[#00f0ff]'
+                        ? 'w-5 bg-[#FF007F]'
                         : 'w-1.5 bg-white/40 hover:bg-white'
                     }`}
                     aria-label={`Diapositiva ${idx + 1}`}
@@ -239,7 +547,7 @@ const ConversatorioGlitchSlide: React.FC<ConversatorioGlitchSlideProps> = ({
         </>
       ) : (
         <div className="flex flex-col items-center justify-center h-full text-center p-4 font-mono-code text-[#7A7A96]">
-          <ImageIcon className="w-7 h-7 text-[#00f0ff]/40 mb-1.5" />
+          <ImageIcon className="w-7 h-7 text-[#FF007F]/40 mb-1.5" />
           <span className="text-xs text-[#7A7A96]">DISPONIBLE PRÓXIMAMENTE</span>
         </div>
       )}
@@ -266,20 +574,14 @@ export const ConversatoriosSection: React.FC = () => {
         
         {/* ENCABEZADO DE SECCIÓN CON ESTILO RETRO-TERMINAL */}
         <ScrollReveal direction="up" distance="sm">
-          <div className="mb-10 sm:mb-14">
+          <div className="mb-8 sm:mb-10">
             <button
               type="button"
-              className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#00f0ff]/10 hover:bg-[#00f0ff]/20 border border-[#00f0ff]/30 hover:border-[#00f0ff] text-[#00f0ff] text-[15px] sm:text-base font-bahnschrift-condensed font-bold uppercase tracking-widest transition-all duration-300 cursor-pointer group mb-3"
+              className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-[#00f0ff]/10 hover:bg-[#00f0ff]/20 border border-[#00f0ff]/30 hover:border-[#00f0ff] text-[#00f0ff] text-[19px] sm:text-[20px] font-bahnschrift-condensed font-bold uppercase tracking-widest transition-all duration-300 cursor-pointer group"
             >
-              <Mic2 className="w-4 h-4 text-[#00f0ff]" />
+              <Mic2 className="w-5 h-5 text-[#00f0ff]" />
               <span>CONVERSATORIOS</span>
             </button>
-            <h2 className="font-bahnschrift-condensed font-bold text-2xl sm:text-3xl text-white tracking-wider uppercase">
-              Diálogos, Foros, Simposios & Cultura Libre
-            </h2>
-            <p className="text-base sm:text-lg text-[#9A9AB4] mt-2 max-w-3xl font-rajdhani font-semibold tracking-wide">
-              Paneles, foros y ponencias sobre cultura maker, creación sonora experimental, perspectiva de género en tecnología y pedagogías abiertas.
-            </p>
           </div>
         </ScrollReveal>
 
@@ -287,14 +589,6 @@ export const ConversatoriosSection: React.FC = () => {
         <ScrollReveal direction="up" distance="md" delay={100} className="w-full">
           <div className="w-full p-6 sm:p-10 rounded-2xl bg-[#14141E] border border-[#252538] font-dosis relative overflow-hidden">
             <div className="relative z-10">
-              {/* Encabezado editorial interno */}
-              <div className="flex items-center justify-between pb-4 mb-6 border-b border-[#232336]">
-                <div className="flex items-center gap-2 font-dosis text-sm text-[#00f0ff] uppercase tracking-wider font-semibold">
-                  <span className="w-2 h-2 rounded-full bg-[#00f0ff]" />
-                  <span>CONVERSATORIOS & PANELES IMPARTIDOS</span>
-                </div>
-              </div>
-
               {/* Grid editorial de 2 columnas de conversatorios con sus slides glitch */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
                 {CONVERSATORIOS_DATA.map((item) => (

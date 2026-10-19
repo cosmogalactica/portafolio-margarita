@@ -31,14 +31,14 @@ export const SolutionsSection: React.FC = () => {
       id="soluciones"
       onContextMenu={handleProtected}
       onDragStart={handleProtected}
-      className="relative w-full py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-[#0D0D12] border-t border-[#1C1C28] select-none protected-content"
+      className="relative w-full py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-[#0D0D12] border-t border-[#1C1C28] select-none protected-content"
     >
       <div className="max-w-7xl mx-auto">
         {/* ENCABEZADO MINIMALISTA: SOLO TÍTULO Y BOTÓN DE REANUDAR */}
         <ScrollReveal direction="up" distance="sm">
-          <div className="flex items-center justify-between gap-4 mb-6">
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#FF007F]/10 border border-[#FF007F]/30 text-[#FF007F] text-[15px] sm:text-base font-bahnschrift-condensed font-bold uppercase tracking-widest">
-              <Layers className="w-4 h-4 text-[#FF007F]" />
+          <div className="flex items-center justify-between gap-4 mb-8 sm:mb-10">
+            <div className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-[#FF007F]/10 border border-[#FF007F]/30 text-[#FF007F] text-[19px] sm:text-[20px] font-bahnschrift-condensed font-bold uppercase tracking-widest">
+              <Layers className="w-5 h-5 text-[#FF007F]" />
               <span>SOLUCIONES</span>
             </div>
 
@@ -150,14 +150,14 @@ export const SolutionsSection: React.FC = () => {
                 </div>
 
                 {/* Subtítulo */}
-                <p className="font-rajdhani font-semibold text-sm sm:text-base text-[#D4D4E8] text-center mb-5 pb-3 border-b border-[#232334]">
+                <p className="font-rajdhani font-semibold text-sm sm:text-base text-[#FF007F] text-center mb-5 pb-3 border-b border-[#232334]">
                   El mundo es diverso, cambiante y complejo.
                 </p>
 
                 {/* Contenido */}
                 <div className="font-rajdhani text-sm sm:text-[15px] text-[#A6A6C0] leading-relaxed mb-6">
                   <p className="mb-3">
-                    Talleres de practicas transversales, conversatorios y consultoría donde relaciono la:
+                    Labs, talleres, conversatorios y consultorías en prácticas transversales que integran:
                   </p>
                   <div className="space-y-1.5">
                     <p className="font-bold text-white">Tecnología [ I.A & electrónica aplicada ]</p>
@@ -169,17 +169,15 @@ export const SolutionsSection: React.FC = () => {
                 </div>
               </div>
 
-              {/* Botón inferior en el color del div (Magenta) */}
-              <button
-                type="button"
-                onClick={() => {
-                  const el = document.getElementById('contacto');
-                  if (el) el.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="w-full py-2.5 px-4 rounded-xl bg-[#FF007F] hover:bg-[#ff1a8c] text-white text-center font-rajdhani font-bold text-[15px] sm:text-base tracking-wide shadow-[0_4px_16px_rgba(255,0,127,0.35)] hover:shadow-[0_6px_22px_rgba(255,0,127,0.55)] transition-all cursor-pointer mt-auto active:scale-[0.98]"
+              {/* Botón inferior en el color del div (Magenta) que redirige a https://sonorarteclab.com/python-curso/ */}
+              <a
+                href="https://sonorarteclab.com/python-curso/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-2.5 px-2 sm:px-3 rounded-xl bg-[#FF007F] hover:bg-[#ff1a8c] text-white text-center font-rajdhani font-bold text-xs sm:text-[13px] md:text-[11.5px] lg:text-[13px] xl:text-[14px] whitespace-nowrap shadow-[0_4px_16px_rgba(255,0,127,0.35)] hover:shadow-[0_6px_22px_rgba(255,0,127,0.55)] transition-all cursor-pointer mt-auto active:scale-[0.98] flex items-center justify-center"
               >
                 Ser y hacer una sola cosa es muy aburrido
-              </button>
+              </a>
             </div>
 
             {/* TARJETA 2: FUNKYNET */}
@@ -196,7 +194,7 @@ export const SolutionsSection: React.FC = () => {
                 </div>
 
                 {/* Subtítulo */}
-                <p className="font-rajdhani font-semibold text-sm sm:text-base text-[#D4D4E8] text-center mb-5 pb-3 border-b border-[#232334]">
+                <p className="font-rajdhani font-semibold text-sm sm:text-base text-[#00f0ff] text-center mb-5 pb-3 border-b border-[#232334]">
                   Del anonimato a una presencia digital con propósito.
                 </p>
 
@@ -240,17 +238,15 @@ export const SolutionsSection: React.FC = () => {
                 </div>
               </div>
 
-              {/* Botón inferior en el color del div (Cian) */}
-              <button
-                type="button"
-                onClick={() => {
-                  const el = document.getElementById('contacto');
-                  if (el) el.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="w-full py-2.5 px-4 rounded-xl bg-[#00f0ff] hover:bg-[#38f8ff] text-[#0A0A10] text-center font-rajdhani font-bold text-[15px] sm:text-base tracking-wide shadow-[0_4px_16px_rgba(0,240,255,0.35)] hover:shadow-[0_6px_22px_rgba(0,240,255,0.55)] transition-all cursor-pointer mt-auto active:scale-[0.98]"
+              {/* Botón inferior en el color del div (Cian) que redirige a https://sonorarteclab.com/ */}
+              <a
+                href="https://sonorarteclab.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-2.5 px-2 sm:px-3 rounded-xl bg-[#00f0ff] hover:bg-[#38f8ff] text-[#0A0A10] text-center font-rajdhani font-bold text-xs sm:text-[13px] md:text-[11.5px] lg:text-[13px] xl:text-[14px] whitespace-nowrap shadow-[0_4px_16px_rgba(0,240,255,0.35)] hover:shadow-[0_6px_22px_rgba(0,240,255,0.55)] transition-all cursor-pointer mt-auto active:scale-[0.98] flex items-center justify-center"
               >
                 Te entrego la brújula para encontrar el camino
-              </button>
+              </a>
             </div>
 
             {/* TARJETA 3: TUTOR.I.A */}
@@ -267,7 +263,7 @@ export const SolutionsSection: React.FC = () => {
                 </div>
 
                 {/* Subtítulo */}
-                <p className="font-rajdhani font-semibold text-sm sm:text-base text-[#D4D4E8] text-center mb-5 pb-3 border-b border-[#232334]">
+                <p className="font-rajdhani font-semibold text-sm sm:text-base text-[#E024C3] text-center mb-5 pb-3 border-b border-[#232334]">
                   Agentes conversacionales que no suenan a robot.
                 </p>
 
@@ -278,17 +274,15 @@ export const SolutionsSection: React.FC = () => {
                 </p>
               </div>
 
-              {/* Botón inferior en el color del div (Violeta Eléctrico) */}
-              <button
-                type="button"
-                onClick={() => {
-                  const el = document.getElementById('contacto');
-                  if (el) el.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="w-full py-2.5 px-4 rounded-xl bg-[#E024C3] hover:bg-[#ee3fda] text-white text-center font-rajdhani font-bold text-[15px] sm:text-base tracking-wide shadow-[0_4px_16px_rgba(224,36,195,0.35)] hover:shadow-[0_6px_22px_rgba(224,36,195,0.55)] transition-all cursor-pointer mt-auto active:scale-[0.98]"
+              {/* Botón inferior en el color del div (Violeta Eléctrico) que redirige a https://sonorarteclab.com/tutor-i-a/ */}
+              <a
+                href="https://sonorarteclab.com/tutor-i-a/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-2.5 px-2 sm:px-3 rounded-xl bg-[#E024C3] hover:bg-[#ee3fda] text-white text-center font-rajdhani font-bold text-xs sm:text-[13px] md:text-[11.5px] lg:text-[13px] xl:text-[14px] whitespace-nowrap shadow-[0_4px_16px_rgba(224,36,195,0.35)] hover:shadow-[0_6px_22px_rgba(224,36,195,0.55)] transition-all cursor-pointer mt-auto active:scale-[0.98] flex items-center justify-center"
               >
                 Las conexiones digitales autenticas son posibles
-              </button>
+              </a>
             </div>
 
           </div>

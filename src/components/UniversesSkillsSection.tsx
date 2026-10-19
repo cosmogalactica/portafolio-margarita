@@ -10,7 +10,6 @@
 
 import React, { useState } from 'react';
 import {
-  Sparkles,
   ChevronDown,
   Terminal,
   Feather,
@@ -48,7 +47,7 @@ export const UNIVERSES_DATA: UniverseData[] = [
       'Creación De Experiencias Digitales',
       'Electrónica Aplicada Al Arte',
       'App Inventor',
-      'DIY',
+      'DIY | DIWO',
       'Cultura Maker',
     ],
   },
@@ -128,28 +127,27 @@ export const UniversesSkillsSection: React.FC = () => {
 
   return (
     <div id="universos-habilidades" className="mt-12 sm:mt-16 pt-8 border-t border-[#222234]">
-      {/* Barra de cabecera con botón de trayectoria sincronizado y controles de desplegables */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <div className="flex items-center gap-3">
-          <button
-            type="button"
-            onClick={() => toggleAll(!allOpen)}
-            className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#FF007F]/10 hover:bg-[#FF007F]/20 border border-[#FF007F]/30 hover:border-[#FF007F] text-[#FF007F] text-[15px] sm:text-base font-bahnschrift-condensed font-bold uppercase tracking-widest transition-all duration-300 hover:shadow-[0_0_15px_rgba(255,0,127,0.25)] cursor-pointer group"
-          >
-            <Sparkles className="w-4 h-4 text-[#FF007F] group-hover:rotate-12 transition-transform" />
-            <span>UNIVERSOS Y HABILIDADES</span>
-          </button>
-        </div>
+      {/* Barra de cabecera con estilo idéntico al div de PERFIL */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-5">
+        <button
+          type="button"
+          onClick={() => toggleAll(!allOpen)}
+          className="flex items-center gap-2 font-bahnschrift-condensed text-sm text-[#00f0ff] uppercase tracking-widest font-bold hover:text-white transition-colors cursor-pointer group text-left"
+          title={allOpen ? 'Contraer todos los universos' : 'Expandir todos los universos'}
+        >
+          <span className="w-2 h-2 rounded-full bg-[#00f0ff] animate-pulse-slow shadow-[0_0_8px_#00f0ff] group-hover:scale-125 transition-transform" />
+          <span>UNIVERSOS Y HABILIDADES</span>
+        </button>
 
         {/* Botón rápido para expandir/colapsar todos */}
         <div className="flex items-center gap-2">
           <button
             type="button"
             onClick={() => toggleAll(!allOpen)}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-[#141420] border border-[#27273C] hover:border-[#00f0ff]/50 text-[14px] sm:text-[15px] font-bahnschrift-condensed font-semibold tracking-wider text-[#8E8EA8] hover:text-[#00f0ff] transition-all cursor-pointer"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-[#141420] border border-[#27273C] hover:border-[#00f0ff]/50 text-[13px] sm:text-[14px] font-bahnschrift-condensed font-semibold tracking-wider text-[#8E8EA8] hover:text-[#00f0ff] transition-all cursor-pointer"
           >
             <Layers className="w-3.5 h-3.5" />
-            <span>{allOpen ? 'Colapsar todos' : 'Expandir todos'}</span>
+            <span>{allOpen ? 'Contraer' : 'Expandir'}</span>
           </button>
         </div>
       </div>

@@ -72,8 +72,21 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Reprobate';
+  src: url('/fonts/REPROB__.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 .font-rajdhani {
   font-family: 'Rajdhani', sans-serif;
+}
+
+.font-reprobate {
+  font-family: 'Reprobate', cursive, sans-serif;
+  letter-spacing: 0.05em;
 }
 
 .font-hacked {
@@ -143,7 +156,38 @@
   animation: terminalBlink 0.9s infinite;
 }
 
-/* Capa de protección de contenido y anti-copia */
+/* Capa global de protección de contenido, anti-copia y anti-arrastre para producción */
+*,
+*::before,
+*::after {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+input,
+textarea {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+img,
+video,
+iframe,
+canvas,
+svg {
+  -webkit-user-drag: none;
+  user-drag: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 .unselectable,
 .protected-content {
   -webkit-user-select: none;
@@ -152,12 +196,22 @@
   user-select: none;
 }
 
+.protected-content img,
+.protected-content iframe,
+.protected-content video {
+  -webkit-user-drag: none;
+  user-drag: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
 .protected-media {
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
   -webkit-user-drag: none;
-  pointer-events: none;
+  user-drag: none;
+  pointer-events: auto;
   -webkit-touch-callout: none;
 }
 
