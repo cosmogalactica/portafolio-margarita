@@ -393,30 +393,95 @@ export const NewsSection: React.FC = () => {
             </article>
           </ScrollReveal>
 
-          {/* DIVS 2 Y 3: ESPACIOS VACÍOS PREPARADOS PARA FUTURAS NOTICIAS */}
-          {[1, 2].map((emptyIndex) => (
-            <ScrollReveal
-              key={`empty-slot-${emptyIndex}`}
-              direction="up"
-              distance="md"
-              delay={emptyIndex * 80 + 100}
-              className="w-full flex"
+          {/* DIV 2: ESPACIO VACÍO PREPARADO PARA FUTURA NOTICIA */}
+          <ScrollReveal
+            direction="up"
+            distance="md"
+            delay={180}
+            className="w-full flex"
+          >
+            <article
+              onContextMenu={handleProtected}
+              onDragStart={handleProtected}
+              className="w-full rounded-2xl bg-[#14141E] border border-[#252538] shadow-[0_12px_40px_rgba(0,0,0,0.6)] flex flex-col justify-between overflow-hidden select-none relative"
             >
-              <article
-                onContextMenu={handleProtected}
-                onDragStart={handleProtected}
-                className="w-full rounded-2xl bg-[#14141E] border border-[#252538] shadow-[0_12px_40px_rgba(0,0,0,0.6)] flex flex-col justify-between overflow-hidden select-none relative"
-              >
-                <div className="relative w-full bg-[#07070B] overflow-hidden flex items-center justify-center p-3 sm:p-5">
-                  <div
-                    className="relative w-full aspect-[16/9] sm:aspect-[16/10] rounded-xl bg-[#0A0A12] border border-dashed border-[#252538] flex items-center justify-center select-none"
-                    aria-hidden="true"
+              <div className="relative w-full bg-[#07070B] overflow-hidden flex items-center justify-center p-3 sm:p-5">
+                <div
+                  className="relative w-full aspect-[16/9] sm:aspect-[16/10] rounded-xl bg-[#0A0A12] border border-dashed border-[#252538] flex items-center justify-center select-none"
+                  aria-hidden="true"
+                />
+              </div>
+              <div aria-hidden="true" />
+            </article>
+          </ScrollReveal>
+
+          {/* DIV 3: REGISTRO DE INSTAGRAM (PUBLICACIÓN DEXLKABIBJG) */}
+          <ScrollReveal
+            direction="up"
+            distance="md"
+            delay={260}
+            className="w-full flex"
+          >
+            <article
+              onContextMenu={handleProtected}
+              onDragStart={handleProtected}
+              className="w-full rounded-2xl bg-[#14141E] border border-[#252538] hover:border-[#00f0ff]/60 shadow-[0_12px_40px_rgba(0,0,0,0.6)] transition-all duration-300 flex flex-col justify-between overflow-hidden group select-none relative"
+            >
+              {/* Resplandor ambiental de acento en la tarjeta */}
+              <div
+                className="pointer-events-none absolute -top-12 -right-12 w-32 h-32 bg-[#00f0ff]/10 blur-[50px] rounded-full z-0"
+                aria-hidden="true"
+              />
+
+              {/* CONTENEDOR MULTIMEDIA: MISMO TAMAÑO QUE TODOS LOS DIVS DE SLIDE DEL SITIO */}
+              <div className="relative w-full bg-[#07070B] overflow-hidden flex items-center justify-center p-3 sm:p-5">
+                <div
+                  onContextMenu={handleProtected}
+                  onDragStart={handleProtected}
+                  style={
+                    {
+                      userSelect: 'none',
+                      WebkitUserDrag: 'none',
+                    } as React.CSSProperties
+                  }
+                  className="relative w-full aspect-[16/9] sm:aspect-[16/10] rounded-xl overflow-hidden bg-[#0A0A12] border border-[#26263A] shadow-md select-none flex flex-col"
+                >
+                  {/* Capa de textura CRT glitch sutil */}
+                  <div className="absolute inset-0 glitch-texture-overlay z-10 pointer-events-none" />
+
+                  {/* Barra superior de control del iframe */}
+                  <div className="relative z-20 flex items-center justify-between px-3.5 py-1.5 bg-[#10101A]/95 border-b border-[#252538] backdrop-blur-sm select-none shrink-0">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-[#00f0ff] animate-pulse" />
+                      <span className="text-[11px] font-mono-code font-bold uppercase tracking-wider text-[#00f0ff]">
+                        REGISTRO INSTAGRAM
+                      </span>
+                    </div>
+
+                    <a
+                      href="https://www.instagram.com/p/DexLkAbibjg/?xtok=MTkzY2J4b2tiaGx2OQ%3D%3D"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-1 rounded hover:bg-white/10 text-[#A6A6C0] hover:text-[#00f0ff] transition-colors inline-flex items-center gap-1.5 text-xs font-mono-code"
+                      title="Abrir publicación completa en Instagram"
+                    >
+                      <span className="hidden sm:inline text-[11px]">VER EN INSTAGRAM</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
+
+                  {/* Publicación completa escalada al 100% sin recortar */}
+                  <InstagramScaledEmbed
+                    url="https://www.instagram.com/p/DexLkAbibjg/embed/"
+                    title="Instagram - Publicación Completa"
                   />
                 </div>
-                <div aria-hidden="true" />
-              </article>
-            </ScrollReveal>
-          ))}
+              </div>
+
+              {/* DIV 2 DE LA NOTICIA: VACÍO */}
+              <div aria-hidden="true" />
+            </article>
+          </ScrollReveal>
 
           {/* DIV 4: REGISTRO DE INSTAGRAM IFRAME COMPLETO SIN CORTES */}
           <ScrollReveal
