@@ -7,7 +7,7 @@
  * individual interactivo debajo de CADA título.
  */
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import {
   Mic2,
   ChevronLeft,
@@ -231,12 +231,12 @@ const ConversatorioGlitchSlide: React.FC<ConversatorioGlitchSlideProps> = ({
   conversatorioId,
   conversatorioTitle,
 }) => {
-  const [images] = useState<string[]>(() => {
-    const isExternalProduction = typeof window !== 'undefined' && 
-      !window.location.hostname.includes('run.app') && 
-      !window.location.hostname.includes('localhost') && 
-      !window.location.hostname.includes('127.0.0.1');
+  const isExternalProduction = typeof window !== 'undefined' && 
+    !window.location.hostname.includes('run.app') && 
+    !window.location.hostname.includes('localhost') && 
+    !window.location.hostname.includes('127.0.0.1');
 
+  const images = useMemo<string[]>(() => {
     let defaultList = CONVERSATORIO_DEFAULT_IMAGES[conversatorioId] || GENERIC_CONVERSATORIOS_IMAGES;
     if (conversatorioId === 'mas-alla-del-algoritmo-2024') {
       defaultList = isExternalProduction ? WOLF_PROD_IMAGES : WOLF_GITHUB_IMAGES;
@@ -253,125 +253,17 @@ const ConversatorioGlitchSlide: React.FC<ConversatorioGlitchSlideProps> = ({
     } else if (conversatorioId === 'cafe-y-fotogramas-2017') {
       defaultList = isExternalProduction ? CAFEYFOTOGRAMAS_PROD_IMAGES : CAFEYFOTOGRAMAS_GITHUB_IMAGES;
     }
-
-    const saved = localStorage.getItem(`margarita_conversatorio_slide_${conversatorioId}`);
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-
-        // Migrar automáticamente si contiene enlaces antiguos de Unsplash o no tiene exactamente 5 imágenes para Wolf
-        if (
-          conversatorioId === 'mas-alla-del-algoritmo-2024' &&
-          Array.isArray(parsed) &&
-          (parsed.some((url: string) => typeof url === 'string' && url.includes('unsplash.com')) || parsed.length !== 5)
-        ) {
-          try {
-            localStorage.setItem(`margarita_conversatorio_slide_${conversatorioId}`, JSON.stringify(defaultList));
-          } catch {
-            // ignore
-          }
-          return defaultList;
-        }
-
-        // Migrar automáticamente si contiene enlaces antiguos o no tiene musiforo2 como portada para Musiforo
-        if (
-          conversatorioId === 'musiforo-unal-2021' &&
-          Array.isArray(parsed) &&
-          (!parsed[0]?.includes('musiforo2') ||
-            parsed.some((url: string) => typeof url === 'string' && (url.includes('unsplash.com') || !url.includes('musiforo'))) ||
-            parsed.length !== 5)
-        ) {
-          try {
-            localStorage.setItem(`margarita_conversatorio_slide_${conversatorioId}`, JSON.stringify(defaultList));
-          } catch {
-            // ignore
-          }
-          return defaultList;
-        }
-
-        // Migrar automáticamente si contiene enlaces antiguos de Unsplash o no tiene exactamente 5 imágenes para Bibliolabs
-        if (
-          conversatorioId === 'sonorarteclab-cultura-maker-2021' &&
-          Array.isArray(parsed) &&
-          (parsed.some((url: string) => typeof url === 'string' && (url.includes('unsplash.com') || !url.includes('bibliolabs'))) || parsed.length !== 5)
-        ) {
-          try {
-            localStorage.setItem(`margarita_conversatorio_slide_${conversatorioId}`, JSON.stringify(defaultList));
-          } catch {
-            // ignore
-          }
-          return defaultList;
-        }
-
-        // Migrar automáticamente si contiene enlaces antiguos o no tiene untref3 como portada para UNTREF
-        if (
-          conversatorioId === 'movimiento-cultura-maker-untref-2019' &&
-          Array.isArray(parsed) &&
-          (!parsed[0]?.includes('untref3') ||
-            parsed.some((url: string) => typeof url === 'string' && (url.includes('unsplash.com') || !url.includes('untref'))) ||
-            parsed.length !== 3)
-        ) {
-          try {
-            localStorage.setItem(`margarita_conversatorio_slide_${conversatorioId}`, JSON.stringify(defaultList));
-          } catch {
-            // ignore
-          }
-          return defaultList;
-        }
-
-        // Migrar automáticamente si contiene enlaces antiguos, contiene hablemosdesynthes2, no tiene hablemosdesynthes3 como portada o no tiene exactamente 2 imágenes para Hablemos de Synthes
-        if (
-          conversatorioId === 'synthetizadores-sonidos-marcianos-2017' &&
-          Array.isArray(parsed) &&
-          (!parsed[0]?.includes('hablemosdesynthes3') ||
-            parsed.some((url: string) => typeof url === 'string' && (url.includes('unsplash.com') || !url.includes('hablemosdesynthes') || url.includes('hablemosdesynthes2'))) ||
-            parsed.length !== 2)
-        ) {
-          try {
-            localStorage.setItem(`margarita_conversatorio_slide_${conversatorioId}`, JSON.stringify(defaultList));
-          } catch {
-            // ignore
-          }
-          return defaultList;
-        }
-
-        // Migrar automáticamente si contiene enlaces antiguos de Unsplash o no tiene exactamente 9 imágenes para Audiografemas
-        if (
-          conversatorioId === 'audiografemas-poesia-analoga-2017' &&
-          Array.isArray(parsed) &&
-          (parsed.some((url: string) => typeof url === 'string' && (url.includes('unsplash.com') || !url.includes('audiografemas'))) || parsed.length !== 9)
-        ) {
-          try {
-            localStorage.setItem(`margarita_conversatorio_slide_${conversatorioId}`, JSON.stringify(defaultList));
-          } catch {
-            // ignore
-          }
-          return defaultList;
-        }
-
-        // Migrar automáticamente si contiene enlaces antiguos de Unsplash o no contiene cafeyfotogramas para Café y Fotogramas
-        if (
-          conversatorioId === 'cafe-y-fotogramas-2017' &&
-          Array.isArray(parsed) &&
-          (parsed.some((url: string) => typeof url === 'string' && (url.includes('unsplash.com') || !url.includes('cafeyfotogramas'))) || parsed.length !== 1)
-        ) {
-          try {
-            localStorage.setItem(`margarita_conversatorio_slide_${conversatorioId}`, JSON.stringify(defaultList));
-          } catch {
-            // ignore
-          }
-          return defaultList;
-        }
-
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          return parsed;
-        }
-      } catch {
-        return defaultList;
-      }
-    }
     return defaultList;
-  });
+  }, [conversatorioId, isExternalProduction]);
+
+  // Limpiar cualquier residuo obsoleto en localStorage para reflejar cambios de código inmediatamente
+  useEffect(() => {
+    try {
+      localStorage.removeItem(`margarita_conversatorio_slide_${conversatorioId}`);
+    } catch {
+      // ignore
+    }
+  }, [conversatorioId]);
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -526,7 +418,7 @@ const ConversatorioGlitchSlide: React.FC<ConversatorioGlitchSlideProps> = ({
 
               {/* Indicadores de diapositivas */}
               <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-20 max-w-[85%] overflow-x-auto scrollbar-none px-2 py-0.5">
-                {images.map((_, idx) => (
+                {images.map((_: string, idx: number) => (
                   <button
                     key={idx}
                     type="button"

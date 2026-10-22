@@ -6,7 +6,7 @@
  * un Slide Glitch interactivo con textura analógica y persistencia en localStorage.
  */
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import {
   Cpu,
   Image as ImageIcon,
@@ -680,7 +680,7 @@ const WorkshopGlitchSlide: React.FC<WorkshopGlitchSlideProps> = ({
     !window.location.hostname.includes('webcontainer') &&
     !window.location.hostname.includes('github.dev');
 
-  const [images] = useState<string[]>(() => {
+  const images = useMemo<string[]>(() => {
     let defaultList =
       WORKSHOP_DEFAULT_IMAGES[workshopId] !== undefined
         ? WORKSHOP_DEFAULT_IMAGES[workshopId]
@@ -713,207 +713,17 @@ const WorkshopGlitchSlide: React.FC<WorkshopGlitchSlideProps> = ({
       defaultList = SAN_PABLO_BOLIVAR_PROD_IMAGES;
     }
 
-    const saved = localStorage.getItem(`margarita_workshop_slide_${workshopId}`);
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        // Migrar si contiene enlaces antiguos de Unsplash o menos de 9 imágenes para Poesía App Comfama
-        if (
-          workshopId === 'taller-poesiapp-2022' &&
-          Array.isArray(parsed) &&
-          (parsed.some((url: string) => typeof url === 'string' && url.includes('unsplash.com')) || parsed.length < 9)
-        ) {
-          try {
-            localStorage.setItem(`margarita_workshop_slide_${workshopId}`, JSON.stringify(defaultList));
-          } catch {
-            // ignore
-          }
-          return defaultList;
-        }
-
-        // Migrar si contiene enlaces antiguos de Unsplash o menos de 8 imágenes para Feria Comfama Urabá
-        if (
-          workshopId === 'lab-feria-sonorarteclab-uraba-2022' &&
-          Array.isArray(parsed) &&
-          (parsed.some((url: string) => typeof url === 'string' && url.includes('unsplash.com')) || parsed.length < 8)
-        ) {
-          try {
-            localStorage.setItem(`margarita_workshop_slide_${workshopId}`, JSON.stringify(defaultList));
-          } catch {
-            // ignore
-          }
-          return defaultList;
-        }
-
-        // Migrar si contiene enlaces antiguos de Unsplash o no tiene exactamente 6 imágenes para Feria Comfama Zungo
-        if (
-          workshopId === 'lab-feria-comfama-zungo-2022' &&
-          Array.isArray(parsed) &&
-          (parsed.length !== 6 || parsed.some((url: string) => typeof url === 'string' && url.includes('unsplash.com')))
-        ) {
-          try {
-            localStorage.setItem(`margarita_workshop_slide_${workshopId}`, JSON.stringify(defaultList));
-          } catch {
-            // ignore
-          }
-          return defaultList;
-        }
-
-        // Migrar si contiene enlaces antiguos de Unsplash o menos de 12 imágenes para Taller Santa Rosa de Osos
-        if (
-          workshopId === 'lab-feria-sonorarteclab-santa-rosa-2022' &&
-          Array.isArray(parsed) &&
-          (parsed.some((url: string) => typeof url === 'string' && url.includes('unsplash.com')) || parsed.length < 12)
-        ) {
-          try {
-            localStorage.setItem(`margarita_workshop_slide_${workshopId}`, JSON.stringify(defaultList));
-          } catch {
-            // ignore
-          }
-          return defaultList;
-        }
-
-        // Migrar si contiene enlaces antiguos de Unsplash o menos de 11 imágenes para Cinematógrafo Comfama
-        if (
-          workshopId === 'taller-cinematografo-galaxia-2022' &&
-          Array.isArray(parsed) &&
-          (parsed.some((url: string) => typeof url === 'string' && url.includes('unsplash.com')) || parsed.length < 11)
-        ) {
-          try {
-            localStorage.setItem(`margarita_workshop_slide_${workshopId}`, JSON.stringify(defaultList));
-          } catch {
-            // ignore
-          }
-          return defaultList;
-        }
-
-        // Migrar si contiene enlaces antiguos de Unsplash, no tiene 25 imágenes o no tiene imagen 6 de portada para Poesía App BP
-        if (
-          workshopId === 'laboratorios-poesiapp-dibujosonico-2021' &&
-          Array.isArray(parsed) &&
-          (parsed.some((url: string) => typeof url === 'string' && url.includes('unsplash.com')) ||
-            parsed.length !== 25 ||
-            !parsed[0]?.includes('6.webp') ||
-            parsed.some((url: string) => typeof url === 'string' && (url.includes('12.webp') || url.includes('13.webp') || url.includes('14.webp'))))
-        ) {
-          try {
-            localStorage.setItem(`margarita_workshop_slide_${workshopId}`, JSON.stringify(defaultList));
-          } catch {
-            // ignore
-          }
-          return defaultList;
-        }
-
-        // Migrar si contiene enlaces antiguos de Unsplash o no tiene exactamente 2 imágenes para Taller de Ideación BPP
-        if (
-          workshopId === 'taller-ideacion-2021' &&
-          Array.isArray(parsed) &&
-          (parsed.some((url: string) => typeof url === 'string' && url.includes('unsplash.com')) || parsed.length !== 2)
-        ) {
-          try {
-            localStorage.setItem(`margarita_workshop_slide_${workshopId}`, JSON.stringify(defaultList));
-          } catch {
-            // ignore
-          }
-          return defaultList;
-        }
-
-        // Migrar si contiene enlaces antiguos de Unsplash o no tiene exactamente 3 imágenes para Fiesta del Libro y la Cultura
-        if (
-          workshopId === 'proyecto-lapiz-voltajoso-2020' &&
-          Array.isArray(parsed) &&
-          (parsed.some((url: string) => typeof url === 'string' && url.includes('unsplash.com')) || parsed.length !== 3)
-        ) {
-          try {
-            localStorage.setItem(`margarita_workshop_slide_${workshopId}`, JSON.stringify(defaultList));
-          } catch {
-            // ignore
-          }
-          return defaultList;
-        }
-
-        // Migrar si contiene enlaces antiguos de Unsplash o no tiene bergen3 como portada para Bergen
-        if (
-          workshopId === 'proyecto-lapiz-voltajoso-citytech-2018-2017' &&
-          Array.isArray(parsed) &&
-          (parsed.length !== 10 ||
-            !parsed[0]?.includes('bergen3') ||
-            parsed.some((url: string) => typeof url === 'string' && url.includes('unsplash.com')))
-        ) {
-          try {
-            localStorage.setItem(`margarita_workshop_slide_${workshopId}`, JSON.stringify(defaultList));
-          } catch {
-            // ignore
-          }
-          return defaultList;
-        }
-
-        // Migrar si contiene enlaces antiguos de Unsplash o no tiene bancodelarep25 como portada para Banco de la República
-        if (
-          workshopId === 'proyecto-lapiz-voltajoso-banrep-2017' &&
-          Array.isArray(parsed) &&
-          (parsed.length !== 31 ||
-            !parsed[0]?.includes('bancodelarep25') ||
-            parsed.some((url: string) => typeof url === 'string' && url.includes('unsplash.com')))
-        ) {
-          try {
-            localStorage.setItem(`margarita_workshop_slide_${workshopId}`, JSON.stringify(defaultList));
-          } catch {
-            // ignore
-          }
-          return defaultList;
-        }
-
-        // Migrar si contiene enlaces antiguos de Unsplash o no tiene rodolfollinas7 como portada para Rodolfo Llinás
-        if (
-          workshopId === 'taller-electronica-creativa-llinas-2016' &&
-          Array.isArray(parsed) &&
-          (parsed.length !== 7 ||
-            !parsed[0]?.includes('rodolfollinas7') ||
-            parsed.some((url: string) => typeof url === 'string' && url.includes('unsplash.com')))
-        ) {
-          try {
-            localStorage.setItem(`margarita_workshop_slide_${workshopId}`, JSON.stringify(defaultList));
-          } catch {
-            // ignore
-          }
-          return defaultList;
-        }
-
-        // Migrar si contiene enlaces antiguos de Unsplash o no tiene exactamente 4 imágenes para ASEUNAB
-        if (
-          workshopId === 'taller-electronica-creativa-unab-2016' &&
-          Array.isArray(parsed) &&
-          (parsed.some((url: string) => typeof url === 'string' && url.includes('unsplash.com')) || parsed.length !== 4)
-        ) {
-          try {
-            localStorage.setItem(`margarita_workshop_slide_${workshopId}`, JSON.stringify(defaultList));
-          } catch {
-            // ignore
-          }
-          return defaultList;
-        }
-
-        // Migrar si contiene enlaces antiguos de Unsplash o no tiene exactamente 14 imágenes para San Pablo Bolívar
-        if (
-          workshopId === 'taller-electronica-creativa-essa-2014' &&
-          Array.isArray(parsed) &&
-          (parsed.some((url: string) => typeof url === 'string' && url.includes('unsplash.com')) || parsed.length !== 14)
-        ) {
-          try {
-            localStorage.setItem(`margarita_workshop_slide_${workshopId}`, JSON.stringify(defaultList));
-          } catch {
-            // ignore
-          }
-          return defaultList;
-        }
-        return Array.isArray(parsed) && parsed.length > 0 ? parsed : defaultList;
-      } catch {
-        return defaultList;
-      }
-    }
     return defaultList;
-  });
+  }, [workshopId, isExternalProduction]);
+
+  // Limpiar cualquier residuo obsoleto en localStorage para reflejar cambios de código inmediatamente
+  useEffect(() => {
+    try {
+      localStorage.removeItem(`margarita_workshop_slide_${workshopId}`);
+    } catch {
+      // ignore
+    }
+  }, [workshopId]);
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -1228,7 +1038,7 @@ const WorkshopGlitchSlide: React.FC<WorkshopGlitchSlideProps> = ({
 
               {/* Indicadores de diapositivas */}
               <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-20 max-w-[85%] overflow-x-auto px-1 py-0.5 scrollbar-none">
-                {images.map((_, idx) => (
+                {images.map((_: string, idx: number) => (
                   <button
                     key={idx}
                     type="button"

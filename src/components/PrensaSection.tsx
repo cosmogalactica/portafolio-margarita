@@ -225,103 +225,17 @@ const PrensaGlitchSlide: React.FC<PrensaGlitchSlideProps> = ({ prensaId, prensaT
   const isVertical =
     prensaId === 'prensa-diario-adn-2015' || prensaId === 'prensa-diario-vanguardia-2013';
 
-  const [images, setImages] = useState<string[]>(() => {
-    const saved = localStorage.getItem(`margarita_prensa_slide_${prensaId}`);
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        if (
-          prensaId === 'prensa-la-cultural-2024' &&
-          Array.isArray(parsed) &&
-          (!parsed[0]?.includes('lacultural2'))
-        ) {
-          localStorage.removeItem(`margarita_prensa_slide_${prensaId}`);
-          return defaultList;
-        }
-        if (
-          (prensaId === 'prensa-la-cultural-2024' ||
-            prensaId === 'prensa-vanguardia-femenina-2020' ||
-            prensaId === 'prensa-telemedellin-2019' ||
-            prensaId === 'prensa-la-u-stereo-2016' ||
-            prensaId === 'prensa-diario-adn-2015' ||
-            prensaId === 'prensa-diario-vanguardia-2013') &&
-          Array.isArray(parsed) &&
-          parsed.some((u: string) => typeof u === 'string' && u.includes('unsplash.com'))
-        ) {
-          localStorage.removeItem(`margarita_prensa_slide_${prensaId}`);
-          return defaultList;
-        }
-        return parsed;
-      } catch {
-        return defaultList;
-      }
-    }
-    return defaultList;
-  });
+  const [customImages, setCustomImages] = useState<string[] | null>(null);
+  const images = customImages || defaultList;
 
+  // Limpiar cualquier residuo obsoleto en localStorage para reflejar cambios de código inmediatamente
   useEffect(() => {
-    if (prensaId === 'prensa-la-cultural-2024') {
-      try {
-        const saved = localStorage.getItem(`margarita_prensa_slide_${prensaId}`);
-        if (!saved || saved.includes('unsplash.com') || !saved.includes('lacultural2')) {
-          localStorage.removeItem(`margarita_prensa_slide_${prensaId}`);
-          setImages(isExternalProduction ? LACULTURAL_PROD_IMAGES : LACULTURAL_GITHUB_IMAGES);
-        }
-      } catch {
-        // no-op
-      }
-    } else if (prensaId === 'prensa-vanguardia-femenina-2020') {
-      try {
-        const saved = localStorage.getItem(`margarita_prensa_slide_${prensaId}`);
-        if (!saved || saved.includes('unsplash.com')) {
-          localStorage.removeItem(`margarita_prensa_slide_${prensaId}`);
-          setImages(isExternalProduction ? LAARTIVISTA_PROD_IMAGES : LAARTIVISTA_GITHUB_IMAGES);
-        }
-      } catch {
-        // no-op
-      }
-    } else if (prensaId === 'prensa-telemedellin-2019') {
-      try {
-        const saved = localStorage.getItem(`margarita_prensa_slide_${prensaId}`);
-        if (!saved || saved.includes('unsplash.com')) {
-          localStorage.removeItem(`margarita_prensa_slide_${prensaId}`);
-          setImages(isExternalProduction ? TELEMEDELLIN_PROD_IMAGES : TELEMEDELLIN_GITHUB_IMAGES);
-        }
-      } catch {
-        // no-op
-      }
-    } else if (prensaId === 'prensa-la-u-stereo-2016') {
-      try {
-        const saved = localStorage.getItem(`margarita_prensa_slide_${prensaId}`);
-        if (!saved || saved.includes('unsplash.com')) {
-          localStorage.removeItem(`margarita_prensa_slide_${prensaId}`);
-          setImages(isExternalProduction ? LAUSTEREO_PROD_IMAGES : LAUSTEREO_GITHUB_IMAGES);
-        }
-      } catch {
-        // no-op
-      }
-    } else if (prensaId === 'prensa-diario-adn-2015') {
-      try {
-        const saved = localStorage.getItem(`margarita_prensa_slide_${prensaId}`);
-        if (!saved || saved.includes('unsplash.com')) {
-          localStorage.removeItem(`margarita_prensa_slide_${prensaId}`);
-          setImages(isExternalProduction ? ADN_PROD_IMAGES : ADN_GITHUB_IMAGES);
-        }
-      } catch {
-        // no-op
-      }
-    } else if (prensaId === 'prensa-diario-vanguardia-2013') {
-      try {
-        const saved = localStorage.getItem(`margarita_prensa_slide_${prensaId}`);
-        if (!saved || saved.includes('unsplash.com')) {
-          localStorage.removeItem(`margarita_prensa_slide_${prensaId}`);
-          setImages(isExternalProduction ? VANGUARDIA_PROD_IMAGES : VANGUARDIA_GITHUB_IMAGES);
-        }
-      } catch {
-        // no-op
-      }
+    try {
+      localStorage.removeItem(`margarita_prensa_slide_${prensaId}`);
+    } catch {
+      // ignore
     }
-  }, [prensaId, isExternalProduction]);
+  }, [prensaId]);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showAddModal, setShowAddModal] = useState(false);
@@ -342,7 +256,7 @@ const PrensaGlitchSlide: React.FC<PrensaGlitchSlideProps> = ({ prensaId, prensaT
   const handleAdd = () => {
     if (!newUrl.trim()) return;
     const updated = [...images, newUrl.trim()];
-    setImages(updated);
+    setCustomImages(updated);
     localStorage.setItem(`margarita_prensa_slide_${prensaId}`, JSON.stringify(updated));
     setCurrentIndex(updated.length - 1);
     setNewUrl('');
@@ -365,7 +279,7 @@ const PrensaGlitchSlide: React.FC<PrensaGlitchSlideProps> = ({ prensaId, prensaT
     } else if (prensaId === 'prensa-diario-vanguardia-2013') {
       defaults = isExternalProduction ? VANGUARDIA_PROD_IMAGES : VANGUARDIA_GITHUB_IMAGES;
     }
-    setImages(defaults);
+    setCustomImages(null);
     localStorage.removeItem(`margarita_prensa_slide_${prensaId}`);
     setCurrentIndex(0);
   };
