@@ -1,4 +1,4 @@
-name: Deploy to Hostinger via FTP
+name: Build Production Dist
 
 on:
   push:
@@ -7,31 +7,32 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
-    name: Build & Deploy to Hostinger
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🚚 Checkout Repository
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: ⚙️ Setup Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
 
-      - name: 📦 Install Dependencies
+      - name: Install Dependencies
         run: npm install --legacy-peer-deps
 
-      - name: 🏗️ Build Project
+      - name: Build Project
         run: npm run build
 
-      - name: 🚀 Deploy to Hostinger via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./dist/
-          server-dir: /public_html/
+      - name: Deploy Built Files
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          rsync -av --delete dist/ ./
+          rm -rf dist
+          git add .
+          git status
+          git diff-index --quiet HEAD || git commit -m "auto: build production dist"
+          git push origin main
