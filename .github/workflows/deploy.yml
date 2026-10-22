@@ -25,12 +25,9 @@ jobs:
       - name: Build Project
         run: npm run build
 
-      - name: Copy Built Files to Root
-        run: |
-          cp -r dist/* ./
-
-      - name: Commit & Push Changes
+      - name: Commit & Push Compiled Dist
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "auto: build production dist"
           branch: main
+          file_pattern: "dist/*"
