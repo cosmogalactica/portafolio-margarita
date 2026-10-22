@@ -25,13 +25,12 @@ jobs:
       - name: Build Project
         run: npm run build
 
-      - name: Deploy Built Files
+      - name: Copy Built Files to Root
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          rsync -av --delete dist/ ./
-          rm -rf dist
-          git add .
-          git status
-          git diff-index --quiet HEAD || git commit -m "auto: build production dist"
-          git push origin main
+          cp -r dist/* ./
+
+      - name: Commit & Push Changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "auto: build production dist"
+          branch: main
