@@ -1,4 +1,4 @@
-name: Build Production Dist
+name: Build and Deploy Dist
 
 on:
   push:
@@ -25,9 +25,9 @@ jobs:
       - name: Build Project
         run: npm run build
 
-      - name: Commit & Push Compiled Dist
+      - name: Commit and Push Dist
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "auto: build production dist"
+          commit_message: "auto: build dist folder"
           branch: main
           file_pattern: "dist/*"
