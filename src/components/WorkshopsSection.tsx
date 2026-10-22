@@ -374,20 +374,17 @@ export const BPP_2021_COMBINED_PROD_IMAGES = [
 ];
 
 export const POESIAPP_BP_GITHUB_IMAGES = [
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/poesiappbpp/poesiappbpp6.webp',
   'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/poesiappbpp/poesiappbpp1.webp',
   'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/poesiappbpp/poesiappbpp2.webp',
   'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/poesiappbpp/poesiappbpp3.webp',
   'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/poesiappbpp/poesiappbpp4.webp',
   'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/poesiappbpp/poesiappbpp5.webp',
-  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/poesiappbpp/poesiappbpp6.webp',
   'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/poesiappbpp/poesiappbpp7.webp',
   'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/poesiappbpp/poesiappbpp8.webp',
   'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/poesiappbpp/poesiappbpp9.webp',
   'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/poesiappbpp/poesiappbpp10.webp',
   'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/poesiappbpp/poesiappbpp11.webp',
-  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/poesiappbpp/poesiappbpp12.webp',
-  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/poesiappbpp/poesiappbpp13.webp',
-  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/poesiappbpp/poesiappbpp14.webp',
   'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/poesiappbpp/poesiappbpp15.webp',
   'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/poesiappbpp/poesiappbpp16.webp',
   'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/poesiappbpp/poesiappbpp17.webp',
@@ -405,20 +402,17 @@ export const POESIAPP_BP_GITHUB_IMAGES = [
 ];
 
 export const POESIAPP_BP_PROD_IMAGES = [
+  '/images/poesiappbp/poesiappbp6.webp',
   '/images/poesiappbp/poesiappbp1.webp',
   '/images/poesiappbp/poesiappbp2.webp',
   '/images/poesiappbp/poesiappbp3.webp',
   '/images/poesiappbp/poesiappbp4.webp',
   '/images/poesiappbp/poesiappbp5.webp',
-  '/images/poesiappbp/poesiappbp6.webp',
   '/images/poesiappbp/poesiappbp7.webp',
   '/images/poesiappbp/poesiappbp8.webp',
   '/images/poesiappbp/poesiappbp9.webp',
   '/images/poesiappbp/poesiappbp10.webp',
   '/images/poesiappbp/poesiappbp11.webp',
-  '/images/poesiappbp/poesiappbp12.webp',
-  '/images/poesiappbp/poesiappbp13.webp',
-  '/images/poesiappbp/poesiappbp14.webp',
   '/images/poesiappbp/poesiappbp15.webp',
   '/images/poesiappbp/poesiappbp16.webp',
   '/images/poesiappbp/poesiappbp17.webp',
@@ -793,11 +787,14 @@ const WorkshopGlitchSlide: React.FC<WorkshopGlitchSlideProps> = ({
           return defaultList;
         }
 
-        // Migrar si contiene enlaces antiguos de Unsplash o menos de 28 imágenes para Poesía App BP
+        // Migrar si contiene enlaces antiguos de Unsplash, no tiene 25 imágenes o no tiene imagen 6 de portada para Poesía App BP
         if (
           workshopId === 'laboratorios-poesiapp-dibujosonico-2021' &&
           Array.isArray(parsed) &&
-          (parsed.some((url: string) => typeof url === 'string' && url.includes('unsplash.com')) || parsed.length !== 28)
+          (parsed.some((url: string) => typeof url === 'string' && url.includes('unsplash.com')) ||
+            parsed.length !== 25 ||
+            !parsed[0]?.includes('6.webp') ||
+            parsed.some((url: string) => typeof url === 'string' && (url.includes('12.webp') || url.includes('13.webp') || url.includes('14.webp'))))
         ) {
           try {
             localStorage.setItem(`margarita_workshop_slide_${workshopId}`, JSON.stringify(defaultList));

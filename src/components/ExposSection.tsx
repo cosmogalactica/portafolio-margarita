@@ -113,8 +113,8 @@ export const EXPOS_DATA: ExpoItem[] = [
 ];
 
 export const EXPOLABMAMB_GITHUB_IMAGES = [
-  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/expolabmamb/expolabmamb1.webp',
   'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/expolabmamb/expolabmamb2.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/expolabmamb/expolabmamb1.webp',
   'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/expolabmamb/expolabmamb3.webp',
   'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/expolabmamb/expolabmamb4.webp',
   'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/expolabmamb/expolabmamb5.webp',
@@ -124,8 +124,8 @@ export const EXPOLABMAMB_GITHUB_IMAGES = [
 ];
 
 export const EXPOLABMAMB_PROD_IMAGES = [
-  '/images/expolabmamb/expolabmamb1.webp',
   '/images/expolabmamb/expolabmamb2.webp',
+  '/images/expolabmamb/expolabmamb1.webp',
   '/images/expolabmamb/expolabmamb3.webp',
   '/images/expolabmamb/expolabmamb4.webp',
   '/images/expolabmamb/expolabmamb5.webp',
@@ -207,21 +207,21 @@ export const CIMAKIDS_PROD_IMAGES = [
 ];
 
 export const BOCHINCHEMAMB_GITHUB_IMAGES = [
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/bochinchemamb/bochinchemamb6.webp',
   'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/bochinchemamb/bochinchemamb1.webp',
   'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/bochinchemamb/bochinchemamb2.webp',
   'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/bochinchemamb/bochinchemamb3.webp',
   'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/bochinchemamb/bochinchemamb4.webp',
   'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/bochinchemamb/bochinchemamb5.webp',
-  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/bochinchemamb/bochinchemamb6.webp',
 ];
 
 export const BOCHINCHEMAMB_PROD_IMAGES = [
+  '/images/bochinchemamb/bochinchemamb6.webp',
   '/images/bochinchemamb/bochinchemamb1.webp',
   '/images/bochinchemamb/bochinchemamb2.webp',
   '/images/bochinchemamb/bochinchemamb3.webp',
   '/images/bochinchemamb/bochinchemamb4.webp',
   '/images/bochinchemamb/bochinchemamb5.webp',
-  '/images/bochinchemamb/bochinchemamb6.webp',
 ];
 
 export const MERCADILLO_GITHUB_IMAGES = [

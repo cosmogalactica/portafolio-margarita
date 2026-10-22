@@ -18,30 +18,38 @@ import { ScrollReveal } from './ScrollReveal';
 export const GITHUB_RAW_ARTEFACTOS_BASE_URL =
   'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/artefactos/';
 
-// 39 fotografías oficiales del catálogo de Artefactos
-export const ARTEFACTOS_GITHUB_IMAGES: string[] = Array.from(
-  { length: 39 },
-  (_, i) => `${GITHUB_RAW_ARTEFACTOS_BASE_URL}artefactos${i + 1}.webp`
+// Índices ordenados del catálogo de Artefactos con la imagen 38 como portada
+export const ARTEFACTOS_ORDER: number[] = [
+  38,
+  ...Array.from({ length: 39 }, (_, i) => i + 1).filter((num) => num !== 38),
+];
+
+// 39 fotografías oficiales del catálogo de Artefactos (con la imagen 38 como portada)
+export const ARTEFACTOS_GITHUB_IMAGES: string[] = ARTEFACTOS_ORDER.map(
+  (num) => `${GITHUB_RAW_ARTEFACTOS_BASE_URL}artefactos${num}.webp`
 );
 
-export const ARTEFACTOS_PROD_IMAGES: string[] = Array.from(
-  { length: 39 },
-  (_, i) => `/images/artefactos/artefactos${i + 1}.webp`
+export const ARTEFACTOS_PROD_IMAGES: string[] = ARTEFACTOS_ORDER.map(
+  (num) => `/images/artefactos/artefactos${num}.webp`
 );
 
 // RUTA BASE GITHUB RAW PARA IMÁGENES DE CASA TALLER
 export const GITHUB_RAW_CASATALLER_BASE_URL =
   'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/casataller/';
 
-// 41 fotografías oficiales de Casa Taller (casataller1.webp a casataller41.webp)
-export const CASA_TALLER_GITHUB_IMAGES: string[] = Array.from(
-  { length: 41 },
-  (_, i) => `${GITHUB_RAW_CASATALLER_BASE_URL}casataller${i + 1}.webp`
+// Índices ordenados del catálogo de Casa Taller con la imagen 8 como portada
+export const CASA_TALLER_ORDER: number[] = [
+  8,
+  ...Array.from({ length: 41 }, (_, i) => i + 1).filter((num) => num !== 8),
+];
+
+// 41 fotografías oficiales de Casa Taller (con la imagen 8 como portada)
+export const CASA_TALLER_GITHUB_IMAGES: string[] = CASA_TALLER_ORDER.map(
+  (num) => `${GITHUB_RAW_CASATALLER_BASE_URL}casataller${num}.webp`
 );
 
-export const CASA_TALLER_PROD_IMAGES: string[] = Array.from(
-  { length: 41 },
-  (_, i) => `/images/casataller/casataller${i + 1}.webp`
+export const CASA_TALLER_PROD_IMAGES: string[] = CASA_TALLER_ORDER.map(
+  (num) => `/images/casataller/casataller${num}.webp`
 );
 
 // Alias para compatibilidad de exportación
@@ -62,7 +70,7 @@ export const resolveCasaTallerImageUrl = (urlOrFilename: string): string => {
       window.location.hostname === 'localhost' ||
       window.location.hostname === '127.0.0.1');
 
-  const filename = urlOrFilename.split('/').pop() || 'casataller1.webp';
+  const filename = urlOrFilename.split('/').pop() || 'casataller8.webp';
   if (isDevOrPreview) {
     return `${GITHUB_RAW_CASATALLER_BASE_URL}${filename}`;
   }
@@ -84,7 +92,7 @@ export const resolveArtefactoImageUrl = (urlOrFilename: string): string => {
       window.location.hostname === 'localhost' ||
       window.location.hostname === '127.0.0.1');
 
-  const filename = urlOrFilename.split('/').pop() || 'artefactos1.webp';
+  const filename = urlOrFilename.split('/').pop() || 'artefactos38.webp';
   if (isDevOrPreview) {
     return `${GITHUB_RAW_ARTEFACTOS_BASE_URL}${filename}`;
   }

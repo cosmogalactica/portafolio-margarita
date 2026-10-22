@@ -5,8 +5,8 @@
  * acentos fucsia neón #E024C3 / #FF007F y capas de seguridad anti-copia activas).
  */
 
-import React, { useState, useEffect, useRef } from 'react';
-import { ChevronDown, Menu, X, ArrowUpRight } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Menu, X, ArrowUpRight } from 'lucide-react';
 
 export interface HeaderProps {
   onCtaClick?: () => void;
@@ -18,29 +18,10 @@ interface NavItem {
   label: string;
   href: string;
   isExternal?: boolean;
-  hasDropdown?: boolean;
-  children?: { id: string; label: string; href: string; badge?: string; isExternal?: boolean }[];
 }
 
 export const NAV_ITEMS: NavItem[] = [
-  {
-    id: 'noticias',
-    label: 'NOTICIAS',
-    href: '#noticias',
-    hasDropdown: true,
-    children: [
-      {
-        id: 'darpana-instagram',
-        label: 'Darpana en Instagram',
-        href: '#darpana-instagram',
-      },
-      {
-        id: 'darpana-lanzamiento',
-        label: 'Darpana Lanzamiento',
-        href: '#darpana',
-      },
-    ],
-  },
+  { id: 'noticias', label: 'NOTICIAS', href: '#noticias' },
   { id: 'soluciones', label: 'SOLUCIONES', href: '#soluciones' },
   { id: 'publicaciones', label: 'PUBLICACIONES', href: '#publicaciones' },
   { id: 'talleres', label: 'LABS', href: '#talleres' },
@@ -56,9 +37,7 @@ export const NAV_ITEMS: NavItem[] = [
 
 export const Header: React.FC<HeaderProps> = ({ onCtaClick, activeSection = '' }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isNoticiasOpen, setIsNoticiasOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Detección de scroll para efecto dinámico de elevación glassmorphism
   useEffect(() => {
@@ -69,23 +48,11 @@ export const Header: React.FC<HeaderProps> = ({ onCtaClick, activeSection = '' }
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Cierre del dropdown al hacer clic fuera
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsNoticiasOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
   // Cierre de menú móvil con tecla Escape
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setIsMobileMenuOpen(false);
-        setIsNoticiasOpen(false);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -125,38 +92,6 @@ export const Header: React.FC<HeaderProps> = ({ onCtaClick, activeSection = '' }
     }
   };
 
-  const handleNoticiasClick = (e?: React.MouseEvent) => {
-    if (e) {
-      e.preventDefault();
-    }
-    setIsNoticiasOpen(false);
-    setIsMobileMenuOpen(false);
-    const target = document.getElementById('noticias') || document.getElementById('darpana');
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
-      window.history.pushState(null, '', '#noticias');
-    } else {
-      window.location.hash = '#noticias';
-    }
-  };
-
-  const handleSubItemClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, isExternal?: boolean) => {
-    setIsNoticiasOpen(false);
-    setIsMobileMenuOpen(false);
-    if (isExternal || href.startsWith('http')) {
-      return;
-    }
-    e.preventDefault();
-    const id = href.replace('#', '');
-    const target = document.getElementById(id) || document.getElementById('noticias');
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
-      window.history.pushState(null, '', href);
-    } else {
-      window.location.hash = href;
-    }
-  };
-
   return (
     <header
       role="banner"
@@ -187,7 +122,7 @@ export const Header: React.FC<HeaderProps> = ({ onCtaClick, activeSection = '' }
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FF007F] shadow-[0_0_8px_#FF007F]" />
               </span>
 
-              {/* Nombre de marca con tipografía Reprobate y tamaño aumentado en 2 puntos */}
+              {/* Nombre de marca con tipografía Reprobate */}
               <span className="font-reprobate font-normal text-[21px] sm:text-[23px] tracking-wider text-[#F4F4F8] group-hover:text-white group-hover-glitch transition-colors duration-200 uppercase inline-block">
                 MARGARITA
               </span>
@@ -200,75 +135,20 @@ export const Header: React.FC<HeaderProps> = ({ onCtaClick, activeSection = '' }
             aria-label="Navegación principal"
             className="hidden xl:flex items-center space-x-1 font-thorne text-[13px] 2xl:text-[14px] font-normal tracking-wide text-[#A4A4BA]"
           >
-            {NAV_ITEMS.map((item) => {
-              if (item.hasDropdown) {
-                return (
-                  <div key={item.id} className="relative" ref={dropdownRef}>
-                    <button
-                      type="button"
-                      onClick={handleNoticiasClick}
-                      onMouseEnter={() => setIsNoticiasOpen(true)}
-                      aria-expanded={isNoticiasOpen}
-                      aria-haspopup="true"
-                      className={`group flex items-center gap-1.5 px-3 py-1.5 text-[#A4A4BA] hover:text-white transition-colors duration-200 cursor-pointer focus:outline-none ${
-                        isNoticiasOpen || activeSection === item.id ? 'text-[#FF007F] font-medium' : ''
-                      }`}
-                    >
-                      <span className="relative z-10 group-hover-glitch inline-block">{item.label}</span>
-                      <ChevronDown
-                        className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                          isNoticiasOpen ? 'rotate-180 text-[#FF007F]' : 'text-[#707086] group-hover:text-[#FF007F]'
-                        }`}
-                      />
-                    </button>
-
-                    {/* Submenú desplegable para NOTICIAS (Darpana en Instagram y Darpana Lanzamiento) */}
-                    {isNoticiasOpen && (
-                      <div
-                        onMouseLeave={() => setIsNoticiasOpen(false)}
-                        className="absolute left-0 mt-1.5 w-56 py-1.5 bg-[#101018]/95 border border-[#E024C3]/30 rounded-md shadow-[0_10px_35px_rgba(0,0,0,0.8),0_0_15px_rgba(224,36,195,0.15)] backdrop-blur-2xl z-50 animate-in fade-in zoom-in-95 duration-150"
-                      >
-                        {item.children?.map((subItem) => (
-                          <a
-                            key={subItem.id}
-                            href={subItem.href}
-                            target={subItem.isExternal || subItem.href.startsWith('http') ? '_blank' : undefined}
-                            rel={subItem.isExternal || subItem.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                            onClick={(e) => handleSubItemClick(e, subItem.href, subItem.isExternal)}
-                            className="flex items-center justify-between px-3 py-2 text-xs text-[#C5C5D8] hover:text-white hover:bg-[#E024C3]/15 transition-all group cursor-pointer"
-                          >
-                            <span className="font-mono-code flex items-center gap-1.5 group-hover-glitch">
-                              <span className="text-[#E024C3] opacity-0 group-hover:opacity-100 transition-opacity font-bold">›</span>
-                              {subItem.label}
-                            </span>
-                            {subItem.badge && (
-                              <span className="text-[9px] font-mono-code px-1.5 py-0.2 text-[#FF007F] border border-[#FF007F]/40 bg-[#FF007F]/10 rounded shadow-[0_0_8px_rgba(255,0,127,0.3)]">
-                                {subItem.badge}
-                              </span>
-                            )}
-                          </a>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                );
-              }
-
-              return (
-                <a
-                  key={item.id}
-                  href={item.href}
-                  className={`group relative px-3 py-1.5 whitespace-nowrap text-[#A4A4BA] hover:text-white transition-colors duration-200 cursor-pointer focus:outline-none ${
-                    activeSection === item.id ? 'text-[#FF007F] font-medium' : ''
-                  }`}
-                >
-                  <span className="relative z-10 group-hover-glitch inline-block">{item.label}</span>
-                  {activeSection === item.id && (
-                    <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-[#FF007F] shadow-[0_0_8px_#FF007F]" />
-                  )}
-                </a>
-              );
-            })}
+            {NAV_ITEMS.map((item) => (
+              <a
+                key={item.id}
+                href={item.href}
+                className={`group relative px-3 py-1.5 whitespace-nowrap text-[#A4A4BA] hover:text-white transition-colors duration-200 cursor-pointer focus:outline-none ${
+                  activeSection === item.id ? 'text-[#FF007F] font-medium' : ''
+                }`}
+              >
+                <span className="relative z-10 group-hover-glitch inline-block">{item.label}</span>
+                {activeSection === item.id && (
+                  <span className="absolute bottom-0 left-3 right-3 h-[2px] bg-[#FF007F] shadow-[0_0_8px_#FF007F]" />
+                )}
+              </a>
+            ))}
           </nav>
 
           {/* MENÚ INTERMEDIO PARA PANTALLAS LAPTOP/TABLET (md & lg) */}
@@ -277,20 +157,7 @@ export const Header: React.FC<HeaderProps> = ({ onCtaClick, activeSection = '' }
             aria-label="Navegación horizontal compacta"
             className="hidden md:flex xl:hidden items-center gap-1.5 overflow-x-auto max-w-[70vw] scrollbar-none py-1 px-1 font-thorne text-[13px] text-[#A4A4BA]"
           >
-            {/* Botón Noticias / Darpana */}
-            <div className="relative shrink-0" ref={dropdownRef}>
-              <button
-                type="button"
-                onClick={handleNoticiasClick}
-                className={`group flex items-center gap-1 px-2.5 py-1 text-[#A4A4BA] hover:text-white transition-colors cursor-pointer ${
-                  activeSection === 'noticias' ? 'text-[#FF007F]' : ''
-                }`}
-              >
-                <span>NOTICIAS</span>
-              </button>
-            </div>
-
-            {NAV_ITEMS.filter((i) => i.id !== 'noticias').map((item) => (
+            {NAV_ITEMS.map((item) => (
               <a
                 key={item.id}
                 href={item.href}
@@ -308,7 +175,6 @@ export const Header: React.FC<HeaderProps> = ({ onCtaClick, activeSection = '' }
 
           {/* ZONA 3: TOGGLE DE NAVEGACIÓN MÓVIL */}
           <div className="flex items-center gap-3 shrink-0">
-            {/* Toggle de navegación en dispositivos móviles */}
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -342,52 +208,18 @@ export const Header: React.FC<HeaderProps> = ({ onCtaClick, activeSection = '' }
 
           {/* Enlaces organizados y accesibles */}
           <div className="space-y-1.5 flex-1 font-thorne text-sm">
-            {/* NOTICIAS con submenú DARPANA desplegado */}
-            <div className="p-2.5 rounded-md bg-[#13131C] border border-[#242436]/60 mb-2">
-              <a
-                href="#noticias"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="flex items-center justify-between text-white font-semibold hover:text-[#E024C3] py-1"
-              >
-                <span>[ NOTICIAS ]</span>
-                <span className="text-[11px] text-[#7A7A90]">Principal</span>
-              </a>
-              {/* Rama de submenú DARPANA */}
-              <div className="mt-2 pl-3 border-l-2 border-[#E024C3]/40 space-y-1">
-                <a
-                  href="#darpana-instagram"
-                  onClick={(e) => handleSubItemClick(e, '#darpana-instagram')}
-                  className="flex items-center justify-between py-1.5 text-xs text-[#C5C5D8] hover:text-[#00f0ff] font-medium"
-                >
-                  <span className="flex items-center gap-1.5 font-mono-code">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#E024C3]" />
-                    Darpana en Instagram
-                  </span>
-                </a>
-                <a
-                  href="#darpana"
-                  onClick={(e) => handleSubItemClick(e, '#darpana')}
-                  className="flex items-center justify-between py-1.5 text-xs text-[#C5C5D8] hover:text-[#00f0ff] font-medium"
-                >
-                  <span className="flex items-center gap-1.5 font-mono-code">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#00f0ff]" />
-                    Darpana Lanzamiento
-                  </span>
-                </a>
-              </div>
-            </div>
-
-            {/* Resto de secciones */}
-            {NAV_ITEMS.filter((i) => i.id !== 'noticias').map((item, index) => (
+            {NAV_ITEMS.map((item, index) => (
               <a
                 key={item.id}
                 href={item.href}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="flex items-center justify-between px-3 py-2.5 rounded-md text-[#B6B6CB] hover:text-white hover:bg-[#171722] border border-transparent hover:border-[#262638] transition-all"
+                className={`flex items-center justify-between px-3 py-2.5 rounded-md text-[#B6B6CB] hover:text-white hover:bg-[#171722] border border-transparent hover:border-[#262638] transition-all ${
+                  activeSection === item.id ? 'text-[#FF007F] bg-[#FF007F]/10 border-[#FF007F]/30' : ''
+                }`}
               >
                 <span className="text-xs">{item.label}</span>
                 <span className="text-[10px] text-[#55556A]">
-                  0{index + 2}
+                  {String(index + 1).padStart(2, '0')}
                 </span>
               </a>
             ))}

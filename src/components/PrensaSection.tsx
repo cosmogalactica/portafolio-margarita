@@ -108,14 +108,14 @@ export const PRENSA_DATA: PrensaItem[] = [
 ];
 
 export const LACULTURAL_GITHUB_IMAGES = [
-  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/lacultural/lacultural1.webp',
   'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/lacultural/lacultural2.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/lacultural/lacultural1.webp',
   'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/lacultural/lacultural3.webp',
 ];
 
 export const LACULTURAL_PROD_IMAGES = [
-  '/images/lacultural/lacultural1.webp',
   '/images/lacultural/lacultural2.webp',
+  '/images/lacultural/lacultural1.webp',
   '/images/lacultural/lacultural3.webp',
 ];
 
@@ -231,6 +231,14 @@ const PrensaGlitchSlide: React.FC<PrensaGlitchSlideProps> = ({ prensaId, prensaT
       try {
         const parsed = JSON.parse(saved);
         if (
+          prensaId === 'prensa-la-cultural-2024' &&
+          Array.isArray(parsed) &&
+          (!parsed[0]?.includes('lacultural2'))
+        ) {
+          localStorage.removeItem(`margarita_prensa_slide_${prensaId}`);
+          return defaultList;
+        }
+        if (
           (prensaId === 'prensa-la-cultural-2024' ||
             prensaId === 'prensa-vanguardia-femenina-2020' ||
             prensaId === 'prensa-telemedellin-2019' ||
@@ -255,7 +263,7 @@ const PrensaGlitchSlide: React.FC<PrensaGlitchSlideProps> = ({ prensaId, prensaT
     if (prensaId === 'prensa-la-cultural-2024') {
       try {
         const saved = localStorage.getItem(`margarita_prensa_slide_${prensaId}`);
-        if (!saved || saved.includes('unsplash.com')) {
+        if (!saved || saved.includes('unsplash.com') || !saved.includes('lacultural2')) {
           localStorage.removeItem(`margarita_prensa_slide_${prensaId}`);
           setImages(isExternalProduction ? LACULTURAL_PROD_IMAGES : LACULTURAL_GITHUB_IMAGES);
         }

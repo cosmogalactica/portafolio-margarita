@@ -186,13 +186,13 @@ export const AUDIOGRAFEMAS_PROD_IMAGES = [
 ];
 
 export const HABLEMOSDESYNTHES_GITHUB_IMAGES = [
-  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/hablemosdesynthes/hablemosdesynthes1.webp',
   'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/hablemosdesynthes/hablemosdesynthes3.webp',
+  'https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/hablemosdesynthes/hablemosdesynthes1.webp',
 ];
 
 export const HABLEMOSDESYNTHES_PROD_IMAGES = [
-  '/images/hablemosdesynthes/hablemosdesynthes1.webp',
   '/images/hablemosdesynthes/hablemosdesynthes3.webp',
+  '/images/hablemosdesynthes/hablemosdesynthes1.webp',
 ];
 
 export const CAFEYFOTOGRAMAS_GITHUB_IMAGES = [
@@ -319,11 +319,12 @@ const ConversatorioGlitchSlide: React.FC<ConversatorioGlitchSlideProps> = ({
           return defaultList;
         }
 
-        // Migrar automáticamente si contiene enlaces antiguos, contiene hablemosdesynthes2 o no tiene exactamente 2 imágenes para Hablemos de Synthes
+        // Migrar automáticamente si contiene enlaces antiguos, contiene hablemosdesynthes2, no tiene hablemosdesynthes3 como portada o no tiene exactamente 2 imágenes para Hablemos de Synthes
         if (
           conversatorioId === 'synthetizadores-sonidos-marcianos-2017' &&
           Array.isArray(parsed) &&
-          (parsed.some((url: string) => typeof url === 'string' && (url.includes('unsplash.com') || !url.includes('hablemosdesynthes') || url.includes('hablemosdesynthes2'))) ||
+          (!parsed[0]?.includes('hablemosdesynthes3') ||
+            parsed.some((url: string) => typeof url === 'string' && (url.includes('unsplash.com') || !url.includes('hablemosdesynthes') || url.includes('hablemosdesynthes2'))) ||
             parsed.length !== 2)
         ) {
           try {
