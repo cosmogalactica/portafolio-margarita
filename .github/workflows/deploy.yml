@@ -6,7 +6,6 @@ on:
       - main
   workflow_dispatch:
 
-# 1. Añadimos permisos de escritura para que el Action pueda hacer push
 permissions:
   contents: write
 
@@ -35,5 +34,4 @@ jobs:
           commit_message: "auto: build dist folder"
           branch: main
           file_pattern: "dist/*"
-          # 2. Forzamos la subida aunque la carpeta esté en .gitignore
           skip_ci: true
