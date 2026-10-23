@@ -43,11 +43,11 @@ export const PUBLICATIONS_DATA: PublicationItem[] = [
     id: 'pub-darpana-2026',
     year: '2026',
     badge: 'LITERATURA EXPANDIDA',
-    badgeColor: '#FF007F',
+    badgeColor: '#00f0ff',
     title: 'DARPANA',
     highlightKeyword: 'DARPANA',
     work: 'Obra ganadora: DARPANA',
-    description: 'Proyecto de Literatura Multicanal que expande el libro físico hacia un ecosistema digital | Beca de creación literaria ganadora para la producción de una obra inédita en formato impreso y digital de cuento para participantes con enfoque diferencial.',
+    description: 'Beca ganadora para la creación literaria cuento p con e. d.',
     publisher: 'IMCT',
     location: 'Bucaramanga, Colombia, 2026',
   },
@@ -166,7 +166,9 @@ export const MI_DIARIO_CINEFILO_PROD_IMAGES = [
 
 // Colecciones por defecto de registros visuales para cada una de las publicaciones
 const PUB_DEFAULT_IMAGES: Record<string, string[]> = {
-  'pub-darpana-2026': DARPANA_GITHUB_IMAGES,
+  'pub-darpana-2026': [],
+  'pub-darpana-slide-1': [],
+  'pub-darpana-slide-2': [],
   'pub-ovni-fancine-2023': [
     'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=900&auto=format&fit=crop',
     'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?q=80&w=900&auto=format&fit=crop',
@@ -310,12 +312,14 @@ interface PublicationGlitchSlideProps {
   publicationId: string;
   publicationTitle: string;
   fitMode?: 'cover' | 'contain';
+  className?: string;
 }
 
 const PublicationGlitchSlide: React.FC<PublicationGlitchSlideProps> = ({
   publicationId,
   publicationTitle,
   fitMode,
+  className,
 }) => {
   const isContain =
     fitMode === 'contain' ||
@@ -323,6 +327,19 @@ const PublicationGlitchSlide: React.FC<PublicationGlitchSlideProps> = ({
     publicationId === 'pub-bucaramanga-escribe-cuenta-2007';
 
   const [images] = useState<string[]>(() => {
+    if (
+      publicationId === 'pub-darpana-2026' ||
+      publicationId === 'pub-darpana-slide-1' ||
+      publicationId === 'pub-darpana-slide-2'
+    ) {
+      try {
+        localStorage.removeItem(`margarita_publication_slide_${publicationId}`);
+      } catch {
+        // ignore
+      }
+      return [];
+    }
+
     // Si la publicación es Bucaramanga Escribe y Cuenta y se detecta despliegue en Hostinger / producción externa
     const isExternalProduction =
       typeof window !== 'undefined' &&
@@ -391,7 +408,9 @@ const PublicationGlitchSlide: React.FC<PublicationGlitchSlideProps> = ({
           WebkitUserDrag: 'none',
         } as React.CSSProperties
       }
-      className="relative w-full aspect-[16/9] sm:aspect-[16/10] rounded-xl overflow-hidden bg-[#0A0A12] border border-[#26263A] group/slide my-3.5 shadow-md select-none flex items-center justify-center"
+      className={`relative w-full rounded-xl overflow-hidden bg-[#0A0A12] border border-[#26263A] group/slide shadow-md select-none flex items-center justify-center ${
+        className ? className : 'aspect-[16/9] sm:aspect-[16/10] my-3.5'
+      }`}
     >
       {/* Capas de textura Glitch y escaneo CRT sutil sin halo */}
       <div className="absolute inset-0 glitch-texture-overlay z-10 pointer-events-none" />
@@ -558,7 +577,7 @@ export const PublicationsSection: React.FC = () => {
                     <div>
                       {/* Fila de metadatos: Año e insignia limpia en Dosis */}
                       <div className="flex items-center gap-2 font-dosis text-sm mb-1.5">
-                        <span className="text-[#FF007F] font-bold text-base">
+                        <span className="text-[#00f0ff] font-bold text-base">
                           {item.year}
                         </span>
                         <span className="text-[#55556E] font-normal">|</span>
@@ -616,10 +635,19 @@ export const PublicationsSection: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* SLIDE DE IMÁGENES DARPANA VERTICAL */}
+                    {/* DOS SLIDES DE IMÁGENES VACÍOS PARA DARPANA (UNO DEBAJO DEL OTRO LLENANDO EL EJE Y) */}
                     {item.id === 'pub-darpana-2026' ? (
-                      <div className="my-3.5 w-full flex items-center justify-center">
-                        <DarpanaSlide />
+                      <div className="mt-4 mb-2 w-full flex flex-col gap-4 flex-1 justify-between">
+                        <PublicationGlitchSlide
+                          publicationId="pub-darpana-slide-1"
+                          publicationTitle="DARPANA - Slide 1"
+                          className="w-full flex-1 min-h-[170px] sm:min-h-[200px]"
+                        />
+                        <PublicationGlitchSlide
+                          publicationId="pub-darpana-slide-2"
+                          publicationTitle="DARPANA - Slide 2"
+                          className="w-full flex-1 min-h-[170px] sm:min-h-[200px]"
+                        />
                       </div>
                     ) : item.videoUrl ? (
                       <PublicationYouTubeEmbed

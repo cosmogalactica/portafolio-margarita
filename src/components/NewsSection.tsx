@@ -264,61 +264,17 @@ export const DarpanaVideoSlide = DarpanaSlide;
  * para que no quede cortada en ningún extremo ni dispositivo.
  */
 export const InstagramScaledEmbed: React.FC<{ url: string; title: string }> = ({ url, title }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState<number>(0.55);
-
-  useEffect(() => {
-    const updateScale = () => {
-      if (containerRef.current) {
-        const { clientWidth, clientHeight } = containerRef.current;
-        // Medidas estándar de la tarjeta de publicación embebida de Instagram
-        const targetWidth = 400;
-        const targetHeight = 500;
-        if (clientWidth > 0 && clientHeight > 0) {
-          const scaleX = clientWidth / targetWidth;
-          const scaleY = clientHeight / targetHeight;
-          const computedScale = Math.min(scaleX, scaleY, 0.95);
-          setScale(Math.max(computedScale, 0.35));
-        }
-      }
-    };
-
-    updateScale();
-    const observer = new ResizeObserver(updateScale);
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
-    window.addEventListener('resize', updateScale);
-    return () => {
-      observer.disconnect();
-      window.removeEventListener('resize', updateScale);
-    };
-  }, []);
-
   return (
-    <div
-      ref={containerRef}
-      className="relative z-10 w-full flex-1 bg-black flex items-center justify-center overflow-hidden"
-    >
-      <div
-        style={{
-          width: '400px',
-          height: '500px',
-          transform: `scale(${scale})`,
-          transformOrigin: 'center center',
-        }}
-        className="shrink-0 flex items-center justify-center transition-transform duration-100"
-      >
-        <iframe
-          src={url}
-          title={title}
-          className="w-[400px] h-[500px] border-0 bg-[#0A0A12] rounded-lg shadow-xl"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-          scrolling="no"
-          loading="lazy"
-        />
-      </div>
+    <div className="relative z-10 w-full h-full flex-1 bg-black flex flex-col overflow-hidden">
+      <iframe
+        src={url}
+        title={title}
+        className="w-full h-full border-0 bg-[#0A0A12] block flex-1"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowFullScreen
+        scrolling="no"
+        loading="lazy"
+      />
     </div>
   );
 };
@@ -365,9 +321,9 @@ export const NewsSection: React.FC = () => {
           </div>
         </ScrollReveal>
 
-        {/* CUADRÍCULA (GRID) DE NOTICIAS */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-stretch">
-          {/* DIV 1: DARPANA (SLIDE CON TODOS LOS VIDEOS) */}
+        {/* CUADRÍCULA (GRID) DE NOTICIAS: 3 COLUMNAS POR FILA CON ALTURA EN EJE Y COMPLETA */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-stretch">
+          {/* DIV 1: ESPACIO VACÍO (SUPERIOR IZQUIERDA) */}
           <ScrollReveal direction="up" distance="md" delay={100} className="w-full flex">
             <article
               onContextMenu={handleProtected}
@@ -380,10 +336,10 @@ export const NewsSection: React.FC = () => {
                 aria-hidden="true"
               />
 
-              {/* CONTENEDOR MULTIMEDIA: VACÍO SEGÚN LO SOLICITADO */}
+              {/* CONTENEDOR MULTIMEDIA: VACÍO EN EJE Y PROPORCIONAL */}
               <div className="relative w-full bg-[#07070B] overflow-hidden flex items-center justify-center p-3 sm:p-5">
                 <div
-                  className="relative w-full aspect-[16/9] sm:aspect-[16/10] rounded-xl bg-[#0A0A12] border border-dashed border-[#252538] flex items-center justify-center select-none"
+                  className="relative w-full h-[580px] sm:h-[620px] rounded-xl bg-[#0A0A12] border border-dashed border-[#252538] flex items-center justify-center select-none"
                   aria-hidden="true"
                 />
               </div>
@@ -393,7 +349,7 @@ export const NewsSection: React.FC = () => {
             </article>
           </ScrollReveal>
 
-          {/* DIV 2: ESPACIO VACÍO PREPARADO PARA FUTURA NOTICIA */}
+          {/* DIV 2: ESPACIO VACÍO (SUPERIOR CENTRO) */}
           <ScrollReveal
             direction="up"
             distance="md"
@@ -407,7 +363,7 @@ export const NewsSection: React.FC = () => {
             >
               <div className="relative w-full bg-[#07070B] overflow-hidden flex items-center justify-center p-3 sm:p-5">
                 <div
-                  className="relative w-full aspect-[16/9] sm:aspect-[16/10] rounded-xl bg-[#0A0A12] border border-dashed border-[#252538] flex items-center justify-center select-none"
+                  className="relative w-full h-[580px] sm:h-[620px] rounded-xl bg-[#0A0A12] border border-dashed border-[#252538] flex items-center justify-center select-none"
                   aria-hidden="true"
                 />
               </div>
@@ -415,11 +371,55 @@ export const NewsSection: React.FC = () => {
             </article>
           </ScrollReveal>
 
-          {/* DIV 3: REGISTRO DE INSTAGRAM (PUBLICACIÓN DEXLKABIBJG) */}
+          {/* DIV 3: ESPACIO VACÍO (SUPERIOR DERECHA) */}
           <ScrollReveal
             direction="up"
             distance="md"
             delay={260}
+            className="w-full flex"
+          >
+            <article
+              onContextMenu={handleProtected}
+              onDragStart={handleProtected}
+              className="w-full rounded-2xl bg-[#14141E] border border-[#252538] shadow-[0_12px_40px_rgba(0,0,0,0.6)] flex flex-col justify-between overflow-hidden select-none relative"
+            >
+              <div className="relative w-full bg-[#07070B] overflow-hidden flex items-center justify-center p-3 sm:p-5">
+                <div
+                  className="relative w-full h-[580px] sm:h-[620px] rounded-xl bg-[#0A0A12] border border-dashed border-[#252538] flex items-center justify-center select-none"
+                  aria-hidden="true"
+                />
+              </div>
+              <div aria-hidden="true" />
+            </article>
+          </ScrollReveal>
+
+          {/* DIV 4: ESPACIO VACÍO (INFERIOR IZQUIERDA) */}
+          <ScrollReveal
+            direction="up"
+            distance="md"
+            delay={340}
+            className="w-full flex"
+          >
+            <article
+              onContextMenu={handleProtected}
+              onDragStart={handleProtected}
+              className="w-full rounded-2xl bg-[#14141E] border border-[#252538] shadow-[0_12px_40px_rgba(0,0,0,0.6)] flex flex-col justify-between overflow-hidden select-none relative"
+            >
+              <div className="relative w-full bg-[#07070B] overflow-hidden flex items-center justify-center p-3 sm:p-5">
+                <div
+                  className="relative w-full h-[580px] sm:h-[620px] rounded-xl bg-[#0A0A12] border border-dashed border-[#252538] flex items-center justify-center select-none"
+                  aria-hidden="true"
+                />
+              </div>
+              <div aria-hidden="true" />
+            </article>
+          </ScrollReveal>
+
+          {/* DIV 5: PUBLICACIÓN DEL 21 DE OCTUBRE (AL LADO IZQUIERDO DE LA COLUMNA INFERIOR DERECHA) */}
+          <ScrollReveal
+            direction="up"
+            distance="md"
+            delay={420}
             className="w-full flex"
           >
             <article
@@ -433,7 +433,7 @@ export const NewsSection: React.FC = () => {
                 aria-hidden="true"
               />
 
-              {/* CONTENEDOR MULTIMEDIA: MISMO TAMAÑO QUE TODOS LOS DIVS DE SLIDE DEL SITIO */}
+              {/* CONTENEDOR MULTIMEDIA: EXTENDIDO EN EJE Y PARA VISUALIZACIÓN COMPLETA */}
               <div className="relative w-full bg-[#07070B] overflow-hidden flex items-center justify-center p-3 sm:p-5">
                 <div
                   onContextMenu={handleProtected}
@@ -444,17 +444,21 @@ export const NewsSection: React.FC = () => {
                       WebkitUserDrag: 'none',
                     } as React.CSSProperties
                   }
-                  className="relative w-full aspect-[16/9] sm:aspect-[16/10] rounded-xl overflow-hidden bg-[#0A0A12] border border-[#26263A] shadow-md select-none flex flex-col"
+                  className="relative w-full h-[580px] sm:h-[620px] rounded-xl overflow-hidden bg-[#0A0A12] border border-[#26263A] shadow-md select-none flex flex-col"
                 >
                   {/* Capa de textura CRT glitch sutil */}
                   <div className="absolute inset-0 glitch-texture-overlay z-10 pointer-events-none" />
 
-                  {/* Barra superior de control del iframe */}
+                  {/* Barra superior de control del iframe con fecha oficial de Instagram */}
                   <div className="relative z-20 flex items-center justify-between px-3.5 py-1.5 bg-[#10101A]/95 border-b border-[#252538] backdrop-blur-sm select-none shrink-0">
                     <div className="flex items-center gap-2">
                       <span className="w-2 h-2 rounded-full bg-[#00f0ff] animate-pulse" />
                       <span className="text-[11px] font-mono-code font-bold uppercase tracking-wider text-[#00f0ff]">
                         REGISTRO INSTAGRAM
+                      </span>
+                      <span className="text-[#3A3A54] text-xs">|</span>
+                      <span className="text-[11px] font-mono-code text-[#C0C0D8] font-semibold tracking-wider">
+                        21 OCTUBRE 2026
                       </span>
                     </div>
 
@@ -470,7 +474,7 @@ export const NewsSection: React.FC = () => {
                     </a>
                   </div>
 
-                  {/* Publicación completa escalada al 100% sin recortar */}
+                  {/* Publicación completa extendida al 100% en el eje Y */}
                   <InstagramScaledEmbed
                     url="https://www.instagram.com/p/DexLkAbibjg/embed/"
                     title="Instagram - Publicación Completa"
@@ -483,11 +487,11 @@ export const NewsSection: React.FC = () => {
             </article>
           </ScrollReveal>
 
-          {/* DIV 4: REGISTRO DE INSTAGRAM IFRAME COMPLETO SIN CORTES */}
+          {/* DIV 6: PUBLICACIÓN DEL 12 DE OCTUBRE (COLUMNA INFERIOR DERECHA) */}
           <ScrollReveal
             direction="up"
             distance="md"
-            delay={340}
+            delay={500}
             className="w-full flex"
           >
             <article
@@ -502,7 +506,7 @@ export const NewsSection: React.FC = () => {
                 aria-hidden="true"
               />
 
-              {/* CONTENEDOR MULTIMEDIA: MISMO TAMAÑO QUE TODOS LOS DIVS DE SLIDE DEL SITIO */}
+              {/* CONTENEDOR MULTIMEDIA: EXTENDIDO EN EJE Y PARA VISUALIZACIÓN COMPLETA */}
               <div className="relative w-full bg-[#07070B] overflow-hidden flex items-center justify-center p-3 sm:p-5">
                 <div
                   onContextMenu={handleProtected}
@@ -513,17 +517,21 @@ export const NewsSection: React.FC = () => {
                       WebkitUserDrag: 'none',
                     } as React.CSSProperties
                   }
-                  className="relative w-full aspect-[16/9] sm:aspect-[16/10] rounded-xl overflow-hidden bg-[#0A0A12] border border-[#26263A] shadow-md select-none flex flex-col"
+                  className="relative w-full h-[580px] sm:h-[620px] rounded-xl overflow-hidden bg-[#0A0A12] border border-[#26263A] shadow-md select-none flex flex-col"
                 >
                   {/* Capa de textura CRT glitch sutil */}
                   <div className="absolute inset-0 glitch-texture-overlay z-10 pointer-events-none" />
 
-                  {/* Barra superior de control del iframe */}
+                  {/* Barra superior de control del iframe con fecha oficial de Instagram */}
                   <div className="relative z-20 flex items-center justify-between px-3.5 py-1.5 bg-[#10101A]/95 border-b border-[#252538] backdrop-blur-sm select-none shrink-0">
                     <div className="flex items-center gap-2">
                       <span className="w-2 h-2 rounded-full bg-[#FF007F] animate-pulse" />
                       <span className="text-[11px] font-mono-code font-bold uppercase tracking-wider text-[#FF007F]">
                         REGISTRO INSTAGRAM
+                      </span>
+                      <span className="text-[#3A3A54] text-xs">|</span>
+                      <span className="text-[11px] font-mono-code text-[#C0C0D8] font-semibold tracking-wider">
+                        12 OCTUBRE 2026
                       </span>
                     </div>
 
@@ -539,7 +547,7 @@ export const NewsSection: React.FC = () => {
                     </a>
                   </div>
 
-                  {/* Publicación completa escalada al 100% sin recortar */}
+                  {/* Publicación completa extendida al 100% en el eje Y */}
                   <InstagramScaledEmbed
                     url="https://www.instagram.com/p/DeYAQ86GiBm/embed/"
                     title="Instagram - Publicación Completa"

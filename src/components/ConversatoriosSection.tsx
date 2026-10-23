@@ -30,6 +30,26 @@ export interface ConversatorioItem {
 
 export const CONVERSATORIOS_DATA: ConversatorioItem[] = [
   {
+    id: 'conversatorio-pendiente-2026',
+    year: '2026',
+    badge: 'CONVERSATORIO',
+    badgeColor: '#00f0ff',
+    title: 'REGISTRO DISPONIBLE PRÓXIMAMENTE',
+    highlightKeyword: 'DISPONIBLE PRÓXIMAMENTE',
+    institution: 'Casa del Libro Total',
+    location: 'Bucaramanga, 2026',
+  },
+  {
+    id: 'conversatorio-lanzamiento-darpana-2026',
+    year: '2026',
+    badge: 'CONVERSATORIO',
+    badgeColor: '#00f0ff',
+    title: 'LANZAMIENTO DEL LIBRO DARPANA',
+    highlightKeyword: 'LANZAMIENTO DEL LIBRO DARPANA',
+    institution: 'Casa del Libro Total',
+    location: 'Bucaramanga, 2026',
+  },
+  {
     id: 'mas-alla-del-algoritmo-2024',
     year: '2024',
     badge: 'CONVERSATORIO',
@@ -203,8 +223,25 @@ export const CAFEYFOTOGRAMAS_PROD_IMAGES = [
   '/images/cafeyfotogramas1.webp',
 ];
 
+export const LANZAMIENTODARPANA_GITHUB_IMAGES: string[] = Array.from(
+  { length: 21 },
+  (_, i) =>
+    `https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/lanzamientodarpanacasadellibrototal/lanzamientodarpanacasadellibrototal${i + 1}.webp`
+);
+
+export const LANZAMIENTODARPANA_PROD_IMAGES: string[] = Array.from(
+  { length: 21 },
+  (_, i) =>
+    `/images/lanzamientodarpanacasadellibrototal/lanzamientodarpanacasadellibrototal${i + 1}.webp`
+);
+
+export const DARPANA_CONVERSATORIO_GITHUB_IMAGES = LANZAMIENTODARPANA_GITHUB_IMAGES;
+export const DARPANA_CONVERSATORIO_PROD_IMAGES = LANZAMIENTODARPANA_PROD_IMAGES;
+
 // Colecciones por defecto de registros fotográficos adaptadas a cada conversatorio
 const CONVERSATORIO_DEFAULT_IMAGES: Record<string, string[]> = {
+  'conversatorio-pendiente-2026': [],
+  'conversatorio-lanzamiento-darpana-2026': LANZAMIENTODARPANA_GITHUB_IMAGES,
   'mas-alla-del-algoritmo-2024': WOLF_GITHUB_IMAGES,
   'musiforo-unal-2021': MUSIFORO_GITHUB_IMAGES,
   'sonorarteclab-cultura-maker-2021': BIBLIOLABS_GITHUB_IMAGES,
@@ -238,7 +275,11 @@ const ConversatorioGlitchSlide: React.FC<ConversatorioGlitchSlideProps> = ({
 
   const images = useMemo<string[]>(() => {
     let defaultList = CONVERSATORIO_DEFAULT_IMAGES[conversatorioId] || GENERIC_CONVERSATORIOS_IMAGES;
-    if (conversatorioId === 'mas-alla-del-algoritmo-2024') {
+    if (conversatorioId === 'conversatorio-pendiente-2026') {
+      defaultList = [];
+    } else if (conversatorioId === 'conversatorio-lanzamiento-darpana-2026') {
+      defaultList = isExternalProduction ? LANZAMIENTODARPANA_PROD_IMAGES : LANZAMIENTODARPANA_GITHUB_IMAGES;
+    } else if (conversatorioId === 'mas-alla-del-algoritmo-2024') {
       defaultList = isExternalProduction ? WOLF_PROD_IMAGES : WOLF_GITHUB_IMAGES;
     } else if (conversatorioId === 'musiforo-unal-2021') {
       defaultList = isExternalProduction ? MUSIFORO_PROD_IMAGES : MUSIFORO_GITHUB_IMAGES;
@@ -279,6 +320,19 @@ const ConversatorioGlitchSlide: React.FC<ConversatorioGlitchSlideProps> = ({
     setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
   };
 
+  // Detección de imágenes que deben ajustarse en el eje Y (object-contain) para no ser cortadas:
+  // Específicamente imágenes 7, 15 y 21 de Lanzamiento Darpana (índices 6, 14 y 20)
+  const isContainImage = useMemo(() => {
+    const currentUrl = images[currentIndex] || '';
+    return (
+      currentUrl.includes('lanzamientodarpanacasadellibrototal7.') ||
+      currentUrl.includes('lanzamientodarpanacasadellibrototal15.') ||
+      currentUrl.includes('lanzamientodarpanacasadellibrototal21.') ||
+      (conversatorioId === 'conversatorio-lanzamiento-darpana-2026' &&
+        (currentIndex === 6 || currentIndex === 14 || currentIndex === 20))
+    );
+  }, [images, currentIndex, conversatorioId]);
+
   return (
     <div
       onContextMenu={(e) => e.preventDefault()}
@@ -297,11 +351,26 @@ const ConversatorioGlitchSlide: React.FC<ConversatorioGlitchSlideProps> = ({
       {/* Imagen actual */}
       {images.length > 0 ? (
         <>
-          <div className="w-full h-full flex items-center justify-center overflow-hidden">
+          <div className="relative w-full h-full flex items-center justify-center overflow-hidden bg-[#07070B]">
+            {/* Fondo ambiental sutil para imágenes ajustadas en el eje Y */}
+            {isContainImage && (
+              <div className="absolute inset-0 overflow-hidden pointer-events-none select-none" aria-hidden="true">
+                <img
+                  src={images[currentIndex]}
+                  alt=""
+                  className="w-full h-full object-cover blur-xl opacity-25 scale-125 pointer-events-none select-none"
+                  draggable={false}
+                />
+              </div>
+            )}
             <img
               src={images[currentIndex]}
               alt={`${conversatorioTitle} (${currentIndex + 1})`}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover/slide:scale-105 pointer-events-none select-none"
+              className={`w-full h-full pointer-events-none select-none relative z-10 transition-transform duration-500 ${
+                isContainImage
+                  ? 'object-contain'
+                  : 'object-cover group-hover/slide:scale-105'
+              }`}
               loading="lazy"
               draggable={false}
               onContextMenu={(e) => e.preventDefault()}
@@ -315,7 +384,27 @@ const ConversatorioGlitchSlide: React.FC<ConversatorioGlitchSlideProps> = ({
               onError={(e) => {
                 const target = e.currentTarget;
                 const currentSrc = target.src;
-                if (currentSrc.includes('wolf')) {
+                if (currentSrc.includes('lanzamientodarpanacasadellibrototal')) {
+                  const match = currentSrc.match(/lanzamientodarpanacasadellibrototal\d+\.webp/);
+                  if (match) {
+                    const filename = match[0];
+                    if (currentSrc.includes('raw.githubusercontent.com')) {
+                      target.src = `/images/lanzamientodarpanacasadellibrototal/${filename}`;
+                    } else {
+                      target.src = `https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/lanzamientodarpanacasadellibrototal/${filename}`;
+                    }
+                  }
+                } else if (currentSrc.includes('darpana')) {
+                  const match = currentSrc.match(/darpana\d+\.webp/);
+                  if (match) {
+                    const filename = match[0];
+                    if (currentSrc.includes('raw.githubusercontent.com')) {
+                      target.src = `/images/darpana/${filename}`;
+                    } else {
+                      target.src = `https://raw.githubusercontent.com/cosmogalactica/portafolio-margarita/main/images/darpana/${filename}`;
+                    }
+                  }
+                } else if (currentSrc.includes('wolf')) {
                   const match = currentSrc.match(/wolf\d+\.webp/);
                   if (match) {
                     const filename = match[0];
@@ -441,7 +530,7 @@ const ConversatorioGlitchSlide: React.FC<ConversatorioGlitchSlideProps> = ({
       ) : (
         <div className="flex flex-col items-center justify-center h-full text-center p-4 font-mono-code text-[#7A7A96]">
           <ImageIcon className="w-7 h-7 text-[#FF007F]/40 mb-1.5" />
-          <span className="text-xs text-[#7A7A96]">DISPONIBLE PRÓXIMAMENTE</span>
+          <span className="text-xs text-[#7A7A96] tracking-wider uppercase">DISPONIBLE PRÓXIMAMENTE</span>
         </div>
       )}
     </div>
